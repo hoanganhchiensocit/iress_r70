@@ -22,7 +22,6 @@
 					"@module": "./src/modules/"
 				}
 			}
-		],
-		["transform-remove-console"]
+		]
 	]
 }

@@ -262,6 +262,8 @@ dependencies {
 
     //add lib
     implementation project(':react-native-splash-screen')
+    implementation project(':react-native-navigation')
+    implementation project(':react-native-firebase')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

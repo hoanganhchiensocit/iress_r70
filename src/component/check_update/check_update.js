@@ -18,12 +18,11 @@ import {
 	setNativeExceptionHandler
 } from 'react-native-exception-handler';
 import RNRestart from 'react-native-restart';
-import RNFetchBlob from 'rn-fetch-blob';
 
 import * as api from '../../api';
-if (!global.fetch) {
-	global.fetch = require('fetch').fetch;
-}
+// if (!global.fetch) {
+// 	global.fetch = require('fetch').fetch;
+// }
 
 // global.fetch = async (url, params = {}) => {
 // 	try {
