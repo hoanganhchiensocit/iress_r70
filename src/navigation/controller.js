@@ -1,4 +1,4 @@
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { Platform, Dimensions } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 

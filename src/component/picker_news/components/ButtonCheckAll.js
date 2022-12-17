@@ -1,15 +1,13 @@
 
 import React, { useRef, useCallback, useState, useMemo } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableWithoutFeedback, TouchableOpacity, FlatList } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import IconFeather from 'react-native-vector-icons/Feather'
 import { forEach, size, map } from 'lodash'
 // Component
-import AnimatedView, { ENUM as TYPE_ANIMATION } from '~/component/animation_view/index'
 // Style
 import CommonStyle, { register } from '~/theme/theme_controller'
-import * as PureFunc from '~/utils/pure_func'
 
 import * as setTestId from '~/constants/testId';
 const { width: widthDevice, height: heightDevice } = Dimensions.get('window')

@@ -17,7 +17,7 @@ import { func, dataStorage } from '../../storage';
 import I18n from '../../modules/language/';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import { bindActionCreators } from 'redux';
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import Chart from '../line_chart/line_chart';
 import ChartNew from '../candle_stick_chart/candle_stick_chart';
 import { connect } from 'react-redux';

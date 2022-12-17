@@ -6,7 +6,7 @@ import Shadow from '~/component/shadow';
 import CommonStyle from '~/theme/theme_controller'
 import Header from '~/screens/watchlist/Detail/components/HeaderPanner.js'
 import ErrorModify from '~s/confirm_order/Components/Error/ErrorModify'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { getType } from '~/screens/confirm_order/ConfirmCancelOrder/Model/CancelModel'
 import ENUM from '~/enum'

@@ -1,7 +1,7 @@
 import React from 'react-native'
 import { setType, setOrderDetail } from '~/screens/confirm_order/ConfirmCancelOrder/Model/CancelModel'
 import { getObjectNewOrderReduxFromOrderDetail } from '~/screens/new_order/Controller/SwitchController'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import CommonStyle from '~/theme/theme_controller'
 import Enum from '~/enum'
 const { NAME_PANEL } = Enum

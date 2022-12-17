@@ -8,7 +8,7 @@ import Keyboard from '~/component/virtual_keyboard/Keyboard.js';
 import TabChangeOrderVolume from '~/screens/new_order/View/Keyboard/TabChangeValueOrVol.js';
 import TabChangeContigent from '~/screens/new_order/View/Keyboard/TabChangeContingent';
 import BidAskPrice from '~/screens/new_order/View/Keyboard/BidAskPrice.js';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import SvgIcon from '~/component/svg_icon/SvgIcon.js';
 import CommonStyle from '~/theme/theme_controller';
 import {

@@ -12,7 +12,7 @@ import * as pickerActions from './picker.actions';
 import ModalPicker from './../modal_picker/modal_price_picker';
 import { iconsMap } from '../../utils/AppIcons';
 import Flag from '../../component/flags/flag'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt';
 
 import * as Business from '../../business';

@@ -8,7 +8,7 @@ import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
 import { dataStorage, func } from '../../storage';
 import I18n from '../../modules/language/';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import config from '../../../src/config'
 import styles from './style/style'

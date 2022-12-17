@@ -21,7 +21,7 @@ import { dataStorage } from '../../../../storage';
 import CommonStyle from '~/theme/theme_controller'
 import Pin from '../../../../component/pin/pin';
 import * as Animatable from 'react-native-animatable';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import Panel from '../../../../component/headerNavBar/index.js';
 import NumpadKeyboard from '../../../../component/pin/numpad_keyboard';
 import Ionicons from 'react-native-vector-icons/Ionicons';

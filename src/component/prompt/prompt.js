@@ -13,7 +13,7 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 import styles from './style/prompt.style';
-import { VibrancyView } from 'react-native-blur';
+import { VibrancyView } from '@react-native-community/blur';
 import * as Animatable from 'react-native-animatable';
 import PropTypes from 'prop-types'
 import CommonStyle, { register } from '~/theme/theme_controller'

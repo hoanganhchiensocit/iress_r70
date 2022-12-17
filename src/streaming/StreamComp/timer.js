@@ -1,20 +1,10 @@
 import React from 'react';
 import { View, AppState } from 'react-native';
 import { WebView } from 'react-native-webview';
-import moment from 'moment';
-import _ from 'lodash';
-import { connect } from 'react-redux';
 
 import BaseConnecter from './baseConnect';
 import CheckUpdate from '~/component/check_update/check_update';
-// import * as Controller from '~/memory/controller';
-import * as Util from '~/util';
-import * as Api from '~/api';
-import streamActions from './reducer';
-import Enum from '~/enum';
-import scriptLoader from '~/streaming/WebApi/logAndTimer.bundle.js';
 import WebApi from '../WebApi/utils';
-import * as ManageAppstate from '~/manage/manageAppState';
 
 import * as Channel from '~/streaming/channel';
 import * as Emitter from '@lib/vietnam-emitter';
@@ -34,10 +24,6 @@ const CODE = `
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.1/uuid.min.js" integrity="sha512-4JH7nC4nSqPixxbhZCLETJ+DUfHa+Ggk90LETm25fi/SitneSvtxkcWAUujvYrgKgvrvwv4NDAsFgdwCS79Dcw==" crossorigin="anonymous"></script>
 	</head>
 	<body>
-        <script>
-            ${decodeURI(scriptLoader)}
-		    true;
-		</script>
 	</body>
 </html>
 `;

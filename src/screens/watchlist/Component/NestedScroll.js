@@ -3,7 +3,7 @@ import { Platform } from 'react-native'
 import _ from 'lodash'
 import { PanGestureHandler, State, TapGestureHandler } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated';
-import AnimatedBezier from 'react-native-reanimated/src/core/AnimatedBezier'
+// import AnimatedBezier from 'react-native-reanimated/src/core/AnimatedBezier'
 
 const {
     add,
@@ -47,7 +47,7 @@ const {
 } = magic;
 
 const cancelValue = 5
-export const swipeBounce = (t) => new AnimatedBezier(t, 0.25, 0.46, 0.45, 0.94);
+// export const swipeBounce = (t) => new AnimatedBezier(t, 0.25, 0.46, 0.45, 0.94);
 
 export default class NestedScrollView extends Component {
     constructor(props) {
@@ -105,7 +105,7 @@ export default class NestedScrollView extends Component {
         this.configTiming = {
             duration: new Value(5000),
             toValue: new Value(0),
-            easing: swipeBounce
+            // easing: swipeBounce
         };
     }
 

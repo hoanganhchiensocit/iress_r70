@@ -7,7 +7,7 @@ import Modal from 'react-native-modal'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as loginActions from '../../screens/login/login.actions'
-import { VibrancyView, BlurView } from 'react-native-blur'
+import { VibrancyView, BlurView } from '@react-native-community/blur'
 import { dataStorage } from '../../storage';
 import I18n from '../../modules/language/';
 import CommonStyle, { register } from '~/theme/theme_controller'

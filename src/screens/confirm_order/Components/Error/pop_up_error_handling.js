@@ -5,7 +5,7 @@ import TouchableOpacityOpt from '~/component/touchableOpacityOpt/index';
 import * as Emitter from '@lib/vietnam-emitter';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import Shadow from '~/component/shadow';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as Business from '~/business';
 import {
 	changeLoadingButtonConfirm,

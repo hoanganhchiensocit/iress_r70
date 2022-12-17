@@ -4,7 +4,7 @@ import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 import PropTypes from 'prop-types'
 import CommonStyle, { register } from '~/theme/theme_controller'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import Enum from '~/enum';
 const Icon = () => <CommonStyle.icons.cheDown style={{
     textAlign: 'center',

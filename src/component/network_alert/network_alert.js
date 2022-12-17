@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
-import { VibrancyView, BlurView } from 'react-native-blur'
+import { VibrancyView, BlurView } from '@react-native-community/blur'
 
 export default class NetworkAlert extends Component {
     render() {

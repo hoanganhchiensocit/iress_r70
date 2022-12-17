@@ -15,7 +15,7 @@ import CommonStyle, { register } from '~/theme/theme_controller';
 import I18n from '~/modules/language/';
 import { isIphoneXorAbove } from '~/lib/base/functionUtil';
 import * as Controller from '~/memory/controller';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { onUserCancel } from '~/manage/manageAuth';
 
 import { oktaSignOutWithBrowser } from '~/manage/manageOktaAuth';

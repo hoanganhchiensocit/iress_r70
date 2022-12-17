@@ -20,7 +20,7 @@ import * as Emitter from '@lib/vietnam-emitter'
 // Component
 import XComponent from '../../component/xComponent/xComponent'
 import AlertPrice from './alert_price'
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import CommonStyle, { register } from '~/theme/theme_controller'
 import AlertPriceHeader from './alert_price_top'
 import { TYPE } from './components/ButtonConfirm'

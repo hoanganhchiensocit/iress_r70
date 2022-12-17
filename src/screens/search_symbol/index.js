@@ -5,7 +5,7 @@ import HeaderSearchSymbol from '~/component/search_symbol/Views/HeaderSearchSymb
 import Content from '~/component/search_symbol/Views/Content.js'
 import CommonStyle from '~/theme/theme_controller'
 import * as FunctionUtil from '~/lib/base/functionUtil';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { useDispatch } from 'react-redux';
 import { dataStorage } from '~/storage';
 const { height: heightDevice } = Dimensions.get('window')

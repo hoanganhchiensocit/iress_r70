@@ -12,7 +12,7 @@ import { resetStateNewOrder } from '~/screens/new_order/Redux/actions.js'
 import Enum from '~/enum'
 import * as Emitter from '@lib/vietnam-emitter';
 import * as Business from '~/business'
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import { getOrderDetail, getType } from '~/screens/new_order/Model/OrderEntryModel.js'
 import { syncNewestOrdersData } from '~s/orders/Controller/OrdersController'
 import { showErrorHandlingOrder } from '~/screens/confirm_order/Controllers/SwitchController';

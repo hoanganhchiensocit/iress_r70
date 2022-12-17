@@ -11,7 +11,7 @@ import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 import SvgIcon from '~s/watchlist/Component/Icon2'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useShadow } from '~/component/shadow/SvgShadow';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as ContentModel from '~/component/add_symbol/Models/Content.js';
 import * as Controller from '~/memory/controller';
 import * as PriceBoardModel from '~/screens/watchlist/EditWatchList/Model/PriceBoardModel.js';

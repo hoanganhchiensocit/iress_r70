@@ -20,7 +20,7 @@ import XComponent from '../../component/xComponent/xComponent'
 import I18n from '../../modules/language/'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import SwitchButton from './components/SwitchButton'
 import { TYPE } from './components/ButtonConfirm'
 import TouchableOpacityOpt from '../../component/touchableOpacityOpt';

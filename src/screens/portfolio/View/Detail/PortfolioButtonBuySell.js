@@ -6,7 +6,7 @@ import I18n from '~/modules/language/'
 import Animated, { Easing } from 'react-native-reanimated'
 import { useSelector, useDispatch } from 'react-redux'
 import { useShadow } from '~/component/shadow/SvgShadowCustom'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { changeBuySell, changeBuySellAndPositionAffected } from '~/screens/new_order/Redux/actions.js'
 import ScreenId from '~/constants/screen_id';
 import { func, dataStorage } from '~/storage';

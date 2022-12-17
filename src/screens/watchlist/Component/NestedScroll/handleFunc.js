@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import Animated from 'react-native-reanimated';
-import AnimatedBezier from 'react-native-reanimated/src/core/AnimatedBezier';
+// import AnimatedBezier from 'react-native-reanimated/src/core/AnimatedBezier';
 import { State } from 'react-native-gesture-handler';
 
 const {
@@ -39,7 +39,7 @@ const magic = {
 const { deceleration, velocityFactor } = magic;
 
 const CANCEL_VALUE = 5;
-export const swipeBounce = (t) => new AnimatedBezier(t, 0.25, 0.46, 0.45, 0.94);
+// export const swipeBounce = (t) => new AnimatedBezier(t, 0.25, 0.46, 0.45, 0.94);
 
 export const getSpaceTop = (props) => {
     const { spaceTop } = props;
@@ -246,7 +246,7 @@ export const snapTo2 = (toValue, _value, duration = 300) => {
     const configTiming = {
         duration: new Value(300),
         toValue: new Value(0),
-        easing: swipeBounce
+        // easing: swipeBounce
     };
 
     return block([

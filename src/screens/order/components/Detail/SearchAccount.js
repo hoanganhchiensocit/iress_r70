@@ -14,7 +14,7 @@ import NewOrderNavigatorManagementGroup from '../../new_order_navigator_manageme
 import ModalPicker from '~/screens/modal_picker/modal_picker';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import I18n from '~/modules/language/';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as Controller from '~/memory/controller'

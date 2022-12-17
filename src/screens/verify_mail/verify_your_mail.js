@@ -10,7 +10,7 @@ import { dataStorage, func } from '../../storage';
 import I18n from '../../modules/language/';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import config from '../../../src/config'
 import ErrorAnimation from '../../component/error_animation/error_animation'

@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Shadow from '~/component/shadow';
 import { useShadow } from '~/component/shadow/SvgShadow'
 import { CloseIcon } from '~s/watchlist/Detail/components'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as Controller from '~/memory/controller';
 import * as Model from '~/memory/model';
 import { setCode, getCode, setMessage, getMessage } from '~/component/error_system/Model/ErrorModel.js'

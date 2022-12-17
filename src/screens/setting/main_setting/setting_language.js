@@ -9,7 +9,7 @@ import ENUM from '~/enum';
 import TransitionView from '~/component/animation_component/transition_view'
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import { getInvertTranslate, getListInvertTranslate, translateCustomLang } from '~/invert_translate'
 import SETTING_TYPE from '~/constants/setting_type'
 import * as Controller from '~/memory/controller';

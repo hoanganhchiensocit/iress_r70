@@ -1,13 +1,11 @@
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { Platform, Dimensions } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 
 import * as Controller from '../../src/memory/controller';
 import config from '../config';
 import I18n from '../modules/language/';
 import { iconsMap } from '../utils/AppIcons';
 import CommonStyle, { register } from '~/theme/theme_controller';
-import * as PureFunc from '~/utils/pure_func';
 import { func, dataStorage } from '~/storage';
 import { getIOSVersion } from '~/lib/base/functionUtil';
 import * as HeaderModel from '~/screens/news_v3/model/header_list_news/header.model.js';

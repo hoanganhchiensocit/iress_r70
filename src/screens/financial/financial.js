@@ -4,7 +4,7 @@ import I18n from '../../modules/language';
 import styles from './style/financial';
 import { getDateStringWithFormat, convertToDate, addDaysToTime } from '../../lib/base/dateTime';
 import HighLightText from '../../modules/_global/HighLightText';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import {
 	formatNumber,
 	convertFormatToNumber,

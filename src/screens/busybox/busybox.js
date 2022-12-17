@@ -3,16 +3,14 @@ import {
     View, Text, Dimensions, Image, ProgressViewIOS, ProgressBarAndroid, Platform, PixelRatio,
     Animated, StatusBar
 } from 'react-native';
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import background from '../../img/background_mobile/ios82.png'
 import backgroundAndroid from '../../img/background_mobile/android.png'
 import logo from '../../img/background_mobile/logo.png'
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import I18n from '../../modules/language';
 import ProgressBarLight from '../../modules/_global/ProgressBarLight';
 import { setCurrentScreen } from '../../lib/base/analytics';
 import CommonStyle, { register } from '~/theme/theme_controller'
-import * as PureFunc from '~/utils/pure_func'
 import { dataStorage } from '../../storage';
 import { logDevice, declareAnimation, declareParallelAnimation, declareSequenceAnimation } from '../../lib/base/functionUtil';
 import config from '../../../src/config';

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Alert, AppState, Text, TextInput, Platform } from 'react-native';
 import AsyncStorage from '~/manage/manageLocalStorage';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { registerScreens } from './screens';
 import I18n from './modules/language/';
 import CONFIG from '~/config';

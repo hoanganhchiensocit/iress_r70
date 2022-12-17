@@ -7,7 +7,7 @@ import AsyncStorage from '~/manage/manageLocalStorage'
 import Axios from 'axios';
 import * as Controller from '~/memory/controller'
 import CommonStyle, { register } from '~/theme/theme_controller'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { TIME_IRESS } from '~/constants/news.js'
 import { TYPE } from '~/component/picker_news/constants.js'
 import * as HeaderModel from '~/screens/news_v3/model/header_list_news/header.model.js'

@@ -43,7 +43,7 @@ import Header from '~/component/headerNavBar'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import CustomIcon from '~/component/Icon'
 import CustomDate from '~/component/customDate'
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 import moment from 'moment'
 import VietNamQueue from '@lib/vietnam-queue';

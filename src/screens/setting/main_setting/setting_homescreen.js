@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HOME_SCREEN from '~/constants/home_screen.json'
 import { getInvertTranslate, getListInvertTranslate, translateCustomLang } from '~/invert_translate'
 import SETTING_TYPE from '~/constants/setting_type'
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import * as Controller from '~/memory/controller';
 import * as settingActions from '../setting.actions';
 import * as loginActions from '~/screens/login/login.actions';

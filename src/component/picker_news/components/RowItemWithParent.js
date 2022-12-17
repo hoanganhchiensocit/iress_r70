@@ -1,12 +1,9 @@
 import React, { useRef, useCallback, useState, PureComponent, useMemo, useEffect } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableWithoutFeedback, TouchableOpacity, FlatList, Platform } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { forEach, size, map } from 'lodash'
 // Component
-import PureCollapsible from '~/component/rn-collapsible/pure-collapsible.js'
 import PureCollapsible2 from '~/component/collapsible/'
-import AnimatedView, { ENUM as TYPE_ANIMATION } from '~/component/animation_view/index'
 import * as Animatable from 'react-native-animatable'
 // Style
 import CommonStyle, { register } from '~/theme/theme_controller'

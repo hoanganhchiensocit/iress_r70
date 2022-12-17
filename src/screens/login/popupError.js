@@ -7,7 +7,7 @@ import TouchableOpacityOpt from '~/component/touchableOpacityOpt/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Shadow from '~/component/shadow';
 import { useShadow } from '~/component/shadow/SvgShadow';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as Controller from '~/memory/controller';
 import { oktaSignOut, oktaSignOutWithBrowser } from '~/manage/manageOktaAuth';
 import * as Business from '~/business';

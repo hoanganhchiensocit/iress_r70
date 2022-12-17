@@ -1,5 +1,5 @@
 import { AppState, Platform } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { func, dataStorage } from '../../../storage';
 import firebase from '../../../firebase';
 import { logDevice, getLastTimeRenewToken } from '../functionUtil';

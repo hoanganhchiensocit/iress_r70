@@ -3,7 +3,7 @@ import {
     View, Text, Dimensions, Image, ProgressViewIOS, ProgressBarAndroid, Platform, PixelRatio,
     Animated, StatusBar
 } from 'react-native';
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import background from '../../img/background_mobile/ios82.png'
 import backgroundAndroid from '../../img/background_mobile/android.png'
 import logo from '../../img/background_mobile/logo.png'

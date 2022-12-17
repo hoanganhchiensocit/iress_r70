@@ -16,7 +16,7 @@ import * as PriceBoardModel from '~/screens/watchlist/EditWatchList/Model/PriceB
 import { awaitCallback } from '~/screens/watchlist/TradeList/tradelist.hook';
 import { isIphoneXorAbove } from '~/lib/base/functionUtil'
 import ENUM from '~/enum';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as Business from '~/business'
 
 const FOOTER_HEIGHT = 16

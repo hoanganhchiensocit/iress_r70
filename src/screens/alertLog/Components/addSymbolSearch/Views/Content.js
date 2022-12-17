@@ -18,7 +18,7 @@ import {
 	ActivityIndicator
 } from 'react-native';
 import { connect, useSelector, useDispatch } from 'react-redux';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as Emitter from '@lib/vietnam-emitter';
 import HandleSearch from '~/component/add_symbol/HandleSearchComp.js';
 // Style

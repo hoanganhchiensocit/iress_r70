@@ -11,7 +11,7 @@ import {
 	TouchableOpacity,
 	Platform
 } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 
 import CommonStyle from '~/theme/theme_controller';
 import ChartConfig from './ChartConfig';

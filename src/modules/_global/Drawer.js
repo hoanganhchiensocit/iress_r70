@@ -44,7 +44,7 @@ import {
 	checkDisableScreenByRole
 } from '../../lib/base/functionUtil';
 import Prompt from '../../component/prompt/prompt';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import Auth from '../../lib/base/auth';
 import Picker from 'react-native-picker';
 import Sound from 'react-native-sound';

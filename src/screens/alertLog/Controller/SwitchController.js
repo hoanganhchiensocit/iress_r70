@@ -1,5 +1,5 @@
 import React from 'react-native'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as Controller from '~/memory/controller';
 import CommonStyle from '~/theme/theme_controller'
 

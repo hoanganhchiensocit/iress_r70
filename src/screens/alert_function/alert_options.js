@@ -25,7 +25,7 @@ import * as Api from '../../api'
 import XComponent from '../../component/xComponent/xComponent'
 import I18n from '../../modules/language/'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import DeliveryMethod from './alert_delivery_method'
 import TouchableOpacityOpt from '@component/touchableOpacityOpt/'
 import { TYPE } from './components/ButtonConfirm'

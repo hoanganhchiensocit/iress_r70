@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useRef, useMemo } from 'react'
 import { StyleSheet, Text, View, TextInput, Keyboard, KeyboardEvent, TouchableOpacity, Dimensions, Platform } from 'react-native'
 import CommonStyle from '~/theme/theme_controller'
 import I18n from '~/modules/language/'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import * as InputModel from '~/screens/new_order/Model/InputModel.js'
 import Enum from '~/enum'

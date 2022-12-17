@@ -4,7 +4,7 @@ import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommonStyle from '~/theme/theme_controller'
 import I18n from '~/modules/language/'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { getChannelChangeOrderError } from '~/streaming/channel'
 import * as Emitter from '@lib/vietnam-emitter';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';

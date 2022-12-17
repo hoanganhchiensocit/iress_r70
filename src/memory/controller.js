@@ -8,7 +8,7 @@ import * as PureFunc from '../utils/pure_func';
 import * as Channel from '../streaming/channel';
 import USER_PRICE_SOURCE_ENUM from '../constants/user_price_source.json';
 import LightTheme from '../theme/color_define/light';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { func, dataStorage } from '../storage';
 import * as manageSymbolRelated from '../manage/manageRelatedSymbol';
 import CommonStyle, { register } from '~/theme/theme_controller';

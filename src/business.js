@@ -54,7 +54,7 @@ import DeviceInfo from 'react-native-device-info';
 import orderTypeString from '../src/constants/order_type_string';
 import orderTypeEnum from '~/constants/order_type';
 import exchangePriority from '~/constants/list_exchange_priority';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import SETTING_TYPE from '~/constants/setting_type';
 import HOME_SCREEN from '~/constants/home_screen.json';
 import VietNamQueue from '@lib/vietnam-queue';

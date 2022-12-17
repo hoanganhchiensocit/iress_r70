@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Platform, PixelRatio } from 'react-native'
 import AnimatedView, { ENUM as ENUM_TYPE_ANIMATION } from '~/component/animation_view/index'
-import { BlurView } from 'react-native-blur'
+import { BlurView } from '@react-native-community/blur'
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
 import I18n from '../../modules/language/';

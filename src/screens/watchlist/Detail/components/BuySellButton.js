@@ -1,8 +1,7 @@
 import React, { PureComponent, useCallback } from 'react';
 import { View } from 'react-native';
 import { connect, useDispatch } from 'react-redux';
-import _ from 'lodash';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 
 import TradeButton from '~s/watchlist/Component/TradeButton';
 import { convertNullValue } from '~/lib/base/functionUtil';

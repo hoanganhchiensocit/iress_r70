@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import I18n from '../../modules/language/';
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
-import { VibrancyView } from 'react-native-blur';
+import { VibrancyView } from '@react-native-community/blur';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
 import { dataStorage } from '../../storage'

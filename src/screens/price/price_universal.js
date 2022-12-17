@@ -67,12 +67,12 @@ import * as loginActions from '../login/login.actions';
 import * as authSettingActions from '../setting/auth_setting/auth_setting.actions'
 import { addDaysToTime, getDateStringWithFormat, addMonthsToTime, getDateOnly, convertToLocalTime2 } from '../../lib/base/dateTime';
 import Modal from 'react-native-modal';
-import { VibrancyView, BlurView } from 'react-native-blur';
+import { VibrancyView, BlurView } from '@react-native-community/blur';
 import Pin from '../../component/pin/pin'
 import AuthenByPin from '../../component/authen_by_pin/authen_by_pin'
 import TouchAlert from '../setting/auth_setting/TouchAlert';
 import time from '../../constants/time';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as api from '../../api';
 import { getSymbolInfo } from '../../app.actions';
 import * as fbemit from '../../emitter';

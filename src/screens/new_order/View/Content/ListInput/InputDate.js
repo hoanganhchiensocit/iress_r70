@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Text, View, TouchableOpacity, Platform } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DatePicker from '~/component/date_picker/date_picker.3.js'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import moment from 'moment'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { getTimeStampServer, getTimeByLocation } from '~/screens/new_order/Controller/InputController.js'

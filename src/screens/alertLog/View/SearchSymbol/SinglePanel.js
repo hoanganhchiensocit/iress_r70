@@ -17,7 +17,7 @@ import SearchAddSymbolContent from '~s/alertLog/Components/addSymbolSearch/Views
 
 import { clearInteractable } from '~/screens/marketActivity/Models/MarketActivityModel.js'
 
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as FunctionUtil from '~/lib/base/functionUtil';
 import Enum from '~/enum'
 let top = FunctionUtil.getTopPanel()

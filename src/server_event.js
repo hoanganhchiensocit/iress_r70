@@ -1,8 +1,5 @@
-import { applyPatch } from 'fast-json-patch';
-// import 'event-source-any-where';
 import config from './config';
 import AppState from './lib/base/helper/appState';
-import EventSource from 'react-native-eventsource';
 import Operator from './operator';
 import { func } from './storage';
 import { EventEmitter } from 'fbemitter';

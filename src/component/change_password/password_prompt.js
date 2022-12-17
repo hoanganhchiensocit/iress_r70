@@ -14,9 +14,8 @@ import {
 	Animated
 } from 'react-native';
 import I18n from '../../modules/language/index';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux';
-import Modal from 'react-native-modal';
 import * as Controller from '~/memory/controller';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CommonStyle, { register } from '~/theme/theme_controller';
@@ -29,7 +28,7 @@ import * as api from '../../api';
 import * as Business from '../../business';
 import * as Utils from '../../util';
 import { resolve } from 'url';
-import { BlurView } from 'react-native-blur';
+import { BlurView } from '@react-native-community/blur';
 import * as Animatable from 'react-native-animatable';
 // import { AnimationFrameScheduler } from 'rxjs/scheduler/AnimationFrameScheduler';
 import ENUM from '~/enum';

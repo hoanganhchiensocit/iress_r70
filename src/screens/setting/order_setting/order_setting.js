@@ -33,7 +33,7 @@ import Header from '../../../../src/component/headerNavBar/index'
 import Icon from '../../../../src/component/headerNavBar/icon'
 import SwitchButton from '~/screens/alert_function/components/SwitchButton'
 import BottomTabBar from '~/component/tabbar'
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import FallHeader from '~/component/fall_header'
 
 const { width: WIDTH_DEVICE, height } = Dimensions.get('window')

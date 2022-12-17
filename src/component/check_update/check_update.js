@@ -2,7 +2,7 @@ import React from 'react';
 
 import codePush from 'react-native-code-push';
 import { Alert, Platform, Linking } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import SplashScreen from 'react-native-splash-screen';
 import {
 	logFirebase,

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 
 import { Icon } from '../Component/Icon';
 import CommonStyle from '~/theme/theme_controller';

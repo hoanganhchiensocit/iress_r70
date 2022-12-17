@@ -6,7 +6,7 @@ import CommonStyle, { register, changeTheme } from '~/theme/theme_controller'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { dataStorage } from '~/storage'
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import ENUM from '~/enum';
 import TransitionView from '~/component/animation_component/transition_view'
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'

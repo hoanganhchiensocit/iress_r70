@@ -1,5 +1,5 @@
 import React from 'react-native';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { INITIAL_STATE } from '~/screens/new_order/Redux/reducer.js';
 import OrderTypeString from '~/constants/order_type_string.js';
 import DurationString from '~/constants/durationString.js';

@@ -3,7 +3,7 @@ import {
   View, Text, Modal, Dimensions, TouchableOpacity, ActivityIndicator,
   Platform, PixelRatio, StatusBar
 } from 'react-native';
-import { VibrancyView, BlurView } from 'react-native-blur';
+import { VibrancyView, BlurView } from '@react-native-community/blur';
 import I18n from '../../modules/language';
 import { checkPropsStateShouldUpdate } from '../../lib/base/functionUtil';
 import * as Animatable from 'react-native-animatable';

@@ -27,13 +27,13 @@ import AlertCustom from '../alert_custom/alert_custom';
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
 import { Badge } from 'native-base';
-import { VibrancyView, BlurView } from 'react-native-blur';
+import { VibrancyView, BlurView } from '@react-native-community/blur';
 import Pin from '../../component/pin/pin';
 import AuthenByPin from '../../component/authen_by_pin/authen_by_pin';
 import deviceModel from '../../constants/device_model';
 import TouchAlert from '../setting/auth_setting/TouchAlert'
 import PromptNew from '../../component/new_prompt/prompt_new'
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import * as Controller from '../../memory/controller';
 
 const { width, height } = Dimensions.get('window');

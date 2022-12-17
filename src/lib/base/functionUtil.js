@@ -46,7 +46,7 @@ import NotiAction from '../../constants/noti_action';
 import OrderType from '../../constants/order_type';
 import HandleType from '../../constants/handle_type';
 import ScreenId from '../../constants/screen_id';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import exchangeString from '../../constants/exchange_string';
 import count from '../../constants/news_count';
 import NEWSTAG from '../../constants/newsTag';

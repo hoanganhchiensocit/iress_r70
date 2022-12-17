@@ -4,7 +4,7 @@ import CommonStyle from '~/theme/theme_controller'
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/index'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import Shadow from '~/component/shadow';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import I18n from '~/modules/language/'
 import Enum from '~/enum'
 import { dataStorage, func } from '~/storage';

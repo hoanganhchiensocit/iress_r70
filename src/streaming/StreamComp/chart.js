@@ -1,17 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import { WebView } from 'react-native-webview';
-import moment from 'moment';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import BaseConnecter from './baseConnect';
-// import * as Controller from '~/memory/controller';
-import * as Util from '~/util';
 import * as Api from '~/api';
 import streamActions from './reducer';
 import Enum from '~/enum';
-import scriptLoader from '../WebApi/script.bundle';
 import WebApi from '../WebApi/utils';
 
 const BAR_BY_PRICE_TYPE = Enum.BAR_BY_PRICE_TYPE;
@@ -24,10 +20,6 @@ const CODE = `
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
 	</head>
 	<body>
-        <script>
-            ${decodeURI(scriptLoader)}
-			true;
-		</script>
 	</body>
 </html>
 `;

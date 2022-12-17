@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Shadow from '~/component/shadow';
 import { useShadow } from '~/component/shadow/SvgShadow';
 import I18n from '~/modules/language/';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as Model from '~/memory/model';
 import momentTZ from 'moment-timezone';
 import _enum from '~/enum';

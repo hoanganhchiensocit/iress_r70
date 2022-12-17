@@ -19,7 +19,7 @@ import * as Emitter from '@lib/vietnam-emitter'
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import XComponent from '../../component/xComponent/xComponent'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import * as Business from '../../business';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import Flag from '../../component/flags/flag'

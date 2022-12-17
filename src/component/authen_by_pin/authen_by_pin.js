@@ -24,12 +24,11 @@ import { bindActionCreators } from 'redux'
 import * as authSettingActions from '../../screens/setting/auth_setting/auth_setting.actions'
 import * as Controller from '../../memory/controller'
 import * as Business from '../../business';
-import pinBackground from '../../img/background_mobile/pinVersion2Background.png'
 import background from '~/img/background_mobile/ios82.png'
 import backgroundAndroid from '~/img/background_mobile/android.png'
 import logo from '../../img/background_mobile/logo.png'
 import NumpadKeyboard from '../pin/numpad_keyboard';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import ENUM from '~/enum'
 
 const { ENVIRONMENT } = ENUM

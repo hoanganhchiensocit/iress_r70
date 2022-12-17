@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 import CommonStyle from '~/theme/theme_controller'
 import I18n from '~/modules/language/'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import {
     formatNumberNew2
 } from '~/lib/base/functionUtil';

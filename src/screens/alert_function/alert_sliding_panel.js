@@ -21,7 +21,7 @@ import SlidingUpPanel from 'rn-sliding-up-panel';
 import XComponent from '../../component/xComponent/xComponent'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AlertPrice from './alert_price'
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import CommonStyle, { register } from '~/theme/theme_controller'
 import NestedScrollViewV2 from '~/component/NestedScrollView.1';
 import AlertPriceHeader from './alert_price_top'

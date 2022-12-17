@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useState, PureComponent, useMemo } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableWithoutFeedback, TouchableOpacity, FlatList } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // Component
 import PureCollapsible from '~/component/rn-collapsible/pure-collapsible.js'

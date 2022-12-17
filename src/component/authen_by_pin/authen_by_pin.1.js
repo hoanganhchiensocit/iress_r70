@@ -11,7 +11,7 @@ import {
 	PixelRatio,
 	Dimensions
 } from 'react-native';
-import { BlurView, VibrancyView } from 'react-native-blur';
+import { BlurView, VibrancyView } from '@react-native-community/blur';
 import * as Animatable from 'react-native-animatable';
 import Pin from '../pin.2/pin';
 import { func, dataStorage } from '../../storage';

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import CommonStyle from '~/theme/theme_controller'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import IconClose from './IconClose'
 const Header = (props) => {
     const { title, opacity } = props

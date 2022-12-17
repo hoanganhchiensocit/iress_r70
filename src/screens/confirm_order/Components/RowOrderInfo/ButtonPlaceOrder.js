@@ -19,7 +19,7 @@ import { resetStateNewOrder } from '~/screens/new_order/Redux/actions.js'
 import Enum from '~/enum'
 import * as Business from '~/business'
 import * as api from '~/api';
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import { showErrorHandlingOrder } from '~/screens/confirm_order/Controllers/SwitchController';
 import { showOrders } from '~/navigation/controller.1';
 import { dataStorage, func } from '~/storage';

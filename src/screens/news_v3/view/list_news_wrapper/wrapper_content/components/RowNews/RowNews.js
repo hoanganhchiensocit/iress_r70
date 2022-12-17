@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect, PureComponent, useLayoutEffect } from 'react';
 import { Text, View, TouchableOpacity, Platform } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 // Style
 import CommonStyle, { register } from '~/theme/theme_controller'
 // Langue

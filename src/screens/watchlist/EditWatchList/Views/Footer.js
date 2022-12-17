@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import PropTypes from 'prop-types'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/';
 import Icon from '~/screens/watchlist/Component/Icon2.js'

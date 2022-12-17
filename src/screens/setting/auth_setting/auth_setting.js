@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import {
     View, Text, TouchableOpacity, Switch, Platform, ScrollView,
     Image, PixelRatio, Keyboard, Linking, NativeModules, Alert
@@ -29,7 +29,7 @@ import { List, ListItem, Icon } from 'react-native-elements';
 import config from '../../../config';
 // import LocalAuth from 'react-native-local-auth';
 // import Finger from 'react-native-touch-id-android'
-import { VibrancyView, BlurView } from 'react-native-blur';
+import { VibrancyView, BlurView } from '@react-native-community/blur';
 import Pin from '../../../component/pin/pin';
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';

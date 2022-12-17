@@ -23,7 +23,7 @@ import KeyboardAvoidView from '~/component/keyboard_avoid_view/index.js';
 import HandleDisableTouchabled from '~/component/bottom_sheet_reanimated/HandleDisableTouchabled';
 import { useDispatch } from 'react-redux';
 import { getType } from '~/screens/new_order/Model/OrderEntryModel.js';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import HandleDisabledButtonConfirm from '~/screens/new_order/HandleDisabledButtonConfirm.js';
 import HandleFillDefaultLimitPriceFixedCo from '~/screens/new_order/HandleFillDefaultLimitPriceFixedCo.js';
 import * as Business from '~/business';

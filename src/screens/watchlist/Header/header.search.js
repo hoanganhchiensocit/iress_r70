@@ -21,18 +21,13 @@ import {
 } from 'react-native';
 import I18n from '~/modules/language/';
 import CommonStyle, { register } from '~/theme/theme_controller';
-import SvgIcon from '~s/watchlist/Component/Icon2';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt';
 import * as PriceBoardModel from '~/screens/watchlist/EditWatchList/Model/PriceBoardModel.js';
 import * as PureFunc from '~/utils/pure_func';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as FunctionUtil from '~/lib/base/functionUtil';
 import ENUM from '~/enum';
 import * as Controller from '~/memory/controller';
-import WatchlistActions from '~s/watchlist/reducers';
-import CONFIG from '~/config';
-import * as Business from '~/business';
 import * as ContentModel from '~/component/add_symbol/Models/Content.js';
 
 const { TIME_DELAY, NAME_PANEL } = ENUM;

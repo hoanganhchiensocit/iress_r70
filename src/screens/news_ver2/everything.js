@@ -21,7 +21,7 @@ import I18n from '../../modules/language';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
 import { logAndReport, setStyleNavigation, switchForm, logDevice, showNewsDetail, openSignIn, setRefTabbar } from '../../lib/base/functionUtil';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import { iconsMap, iconsLoaded } from '../../utils/AppIcons';
 import Perf from '../../lib/base/performance_monitor';
 import { setCurrentScreen } from '../../lib/base/analytics';

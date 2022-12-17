@@ -12,7 +12,7 @@ import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
 import { dataStorage } from '../../storage';
 import I18n from '../../modules/language/';
-import { BlurView } from 'react-native-blur';
+import { BlurView } from '@react-native-community/blur';
 
 export default class PromptNewContent extends Component {
 	constructor(props) {

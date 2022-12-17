@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Alert, AppState, Text, TextInput, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 import AsyncStorage from '~/manage/manageLocalStorage';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import _, { isEmpty } from 'lodash';
 
 import CONFIG from '~/config';

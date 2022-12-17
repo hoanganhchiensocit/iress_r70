@@ -1,7 +1,7 @@
 import { Platform, AppState } from 'react-native';
 import PasscodeAuth from 'react-native-passcode-auth';
 import { supported, status } from 'react-native-passcode-status';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as Controller from '~/memory/controller';
 import CommonStyle, { register } from '~/theme/theme_controller';
 import { dataStorage, func } from '~/storage';

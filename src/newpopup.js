@@ -11,7 +11,7 @@ import {
     View,
     Animated
 } from 'react-native'
-import { BlurView } from 'react-native-blur'
+import { BlurView } from '@react-native-community/blur'
 import CommonStyle from '~/theme/theme_controller'
 import { connect } from 'react-redux'
 import * as Controller from '~/memory/controller'

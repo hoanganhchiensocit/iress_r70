@@ -24,7 +24,7 @@ import NetworkWarning from '~/component/network_warning/network_warning_basic';
 import SpacePushContent from '~/component/virtual_keyboard/SpacePushContent.js'
 import OrderError from '~/component/Error/OrderError'
 import { useDispatch } from 'react-redux';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as Business from '~/business'
 import { dataStorage } from '~/storage';
 import { getMarginTopDevice } from '~/lib/base/functionUtil';

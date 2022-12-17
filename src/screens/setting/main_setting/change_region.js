@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { size } from 'lodash';
 import I18n from '~/modules/language/index';
 import ENUM from '~/enum';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import CommonStyle, { register, changeTheme } from '~/theme/theme_controller';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/';
 import * as Controller from '~/memory/controller';

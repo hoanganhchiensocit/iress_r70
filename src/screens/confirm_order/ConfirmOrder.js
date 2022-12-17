@@ -17,7 +17,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import ScreenId from '~/constants/screen_id'
 import { dataStorage, func } from '~/storage';
 import { dismissModalPlaceOrder } from '~/screens/confirm_order/Redux/actions.js'
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 
 const { height: heightDevice } = Dimensions.get('window')
 const ConfirmOrder = (props) => {

@@ -9,8 +9,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 
-import _ from 'lodash';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import Animated from 'react-native-reanimated';
 
 import { func, dataStorage } from '~/storage';
@@ -121,7 +120,7 @@ const BuySellButton = ({ symbol, exchange, changeAllowUnmount }) => {
 		changeAllowUnmount && changeAllowUnmount(false);
 		dispatch(changeBuySell(isBuy));
 		setOrderDetail({})
-		
+
 		dataStorage.isNeedSubSymbolOnNewOrder = false;
 		handleShowNewOrder && handleShowNewOrder({
 			symbol,

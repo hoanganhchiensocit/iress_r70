@@ -15,7 +15,7 @@ import AddSymbolContent from '~/component/add_symbol/Views/Content.js'
 import SearchAddSymbolHeader from '~/component/add_and_search_symbol/Views/Header/Header.js'
 import SearchAddSymbolContent from '~/component/add_and_search_symbol/Views/Content.js'
 
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import * as FunctionUtil from '~/lib/base/functionUtil';
 import Enum from '~/enum'
 let top = FunctionUtil.getTopPanel()

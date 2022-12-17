@@ -11,7 +11,7 @@ import {
 	View
 } from 'react-native';
 import styles from './style/prompt.style';
-import { BlurView } from 'react-native-blur';
+import { BlurView } from '@react-native-community/blur';
 import * as Animatable from 'react-native-animatable';
 import PropTypes from 'prop-types'
 import CommonStyle from '~/theme/theme_controller'

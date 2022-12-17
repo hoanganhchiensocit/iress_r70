@@ -48,11 +48,11 @@ import * as authSettingActions from '../setting/auth_setting/auth_setting.action
 import * as portfolioActions from '~s/portfolio/Redux/actions'
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
-import { VibrancyView, BlurView } from 'react-native-blur';
+import { VibrancyView, BlurView } from '@react-native-community/blur';
 import Pin from '../../component/pin/pin'
 import AuthenByPin from '../../component/authen_by_pin/authen_by_pin'
 import TouchAlert from '../setting/auth_setting/TouchAlert'
-import { Navigation } from 'react-native-navigation'
+// import { Navigation } from 'react-native-navigation'
 import { getSymbolInfo } from '../../app.actions';
 import Perf from '../../lib/base/performance_monitor';
 import performanceEnum from '../../constants/performance';

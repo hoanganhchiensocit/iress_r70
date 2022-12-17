@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import CommonStyle from '~/theme/theme_controller';
-import { Navigation } from 'react-native-navigation';
+// import { Navigation } from 'react-native-navigation'
 import {
 	resetAnimation,
 	checkDisableScreenByRole
