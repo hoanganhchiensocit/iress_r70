@@ -1,5 +1,5 @@
 import thunk from 'redux-thunk';
-import { autoRehydrate } from 'redux-persist';
+// import { autoRehydrate } from 'redux-persist';
 import sagaMiddlewareFactory from 'redux-saga';
 import Reactotron from 'reactotron-react-native';
 
@@ -31,10 +31,10 @@ export default function configureStore(initialState) {
 
 	const sagaMiddleware = sagaMiddlewareFactory(opts);
 
-	const enhancers = [autoRehydrate()];
-	if (__DEV__) {
-		enhancers.push(reactotron && reactotron.createEnhancer());
-	}
+	// const enhancers = [autoRehydrate()];
+	// if (__DEV__) {
+	// 	enhancers.push(reactotron && reactotron.createEnhancer());
+	// }
 
 	const store = init({
 		models: {
@@ -53,7 +53,7 @@ export default function configureStore(initialState) {
 		redux: {
 			reducers: rootReducer,
 			middlewares: [sagaMiddleware, thunk],
-			enhancers
+			// enhancers
 		}
 	});
 

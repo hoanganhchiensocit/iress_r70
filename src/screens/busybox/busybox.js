@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, Dimensions, Image, ProgressViewIOS, ProgressBarAndroid, Platform, PixelRatio,
+    View, Text, Dimensions, Image, Platform,
     Animated, StatusBar
 } from 'react-native';
 // import { Navigation } from 'react-native-navigation'
@@ -18,18 +18,12 @@ import performanceEnum from '../../constants/performance';
 import Perf from '../../lib/base/performance_monitor';
 import ScreenId from '../../constants/screen_id'
 import SplashScreen from 'react-native-splash-screen';
-import codePush from 'react-native-code-push';
 import { EventEmitter } from '@okta/okta-react-native';
 import * as Controller from '../../memory/controller';
 import * as loginActions from '../../screens/login/login.actions';
 import { openSignIn } from '~/lib/base/functionUtil'
 import { handleSignInOkta, handleSignOutOkta } from '~/screens/home/Controllers/LoginController.js'
 import { oktaSignOutWithBrowser } from '~/manage/manageOktaAuth'
-
-const codePushOptions = {
-    updateDialog: false,
-    installMode: codePush.InstallMode.IMMEDIATE
-}
 
 const { height, width } = Dimensions.get('window');
 const topHeight = height * 0.45

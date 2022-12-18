@@ -2,4 +2,5 @@
     <string name="app_name">iress_r70</string>
 
     <string moduleConfig="true" name="CodePushDeploymentKey">DeploymentKey</string>
+    <string name="default_notification_channel_id">Equix_notification</string>
 </resources>

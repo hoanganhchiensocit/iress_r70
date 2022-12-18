@@ -1,32 +1,96 @@
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.iress_r70">
+          package="com.iress_r70">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-<!--    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />-->
-<!--    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
-<!--    <uses-permission android:name="android.permission.VIBRATE" />-->
-<!--    <uses-permission android:name="android.permission.BLUETOOTH" /> &lt;!&ndash; for Device Name &ndash;&gt;-->
-<!--    <uses-permission android:name="android.permission.USE_BIOMETRIC" />-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />-->
+    <!--    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
+    <!--    <uses-permission android:name="android.permission.VIBRATE" />-->
+    <!--    <uses-permission android:name="android.permission.BLUETOOTH" /> &lt;!&ndash; for Device Name &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.USE_BIOMETRIC" />-->
 
     <application
-      android:name=".MainApplication"
-      android:label="@string/app_name"
-      android:icon="@mipmap/ic_launcher"
-      android:roundIcon="@mipmap/ic_launcher_round"
-      android:allowBackup="false"
-      android:theme="@style/AppTheme">
-      <activity
-        android:name=".MainActivity"
-        android:label="@string/app_name"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-        android:launchMode="singleTask"
-        android:windowSoftInputMode="adjustResize"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-      </activity>
+            android:name=".MainApplication"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:allowBackup="false"
+            android:theme="@style/AppTheme">
+        <activity
+                android:name=".MainActivity"
+                android:label="@string/app_name"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+                android:launchMode="singleTask"
+                android:windowSoftInputMode="adjustResize"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="io.invertase.firebase.notifications.RNFirebaseNotificationReceiver" />
+        <receiver
+                android:name="io.invertase.firebase.notifications.RNFirebaseNotificationsRebootReceiver"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="io.invertase.firebase.messaging.RNFirebaseInstanceIdService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" />
+
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/ic_notification" />
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/colorAccent" />
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_channel_id"
+                android:value="@string/default_notification_channel_id" />
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="com.quantedge.equixnext.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+<!--        <activity-->
+<!--                tools:node="replace"-->
+<!--                android:name="com.okta.oidc.OktaRedirectActivity"-->
+<!--                android:autoRemoveFromRecents="true"-->
+<!--                android:exported="true"-->
+<!--                android:launchMode="singleInstance"-->
+<!--                tools:targetApi="lollipop" >-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                <data android:scheme="com.iress.tmd.mobile.prod.iress" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
     </application>
 </manifest>
