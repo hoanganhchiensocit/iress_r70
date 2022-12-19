@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import type { Node } from 'react';
 import { Provider } from 'react-redux';
-import { View } from 'react-native'
 
 import SplashScreen from 'react-native-splash-screen'
-import AppStack from './navigator/screen_stack'
+import AppStack from './src/navigator/ScreenStacks'
 
 import configureStore from './src/store/configureStore';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';

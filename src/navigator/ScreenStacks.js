@@ -8,7 +8,7 @@ import Navigation, { navigationRef } from './Navigation';
 
 //screen list
 // import Login from '../src/screens/login/login'
-import BusyBox from '../src/screens/busybox/busybox'
+import BusyBox from '../screens/busybox/busybox'
 
 //sau update ve busy box
 function HomeScreen() {
@@ -32,7 +32,7 @@ function AppStack() {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
-        {/*<Stack.Screen name="Home" component={HomeScreen}/>*/}
+        <Stack.Screen name="Home" component={HomeScreen}/>
         {/*<Stack.Screen name="Login" component={Login}/>*/}
         <Stack.Screen name="BusyBox" component={BusyBox}/>
       </Stack.Navigator>
