@@ -20,18 +20,19 @@ export const ScreenEnum = {
 	ORDERS: 'Orders',
 	HOME: 'Home',
 	LOGIN: 'Login',
-	USER: 'User'
+	USER: 'User',
+	SPLASH: 'Splash'
 };
 
-const addPreKeyScreen = () => {
-	result = {};
-	_.forEach(ScreenEnum, (value, key) => {
-		result[key] = `equix.${value}`;
-	});
+// const addPreKeyScreen = () => {
+// 	result = {};
+// 	_.forEach(ScreenEnum, (value, key) => {
+// 		result[key] = `equix.${value}`;
+// 	});
 
-	return result;
-};
+// 	return result;
+// };
 
-const EquixScreenEnum = addPreKeyScreen();
+// const EquixScreenEnum = addPreKeyScreen();
 
-module.exports = EquixScreenEnum;
+// module.exports = EquixScreenEnum;
