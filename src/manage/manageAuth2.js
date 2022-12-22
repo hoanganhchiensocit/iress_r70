@@ -18,7 +18,7 @@ import {
 	oktaGetAccessToken,
 	oktaSignInWithBrowser
 } from '~/manage/manageOktaAuth';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as settingActions from '~s/setting/setting.actions';
 import * as FunctionUtil from '~/lib/base/functionUtil';
 // Enum

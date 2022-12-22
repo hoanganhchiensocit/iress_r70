@@ -8,7 +8,7 @@ import {
 import _ from 'underscore';
 import Big from 'big.js';
 import firebase from '../../firebase';
-import RNFirebase from 'react-native-firebase';
+import RNFirebase from '@react-native-firebase/app';
 import { iconsMap } from '../../utils/AppIcons';
 import { func, dataStorage } from '../../storage';
 import userType from '../../constants/user_type';
@@ -131,6 +131,7 @@ const OrderTypeNoti = {
 };
 
 const configFirebaseTime = {
+	appId: 'id1267749753',
 	apiKey: 'AIzaSyA9BHSfQjP7aQcOOzsdPqaOtr-130RyG58',
 	authDomain: 'time-server-equix-mobile.firebaseapp.com',
 	databaseURL: 'https://time-server-equix-mobile.firebaseio.com',
@@ -166,9 +167,7 @@ export function checkHomeScreenIsDisableAndReplace(forceUpdate = true) {
 	switch (tabSelected.id) {
 		case 0: // Holdings
 			if (
-				checkDisableScreenByRole(
-					ROLE_USER.ROLE_PORTFOLIO_HOLDING_PERFORMANCE
-				)
+				checkDisableScreenByRole(ROLE_USER.ROLE_PORTFOLIO_HOLDING_PERFORMANCE)
 			) {
 				if (checkRoleByKey(ROLE_USER.ROLE_MARKET_OVERVIEW)) {
 					tabSelected = HOME_SCREEN.find((e) => {
@@ -184,9 +183,7 @@ export function checkHomeScreenIsDisableAndReplace(forceUpdate = true) {
 			break;
 		case 1: // Performance
 			if (
-				checkDisableScreenByRole(
-					ROLE_USER.ROLE_PORTFOLIO_HOLDING_PERFORMANCE
-				)
+				checkDisableScreenByRole(ROLE_USER.ROLE_PORTFOLIO_HOLDING_PERFORMANCE)
 			) {
 				if (checkRoleByKey(ROLE_USER.ROLE_MARKET_OVERVIEW)) {
 					tabSelected = HOME_SCREEN.find((e) => {
@@ -202,9 +199,7 @@ export function checkHomeScreenIsDisableAndReplace(forceUpdate = true) {
 			break;
 		case 2: // Overview
 			if (checkDisableScreenByRole(ROLE_USER.ROLE_MARKET_OVERVIEW)) {
-				if (
-					checkRoleByKey(ROLE_USER.ROLE_PORTFOLIO_HOLDING_PERFORMANCE)
-				) {
+				if (checkRoleByKey(ROLE_USER.ROLE_PORTFOLIO_HOLDING_PERFORMANCE)) {
 					tabSelected = HOME_SCREEN.find((e) => {
 						return e.id === 0; // set homescreen = holdings
 					});
@@ -232,11 +227,7 @@ export function checkDisableScreenByRole(roleScreens) {
 	if ([ENVIRONMENT.STAGING, ENVIRONMENT.DEMO].includes(config.environment)) {
 		isDisable = true;
 		if (roleScreens && Array.isArray(roleScreens)) {
-			for (
-				let index = 0, len = roleScreens.length;
-				index < len;
-				index++
-			) {
+			for (let index = 0, len = roleScreens.length; index < len; index++) {
 				const role = roleScreens[index];
 				if (checkRoleByKey(role)) {
 					isDisable = false;
@@ -299,9 +290,7 @@ export function getOrdersTabIndexBaseOnTabName(tabName) {
 export function getHomeScreen() {
 	const tabSelected = HOME_SCREEN.find((e) => {
 		const homeScreen =
-			dataStorage.homeScreen === 0 || dataStorage.homeScreen === 1
-				? 0
-				: 2;
+			dataStorage.homeScreen === 0 || dataStorage.homeScreen === 1 ? 0 : 2;
 		return e.id === homeScreen;
 	});
 	return tabSelected;
@@ -352,26 +341,17 @@ export function handleDataNotification(notif) {
 		const checkString = typeof payload === 'string';
 		const dataNotif = checkString ? JSON.parse(payload) : payload;
 		const notiType =
-			dataNotif &&
-			dataNotif.noti_type &&
-			dataNotif.noti_type.split('#')[0];
+			dataNotif && dataNotif.noti_type && dataNotif.noti_type.split('#')[0];
 		const checkString1 = typeof dataNotif.data === 'string';
 		const objectChange = checkString1
 			? JSON.parse(dataNotif.data)
 			: dataNotif.data;
 		const objID = objectChange && objectChange.broker_order_id;
-		logDevice(
-			'error',
-			`getOrderDataBeforeShowDetail with noti id: `,
-			objID
-		);
+		logDevice('error', `getOrderDataBeforeShowDetail with noti id: `, objID);
 		const realtimeData = objectChange;
 		return { notiType, objID, realtimeData };
 	} catch (error) {
-		logDevice(
-			'error',
-			`getOrderDataBeforeShowDetail cannot get noti order id`
-		);
+		logDevice('error', `getOrderDataBeforeShowDetail cannot get noti order id`);
 		return {};
 	}
 }
@@ -442,36 +422,27 @@ export function showNotiInApp() {
 		if (!accountID) {
 			func.resetNotiData();
 			if (isOrdersScreen()) {
-				dataStorage.showNotiOrdersDetail &&
-					dataStorage.showNotiOrdersDetail();
+				dataStorage.showNotiOrdersDetail && dataStorage.showNotiOrdersDetail();
 			} else {
 				dataStorage.refBottomTabBar &&
-					dataStorage.refBottomTabBar.changeTabActive(
-						ORDERS_TAB_INDEX
-					); // Change tab orders
+					dataStorage.refBottomTabBar.changeTabActive(ORDERS_TAB_INDEX); // Change tab orders
 			}
 			return;
 		}
 		if (isDiffAccount(accountID)) {
 			setCurrentAccountByNotiAccount(accountID);
 			if (isOrdersScreen()) {
-				dataStorage.showNotiOrdersDetail &&
-					dataStorage.showNotiOrdersDetail();
+				dataStorage.showNotiOrdersDetail && dataStorage.showNotiOrdersDetail();
 			} else {
 				dataStorage.refBottomTabBar &&
-					dataStorage.refBottomTabBar.changeTabActive(
-						ORDERS_TAB_INDEX
-					); // Change tab orders
+					dataStorage.refBottomTabBar.changeTabActive(ORDERS_TAB_INDEX); // Change tab orders
 			}
 		} else {
 			if (isOrdersScreen()) {
-				dataStorage.showNotiOrdersDetail &&
-					dataStorage.showNotiOrdersDetail();
+				dataStorage.showNotiOrdersDetail && dataStorage.showNotiOrdersDetail();
 			} else {
 				dataStorage.refBottomTabBar &&
-					dataStorage.refBottomTabBar.changeTabActive(
-						ORDERS_TAB_INDEX
-					); // Change tab orders
+					dataStorage.refBottomTabBar.changeTabActive(ORDERS_TAB_INDEX); // Change tab orders
 			}
 		}
 		return true;
@@ -602,7 +573,8 @@ export function getAccountInfoApi(accountID) {
 	return new Promise((resolve) => {
 		const url = api.getAccountInfo(accountID);
 		let accountName = '';
-		api.requestData(url)
+		api
+			.requestData(url)
 			.then((res) => {
 				if (res) {
 					const accountInfo = res[0] || {};
@@ -656,9 +628,7 @@ export function getCommodityInfo(symbol) {
 		return new Promise((resolve) => {
 			if (!Business.isFuture(classSymbol)) return resolve(); // Chi class fu ms call link
 			const subSymbol = func.getSymbolObj(symbol) || symbol;
-			const url = api.getUrlCommodityInfo(
-				subSymbol.master_code || symbol
-			);
+			const url = api.getUrlCommodityInfo(subSymbol.master_code || symbol);
 			return api.requestData(url, true).then((data) => {
 				if (data && Array.isArray(data)) {
 					resolve(data[0]);
@@ -682,7 +652,8 @@ export function getTopCompany(type, cb) {
 		perf && perf.start();
 		const url = api.getApiUrl(null, type);
 		// console.log('GET SYMBOL WATCHLIST')
-		api.requestData(url)
+		api
+			.requestData(url)
 			.then((bodyData) => {
 				const time = new Date().getTime();
 				// console.log(`TIME GET SYMBOL ${type}: `, time - now)
@@ -721,42 +692,40 @@ export function getLv1(listSymbols, stringQuery, callback) {
 			.then(() => {
 				const timeSub = new Date().getTime();
 				// console.log(`TIME SUB SYMBOL WATCHLIST: `, (timeSub - now) / 1000)
-				Lv1.getLv1(listSymbolObject, isPriceStreaming).then(
-					(bodyData) => {
-						const timeGetLv1 = new Date().getTime();
-						let newData = [];
-						if (bodyData.length !== numberSymbolUserWatchList) {
-							// Không lấy được đủ giá của thằng personal -> fill object fake
-							expireSymbol = listSymbols.filter((v, k) => {
-								const userWatchListSymbol = v.symbol;
-								for (let i = 0; i < bodyData.length; i++) {
-									const priceSymbol = bodyData[i].symbol;
-									if (userWatchListSymbol === priceSymbol) {
-										isContain = true;
-									}
+				Lv1.getLv1(listSymbolObject, isPriceStreaming).then((bodyData) => {
+					const timeGetLv1 = new Date().getTime();
+					let newData = [];
+					if (bodyData.length !== numberSymbolUserWatchList) {
+						// Không lấy được đủ giá của thằng personal -> fill object fake
+						expireSymbol = listSymbols.filter((v, k) => {
+							const userWatchListSymbol = v.symbol;
+							for (let i = 0; i < bodyData.length; i++) {
+								const priceSymbol = bodyData[i].symbol;
+								if (userWatchListSymbol === priceSymbol) {
+									isContain = true;
 								}
-								if (isContain) {
-									isContain = false;
-									return false;
-								}
-								return true;
-							});
-						}
-
-						newData = [...bodyData, ...expireSymbol];
-						// sort lai theo user watchlist
-						const bodyDataSortByUserWatchList = [];
-						for (let i = 0; i < listSymbols.length; i++) {
-							const symbol = listSymbols[i].symbol;
-							const newArr = newData.filter((e, i) => {
-								return e.symbol === symbol;
-							});
-							bodyDataSortByUserWatchList.push(newArr[0]);
-						}
-						callback && callback(bodyDataSortByUserWatchList);
-						dataStorage.countC2rWatchlist = false;
+							}
+							if (isContain) {
+								isContain = false;
+								return false;
+							}
+							return true;
+						});
 					}
-				);
+
+					newData = [...bodyData, ...expireSymbol];
+					// sort lai theo user watchlist
+					const bodyDataSortByUserWatchList = [];
+					for (let i = 0; i < listSymbols.length; i++) {
+						const symbol = listSymbols[i].symbol;
+						const newArr = newData.filter((e, i) => {
+							return e.symbol === symbol;
+						});
+						bodyDataSortByUserWatchList.push(newArr[0]);
+					}
+					callback && callback(bodyDataSortByUserWatchList);
+					dataStorage.countC2rWatchlist = false;
+				});
 			})
 			.catch((err) => {
 				// console.log(err)
@@ -851,8 +820,7 @@ export function saveDicPersonal(bodyData) {
 		});
 		for (let index = 0; index < data.length; index++) {
 			const element = data[index];
-			const symbol =
-				element && element.symbol ? element.symbol : element.code;
+			const symbol = element && element.symbol ? element.symbol : element.code;
 			dataStorage.dicPersonal[`${symbol}`] = true;
 		}
 	}
@@ -923,16 +891,10 @@ export function setWatchListCache(
 						.insert(listInsert)
 						.then((res) => {
 							// console.log(`insert ${type} db success`)
-							logDevice(
-								'info: ',
-								`CACHE ${type} ==> INSERTED...`
-							);
+							logDevice('info: ', `CACHE ${type} ==> INSERTED...`);
 						})
 						.catch((e) => {
-							logDevice(
-								'info: ',
-								`CACHE ${type} ==> ERROR INSERT...`
-							);
+							logDevice('info: ', `CACHE ${type} ==> ERROR INSERT...`);
 						});
 				})
 				.catch((e) => {
@@ -1059,10 +1021,7 @@ export async function openWhatsNewModal(nav, enableGetTime) {
 						};
 						// Reset isUpdating status
 						try {
-							AsyncStorage.setItem(
-								'whatsnew',
-								JSON.stringify(data)
-							)
+							AsyncStorage.setItem('whatsnew', JSON.stringify(data))
 								.then(() => {})
 								.catch((error) => {
 									logDevice(
@@ -1127,17 +1086,13 @@ export function renderTime(
 				location,
 				formatChina
 			);
-			const timeChinese = moment(time)
-				.locale('zh_cn')
-				.format(formatChina);
+			const timeChinese = moment(time).locale('zh_cn').format(formatChina);
 			return showGMT
 				? `${timeChinese} ${convertTimeGMT(location)}`
 				: `${timeChinese}`;
 		} else {
 			// no handle when not timestamp
-			const timeChinese = moment(timeUpdated)
-				.locale('zh_cn')
-				.format(format);
+			const timeChinese = moment(timeUpdated).locale('zh_cn').format(format);
 			return showGMT
 				? `${timeChinese} ${convertTimeGMT(location)}`
 				: `${timeChinese}`;
@@ -1314,7 +1269,8 @@ function showNewWithUrl({ dataNews, navigator }) {
 	try {
 		const { news_code: newsCode } = dataNews;
 		const url = api.getLinkNewUrl(newsCode);
-		api.requestData(url)
+		api
+			.requestData(url)
 			.then((res) => {
 				if (res) {
 					if (res.errorCode) {
@@ -1327,8 +1283,7 @@ function showNewWithUrl({ dataNews, navigator }) {
 								overrideBackPress: true,
 								animated: false,
 								animationType: 'none',
-								navigatorStyle:
-									CommonStyle.navigatorSpecialNoHeader,
+								navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
 								passProps: {
 									data: {
 										...dataNews,
@@ -1474,7 +1429,8 @@ export function showNewsDetail(newID, navigator, isConnected, dataNews) {
 			const url = api.getLinkNewUrl(newID);
 			const data = dataNews || {};
 			try {
-				api.putData(url, data)
+				api
+					.putData(url, data)
 					.then((res) => {
 						if (res) {
 							if (res.errorCode) {
@@ -1495,16 +1451,14 @@ export function showNewsDetail(newID, navigator, isConnected, dataNews) {
 									navigatorStyle: {
 										...CommonStyle.navigatorSpecial,
 										screenBackgroundColor: 'transparent',
-										modalPresentationStyle:
-											'overCurrentContext'
+										modalPresentationStyle: 'overCurrentContext'
 									},
 									passProps: {
 										source: data.link,
 										data,
 										title: `${data.symbol} / ${data.title}`,
 										isConnected,
-										navigatorEventIDParents:
-											navigator.navigatorEventID
+										navigatorEventIDParents: navigator.navigatorEventID
 									}
 								});
 							}
@@ -1545,11 +1499,7 @@ export function getAccountInfo(accountId, cb) {
 	if (!accountId) {
 		const subtitle = dataStorage.emailLogin;
 		if (dataStorage.currentScreenId === ScreenId.PORTFOLIO) {
-			fbemit.emit(
-				'portfolio_sub_title',
-				'portfolio_set_sub_title',
-				subtitle
-			);
+			fbemit.emit('portfolio_sub_title', 'portfolio_set_sub_title', subtitle);
 
 			const channelName = Channel.getChannelAccountChange();
 			Emitter.emit(channelName, subtitle);
@@ -1563,9 +1513,7 @@ export function getAccountInfo(accountId, cb) {
 					Controller.setCurrentAccount(data[0]);
 					fbemit.emit('account', 'update', data[0]);
 					const accountName = data[0].account_name || '';
-					const accountID = data[0].account_id
-						? `(${data[0].account_id})`
-						: '';
+					const accountID = data[0].account_id ? `(${data[0].account_id})` : '';
 					const subtitle = `${accountName} ${accountID}`;
 					// set lai title cho portfolio
 					if (dataStorage.currentScreenId === ScreenId.PORTFOLIO) {
@@ -1720,8 +1668,7 @@ export function getLastTimeRenewToken(callback) {
 	)
 		.then((lastTimeRenewToken) => {
 			if (lastTimeRenewToken) {
-				const isTokenExpire =
-					checkRefreshTokenExpire(lastTimeRenewToken);
+				const isTokenExpire = checkRefreshTokenExpire(lastTimeRenewToken);
 				if (isTokenExpire) {
 					refreshToken()
 						.then(() => {
@@ -1779,54 +1726,43 @@ export function refreshToken(cb = null) {
 					session_id: pin === encryptText ? null : sessionID
 				};
 				const byPassAccessToken = true;
-				api.postData(
-					`${api.getAuthUrl()}/decode`,
-					{ data: objRefreshToken },
-					null,
-					false,
-					byPassAccessToken
-				)
+				api
+					.postData(
+						`${api.getAuthUrl()}/decode`,
+						{ data: objRefreshToken },
+						null,
+						false,
+						byPassAccessToken
+					)
 					.then((data) => {
 						if (data && data.errorCode) {
 							// User status change active -> inactive
 							if (
-								data.errorCode ===
-									Enum.USER_BLOCK_ERROR.USER_INACTIVE ||
-								data.errorCode ===
-									Enum.USER_BLOCK_ERROR.USER_CLOSED ||
-								data.errorCode ===
-									Enum.USER_BLOCK_ERROR.USER_ADMIN_BLOCKED ||
-								data.errorCode ===
-									Enum.USER_BLOCK_ERROR.USER_SECURITY_BLOCKED
+								data.errorCode === Enum.USER_BLOCK_ERROR.USER_INACTIVE ||
+								data.errorCode === Enum.USER_BLOCK_ERROR.USER_CLOSED ||
+								data.errorCode === Enum.USER_BLOCK_ERROR.USER_ADMIN_BLOCKED ||
+								data.errorCode === Enum.USER_BLOCK_ERROR.USER_SECURITY_BLOCKED
 							) {
-								Controller.showAlert(
-									I18n.t('msgLogoutSecurity'),
-									() => {
-										Controller.setIsShowingAlertReload(
-											false
-										);
-										Controller.dispatch(
-											loginActions.logout()
-										);
-									}
-								);
+								Controller.showAlert(I18n.t('msgLogoutSecurity'), () => {
+									Controller.setIsShowingAlertReload(false);
+									Controller.dispatch(loginActions.logout());
+								});
 							}
 							const error = {
 								errorCode: data.errorCode
 							};
 							resolve(error);
 						} else if (data && data.token) {
-							api.postData(
-								`${api.getAuthUrl()}/refresh`,
-								{ data: { refreshToken: data.token } },
-								null,
-								false,
-								byPassAccessToken
-							)
+							api
+								.postData(
+									`${api.getAuthUrl()}/refresh`,
+									{ data: { refreshToken: data.token } },
+									null,
+									false,
+									byPassAccessToken
+								)
 								.then((param) => {
-									Controller.setAccessToken(
-										param.accessToken
-									);
+									Controller.setAccessToken(param.accessToken);
 									// Controller.setBaseUrl(param.baseUrl);
 									setLastTimeReNewToken();
 									cb && cb(); // Lưu time renew token xuong local storage
@@ -1855,32 +1791,35 @@ export function checkNetworkConnection(url, successCb) {
 		task && task.cancel();
 		successCb(false);
 	}, TIMEOUT_REQUEST);
-	task.then((res) => {
-		timeoutId && clearTimeout(timeoutId);
-		const info = res.info();
-		const status = info.status;
-		if (status === 200) {
-			// logDevice('error', `API CHECK NETWORK CONNECTION SUCCESS STATUS ${status}`)
-			successCb && successCb(true);
-		} else {
+	task
+		.then((res) => {
+			timeoutId && clearTimeout(timeoutId);
+			const info = res.info();
+			const status = info.status;
+			if (status === 200) {
+				// logDevice('error', `API CHECK NETWORK CONNECTION SUCCESS STATUS ${status}`)
+				successCb && successCb(true);
+			} else {
+				logDevice(
+					'error',
+					`API CHECK NETWORK CONNECTION - URL: ${url} - ERROR STATUS ${status}`
+				);
+				successCb && successCb(false);
+			}
+		})
+		.catch((errorMessage, statusCode) => {
+			timeoutId && clearTimeout(timeoutId);
 			logDevice(
 				'error',
-				`API CHECK NETWORK CONNECTION - URL: ${url} - ERROR STATUS ${status}`
+				`API CHECK NETWORK CONNECTION ERROR URL: ${url} - ERROR: ${errorMessage}`
 			);
 			successCb && successCb(false);
-		}
-	}).catch((errorMessage, statusCode) => {
-		timeoutId && clearTimeout(timeoutId);
-		logDevice(
-			'error',
-			`API CHECK NETWORK CONNECTION ERROR URL: ${url} - ERROR: ${errorMessage}`
-		);
-		successCb && successCb(false);
-	});
+		});
 }
 
 export function checkNetworkConnection1(url, successCb) {
-	api.requestData1(url)
+	api
+		.requestData1(url)
 		.then((data) => {
 			func.setSystemInfo(data);
 			if (data && data.timeserver) {
@@ -1975,7 +1914,8 @@ export function getAccountName(accountId) {
 			return resolve(dataStorage.dicAccount[accountId]);
 		}
 		const url = api.getAccountInfo(`${accountId}`);
-		api.requestData(url, true)
+		api
+			.requestData(url, true)
 			.then((data) => {
 				if (data && data.length) {
 					const accountInfo = data[0];
@@ -1983,9 +1923,7 @@ export function getAccountName(accountId) {
 						console.log('AAA');
 					}
 					const accountName =
-						accountInfo.account_name ||
-						dataStorage.dicAccount[accountId] ||
-						'';
+						accountInfo.account_name || dataStorage.dicAccount[accountId] || '';
 					if (accountName) {
 						dataStorage.dicAccount[accountId] = accountName;
 					}
@@ -1996,10 +1934,7 @@ export function getAccountName(accountId) {
 				}
 			})
 			.catch((err) => {
-				logDevice(
-					'err',
-					`getAccountInfoNoti GET USER INFO ERROR: ${err}`
-				);
+				logDevice('err', `getAccountInfoNoti GET USER INFO ERROR: ${err}`);
 				const accountName = dataStorage.dicAccount[accountId] || '';
 				return resolve(accountName);
 			});
@@ -2076,10 +2011,7 @@ export function handleRealtimeNewsNoti(id) {
 	try {
 		fbemit.emit('news', 'noti', data);
 	} catch (error) {
-		logDevice(
-			'info',
-			`handleRealtimeNewsNoti func exception with ${error}`
-		);
+		logDevice('info', `handleRealtimeNewsNoti func exception with ${error}`);
 	}
 }
 
@@ -2087,9 +2019,7 @@ export function handleRealtimeOrderNoti(data) {
 	Emitter.emit(Channel.getChannelRealtimeOrders(), data);
 	// Update orders list && order detail
 	const channelOrderDetailBrokerOrderID =
-		StreamingBusiness.getChannelOrderDetailBrokerOrderID(
-			data.broker_order_id
-		);
+		StreamingBusiness.getChannelOrderDetailBrokerOrderID(data.broker_order_id);
 	Emitter.emit(channelOrderDetailBrokerOrderID, { data });
 }
 
@@ -2123,7 +2053,8 @@ export function preprocessOrderDetailNoti(notif) {
 
 export function showNotiPartialfill(filledPrice, orderId, accountId) {
 	const orderUrl = api.getUrlOrderInfo(orderId);
-	api.requestData(orderUrl)
+	api
+		.requestData(orderUrl)
 		.then((res) => {
 			const orderData = res && res[0];
 			if (!orderData) return;
@@ -2156,18 +2087,13 @@ export function showNotiPartialfill(filledPrice, orderId, accountId) {
 			}
 		})
 		.catch((error) => {
-			logDevice(
-				'info',
-				`showNotiPartialfill - get order data ERROR: ${error}`
-			);
+			logDevice('info', `showNotiPartialfill - get order data ERROR: ${error}`);
 		});
 }
 
 export function getOrderIdByType(data) {
 	return (
-		(data.broker_order_id ? data.broker_order_id : 'notiId') +
-		+new Date() +
-		''
+		(data.broker_order_id ? data.broker_order_id : 'notiId') + +new Date() + ''
 	);
 	// let orderId = '';
 	// const type = (getKeyOrder(data) + '').toUpperCase();
@@ -2219,10 +2145,7 @@ export function preprocessTransactionNoti(notif) {
 			`preprocessTransactionNoti with data ${JSON.stringify(data)}`
 		);
 	} catch (error) {
-		logDevice(
-			'info',
-			`preprocessTransactionNoti func exception with ${error}`
-		);
+		logDevice('info', `preprocessTransactionNoti func exception with ${error}`);
 	}
 }
 
@@ -2237,10 +2160,7 @@ export function mergeNotiToGroup() {
 			if (result) notiStatus = JSON.parse(result);
 		})
 		.catch((error) => {
-			logDevice(
-				'info',
-				`mergeNotiToGroup get noti status error ${error}`
-			);
+			logDevice('info', `mergeNotiToGroup get noti status error ${error}`);
 		});
 }
 
@@ -2276,17 +2196,13 @@ const emitOrder = (data, title) => {
 	setTimeout(() => {
 		if (data.client_order_id) {
 			const channelOrderClientOrderID =
-				StreamingBusiness.getChannelOrderClientOrderID(
-					data.client_order_id
-				);
+				StreamingBusiness.getChannelOrderClientOrderID(data.client_order_id);
 			console.log('emitOrder client', data.client_order_id);
 			Emitter.emit(channelOrderClientOrderID, { data, title });
 		}
 		if (data.broker_order_id) {
 			const channelOrderBrokerOrderID =
-				StreamingBusiness.getChannelOrderBrokerOrderID(
-					data.broker_order_id
-				);
+				StreamingBusiness.getChannelOrderBrokerOrderID(data.broker_order_id);
 			console.log('emitOrder broke', data.broker_order_id);
 			Emitter.emit(channelOrderBrokerOrderID, { data, title });
 		}
@@ -2300,8 +2216,7 @@ export function preprocessOrderNoti(notif) {
 		const orderCacheKey = Business.getOrderCacheKey(data);
 		if (orderCacheKey) {
 			// Get current data from cache
-			const oldData =
-				dataStorage.dicOrdersRealTimeCacheSeq[orderCacheKey];
+			const oldData = dataStorage.dicOrdersRealTimeCacheSeq[orderCacheKey];
 
 			/**
 			 * Check old data's sequence number is less than new data's sequence number.
@@ -2323,8 +2238,7 @@ export function preprocessOrderNoti(notif) {
 				(!oldData || oldData < data.seq_num)
 			) {
 				dataStorage.dicOrdersRealTimeCache[orderCacheKey] = data;
-				dataStorage.dicOrdersRealTimeCacheSeq[orderCacheKey] =
-					data.seq_num;
+				dataStorage.dicOrdersRealTimeCacheSeq[orderCacheKey] = data.seq_num;
 			}
 		}
 		emitOrder(data, notif.title);
@@ -2343,10 +2257,7 @@ export function preprocessOrderNoti(notif) {
 			}
 		}
 	} catch (error) {
-		logDevice(
-			'info',
-			`preprocessOrderDetailNoti func exception with ${error}`
-		);
+		logDevice('info', `preprocessOrderDetailNoti func exception with ${error}`);
 	}
 }
 
@@ -2446,10 +2357,7 @@ export function preprocessWatchlistNoti(notif) {
 	try {
 		storeAndEmitNewWatchlist(notif);
 	} catch (error) {
-		logDevice(
-			'info',
-			`preprocessWatchlistNoti func exception with ${error}`
-		);
+		logDevice('info', `preprocessWatchlistNoti func exception with ${error}`);
 		// console.log('preprocessWatchlistNoti func logAndReport exception: ', error)
 	}
 }
@@ -2458,13 +2366,8 @@ export function preprocessPortfolioNoti(notif) {
 	try {
 		const data = JSON.parse(notif.object_changed);
 		Controller.updatePosition(data);
-		if (
-			dataStorage.searchSymbol &&
-			dataStorage.searchSymbol === data.symbol
-		) {
-			Controller.dispatch(
-				searchPortfolioActions.getDataPortfolioSuccess(data)
-			);
+		if (dataStorage.searchSymbol && dataStorage.searchSymbol === data.symbol) {
+			Controller.dispatch(searchPortfolioActions.getDataPortfolioSuccess(data));
 		}
 	} catch (error) {
 		console.catch('preprocessPortfolioNoti', JSON.stringify(error));
@@ -2478,10 +2381,7 @@ export function preprocessPortfolioAccountSummary(notif) {
 		data.available_balance_us = data.cash_available_us;
 		Controller.updateCashBalance(data);
 	} catch (error) {
-		console.catch(
-			'preprocessPortfolioAccountSummary',
-			JSON.stringify(error)
-		);
+		console.catch('preprocessPortfolioAccountSummary', JSON.stringify(error));
 	}
 }
 
@@ -2496,10 +2396,7 @@ export function preprocessBalanceNoti(notif) {
 		}
 	} catch (error) {
 		logDevice('info', `preprocessBalanceNoti func exception with ${error}`);
-		console.log(
-			'preprocessBalanceNoti func logAndReport exception: ',
-			error
-		);
+		console.log('preprocessBalanceNoti func logAndReport exception: ', error);
 	}
 }
 
@@ -2560,11 +2457,10 @@ export async function preprocessSettingNoti(notif) {
 						data['news'][`fromHour`],
 						data['news'][`fromMinute`]
 					);
-				const { hour: toHour, minute: toMinute } =
-					Util.getHoursMinutesLocal(
-						data['news'][`toHour`],
-						data['news'][`toMinute`]
-					);
+				const { hour: toHour, minute: toMinute } = Util.getHoursMinutesLocal(
+					data['news'][`toHour`],
+					data['news'][`toMinute`]
+				);
 				data['news']['fromHour'] = fromHour;
 				data['news']['fromMinute'] = fromMinute;
 				data['news']['toHour'] = toHour;
@@ -2626,10 +2522,7 @@ export function getDisplayName(symbol, callback) {
 					) {
 						return newSymbolInfo.display_name;
 					}
-					logDevice(
-						'info',
-						`Can not get displayName from api of: ${symbol}`
-					);
+					logDevice('info', `Can not get displayName from api of: ${symbol}`);
 					return symbol;
 				});
 			}
@@ -2670,7 +2563,8 @@ export function preprocessNewsNoti(notif) {
 			if (isSensitive && !sensitiveNoti) return;
 			if (newsId && newObj.symbol && listPersonalPosition[`${symbol}`]) {
 				const url = api.getNewById(newsId);
-				api.requestData(url)
+				api
+					.requestData(url)
 					.then((snap) => {
 						if (snap && snap.length) {
 							const data = snap[0];
@@ -2885,10 +2779,7 @@ export function preprocessListAccountsNoti(notif) {
 		}
 	} catch (error) {
 		// console.log('preprocessListAccountsNoti func logAndReport exception: ', error)
-		logDevice(
-			'info',
-			`preprocessListAccountsNoti func exception: ${error}`
-		);
+		logDevice('info', `preprocessListAccountsNoti func exception: ${error}`);
 	}
 }
 
@@ -2930,8 +2821,7 @@ export function preprocessNotifUserDetail(notif) {
 	});
 
 	if (
-		(newUserInfo.status != null &&
-			oldUserInfo.status !== newUserInfo.status) ||
+		(newUserInfo.status != null && oldUserInfo.status !== newUserInfo.status) ||
 		(newUserInfo.user_login_id != null &&
 			oldUserInfo.user_login_id !== newUserInfo.user_login_id)
 	) {
@@ -2956,17 +2846,10 @@ export function preprocessNotifUserDetail(notif) {
 			newUserInfo.advisor_code !== oldUserInfo.advisor_code) ||
 		(newUserInfo.list_mapping !== undefined &&
 			newUserInfo.list_mapping &&
-			isListMappingChange(
-				oldUserInfo.list_mapping,
-				newUserInfo.list_mapping
-			))
+			isListMappingChange(oldUserInfo.list_mapping, newUserInfo.list_mapping))
 	) {
 		Controller.showAlertReload(async () => {
-			unregisterOldRoleGroup(
-				preprocessNoti,
-				'ALL',
-				oldUserInfo.role_group
-			);
+			unregisterOldRoleGroup(preprocessNoti, 'ALL', oldUserInfo.role_group);
 			Business.reloadApp();
 		});
 	}
@@ -3005,9 +2888,7 @@ export function preprocessHalt(notif) {
 		if (data) {
 			logDevice(
 				'info',
-				`preprocessHalt with data halt: ${
-					data ? JSON.stringify(data) : ''
-				}`
+				`preprocessHalt with data halt: ${data ? JSON.stringify(data) : ''}`
 			);
 			const { symbol, halt } = data;
 			if (symbol) {
@@ -3190,13 +3071,14 @@ export function pinComplete(
 								refreshToken: rToken
 							}
 						};
-						api.postData(
-							`${api.getAuthUrl()}/refresh`,
-							refreshData,
-							null,
-							false,
-							byPassAccessToken
-						)
+						api
+							.postData(
+								`${api.getAuthUrl()}/refresh`,
+								refreshData,
+								null,
+								false,
+								byPassAccessToken
+							)
 							.then((data) => {
 								if (data && data.errorCode) {
 									refPin && refPin.authenFail();
@@ -3210,24 +3092,15 @@ export function pinComplete(
 											refreshToken: token,
 											accessToken
 										};
-										Controller.dispatch(
-											loginActions.saveToken(loginObj)
-										);
+										Controller.dispatch(loginActions.saveToken(loginObj));
 									}
 									refPin &&
-										refPin.authenSuccess(
-											accessToken,
-											successCb,
-											params
-										);
+										refPin.authenSuccess(accessToken, successCb, params);
 								}
 							})
 							.catch((err) => {
 								// console.log(`AUTHEN PIN REFRESH TOKEN ERROR: ${err}`)
-								logDevice(
-									'error',
-									`AUTHEN PIN REFRESH TOKEN ERROR: ${err}`
-								);
+								logDevice('error', `AUTHEN PIN REFRESH TOKEN ERROR: ${err}`);
 								refPin && refPin.authenFail();
 							});
 					}
@@ -3296,13 +3169,14 @@ export function authPinComplete({
 								refreshToken: rToken
 							}
 						};
-						api.postData(
-							`${api.getAuthUrl()}/refresh`,
-							refreshData,
-							null,
-							false,
-							byPassAccessToken
-						)
+						api
+							.postData(
+								`${api.getAuthUrl()}/refresh`,
+								refreshData,
+								null,
+								false,
+								byPassAccessToken
+							)
 							.then((data) => {
 								if (data && data.errorCode) {
 									authenFail && authenFail(data.errorCode);
@@ -3316,20 +3190,14 @@ export function authPinComplete({
 											refreshToken: token,
 											accessToken
 										};
-										Controller.dispatch(
-											loginActions.saveToken(loginObj)
-										);
+										Controller.dispatch(loginActions.saveToken(loginObj));
 									}
-									authenSuccess &&
-										authenSuccess({ accessToken });
+									authenSuccess && authenSuccess({ accessToken });
 								}
 							})
 							.catch((err) => {
 								// console.log(`AUTHEN PIN REFRESH TOKEN ERROR: ${err}`)
-								logDevice(
-									'error',
-									`AUTHEN PIN REFRESH TOKEN ERROR: ${err}`
-								);
+								logDevice('error', `AUTHEN PIN REFRESH TOKEN ERROR: ${err}`);
 								authenFail && authenFail(err);
 							});
 					}
@@ -3388,9 +3256,7 @@ export function touchIDComplete(successCb, errCb, params, token) {
 								const closeModalCb = params.closeModalCb; // truyen tu auto login sang
 								closeModalCb && closeModalCb(false, true); // close modal authen pin and show changed token warning
 							} else {
-								Alert.alert(
-									`Decode token error. Please try again`
-								);
+								Alert.alert(`Decode token error. Please try again`);
 								logDevice(
 									'error',
 									`AUTHEN TOUCHID - /DECODE ERROR: ${data.errorCode}`
@@ -3403,23 +3269,21 @@ export function touchIDComplete(successCb, errCb, params, token) {
 									refreshToken: token
 								}
 							};
-							api.postData(
-								`${api.getAuthUrl()}/refresh`,
-								refreshData,
-								null,
-								false,
-								byPassAccessToken
-							)
+							api
+								.postData(
+									`${api.getAuthUrl()}/refresh`,
+									refreshData,
+									null,
+									false,
+									byPassAccessToken
+								)
 								.then((data) => {
 									const accessToken = data.accessToken;
 									// Controller.setBaseUrl(data.baseUrl);
 									successCb && successCb(params, accessToken);
 								})
 								.catch((err) => {
-									logDevice(
-										'error',
-										`AUTHEN TOUCHID ERROR - ${error}`
-									);
+									logDevice('error', `AUTHEN TOUCHID ERROR - ${error}`);
 									errCb && errCb();
 								});
 						}
@@ -3436,10 +3300,7 @@ export function touchIDComplete(successCb, errCb, params, token) {
 				errorCode: 'No internet connection'
 			};
 			errCb && errCb(error);
-			logDevice(
-				'error',
-				`touchIDComplete NO INTERNET CONNECTION ${error}`
-			);
+			logDevice('error', `touchIDComplete NO INTERNET CONNECTION ${error}`);
 		}
 	} catch (error) {
 		logDevice('error', `touchIDComplete func exception with ${error}`);
@@ -3680,9 +3541,7 @@ export function switchForm(navigator, event, cb = null) {
 	const initialPage = event.payload.initialPage;
 	const { symbol, isHideBackButton } = (arg && arg.passProps) || {};
 
-	cb &&
-		dataStorage.changeMenuSelected &&
-		dataStorage.changeMenuSelected(title);
+	cb && dataStorage.changeMenuSelected && dataStorage.changeMenuSelected(title);
 	switch (menuSelected) {
 		case Enum.MENU_SELECTED.marketOverview:
 			navigator.resetTo({
@@ -3717,9 +3576,7 @@ export function switchForm(navigator, event, cb = null) {
 							testID: 'menu_ios'
 						}
 					],
-					rightButtons: checkRoleByKey(
-						ROLE_DETAIL.ROLE_PERFORM_EDIT_BUTTON
-					)
+					rightButtons: checkRoleByKey(ROLE_DETAIL.ROLE_PERFORM_EDIT_BUTTON)
 						? [
 								{
 									id: 'add_alert',
@@ -3741,26 +3598,15 @@ export function switchForm(navigator, event, cb = null) {
 				animationType: 'none',
 				passProps: {
 					isHideBackButton:
-						isHideBackButton === undefined
-							? true
-							: isHideBackButton,
+						isHideBackButton === undefined ? true : isHideBackButton,
 					symbolSelected: symbol,
 					wrapperStyle: {
 						paddingTop:
-							Platform.OS === 'ios'
-								? isIphoneXorAbove()
-									? 38
-									: 6
-								: 0,
+							Platform.OS === 'ios' ? (isIphoneXorAbove() ? 38 : 6) : 0,
 						height: isIphoneXorAbove() ? 48 + 38 : 48 + 6
 					},
 					style: {
-						top:
-							Platform.OS === 'ios'
-								? isIphoneXorAbove()
-									? 38
-									: 16
-								: 0
+						top: Platform.OS === 'ios' ? (isIphoneXorAbove() ? 38 : 16) : 0
 					}
 				}
 			});
@@ -3942,11 +3788,11 @@ export function getCompany(stringQuery, cb) {
 	const newTxt = Util.encodeSymbol(stringQuery);
 	const url = `${api.getSymbolUrl(false, true)}${newTxt}`;
 	const res = {};
-	api.requestData(url)
+	api
+		.requestData(url)
 		.then((data) => {
 			if (typeof data === 'object' && !data.length) {
-				res[data.code || data.symbol] =
-					data.company_name || data.company || '';
+				res[data.code || data.symbol] = data.company_name || data.company || '';
 				func.addSymbol(data);
 				cb && cb(res);
 			} else {
@@ -3976,7 +3822,8 @@ export function checkNewsToday(stringQuery) {
 	if (stringQuery && typeof stringQuery === 'string') {
 		return new Promise((resolve, reject) => {
 			const checkUrl = api.checkNewsTodayUrl(stringQuery);
-			api.requestData(checkUrl)
+			api
+				.requestData(checkUrl)
 				.then((data) => {
 					dataStorage.listNewsToday = data || {};
 					resolve();
@@ -4003,7 +3850,8 @@ export function getSymbolInfoApi(
 	if (stringQuery !== '') {
 		const newTxt = Util.encodeSymbol(stringQuery);
 		const url = `${api.getSymbolUrl(false, true)}${newTxt}`;
-		api.requestData(url, true, null, byPassCache)
+		api
+			.requestData(url, true, null, byPassCache)
 			.then((data) => {
 				if (Array.isArray(data) && data.length > 0) {
 					for (let i = 0; i < data.length; i++) {
@@ -4033,7 +3881,8 @@ export function getSymbolInfoApi1(stringQuery, cb, byPassCache = false) {
 	if (stringQuery !== '') {
 		const newTxt = Util.encodeSymbol(stringQuery);
 		const url = `${api.getSymbolUrl(false, true)}${newTxt}`;
-		api.requestData1(url, true, null, byPassCache)
+		api
+			.requestData1(url, true, null, byPassCache)
 			.then((data) => {
 				if (Array.isArray(data) && data.length > 0) {
 					for (let i = 0; i < data.length; i++) {
@@ -4070,7 +3919,8 @@ export function checkAndAddToDic(symbolInfo, forceUpdate) {
 export function getEchangeSymbol(symbol, cb) {
 	const newTxt = Util.encodeSymbol(symbol);
 	const url = `${api.getSymbolUrl(false, true)}${newTxt}`;
-	api.requestData(url)
+	api
+		.requestData(url)
 		.then((data) => {
 			if (data && data.length) {
 				const res =
@@ -4085,7 +3935,8 @@ export function getEchangeSymbol(symbol, cb) {
 		});
 }
 export function searchReccent({ cb }) {
-	func.getReccentSearchSymbol()
+	func
+		.getReccentSearchSymbol()
 		.then((data) => {
 			cb && cb(data);
 		})
@@ -4305,7 +4156,8 @@ export function searchResponseFakeFuture({
 		index
 	});
 	const timeStartReq = +new Date();
-	api.requestData(searchUrl, null, null, null, timeout)
+	api
+		.requestData(searchUrl, null, null, null, timeout)
 		.then((data) => {
 			const listSymbolFu = listSymbolFuture.filter((el) => {
 				const symbol = el.display_name.toLocaleLowerCase();
@@ -4367,7 +4219,8 @@ export function searchResponse({
 		index
 	});
 	const timeStartReq = +new Date();
-	api.requestData(searchUrl, null, null, null, timeout)
+	api
+		.requestData(searchUrl, null, null, null, timeout)
 		.then((data) => {
 			if (isErrorSystemByCode(data)) return;
 			if (data && data.length && data !== 'INVALID_PARAMS') {
@@ -4401,7 +4254,8 @@ export function resultSearchNewOrderByMaster({
 		textSearch,
 		isPointTextSearch
 	});
-	api.requestData(searchUrl)
+	api
+		.requestData(searchUrl)
 		.then((data) => {
 			console.log('data searchSearchNewOrderByMaster$$$$', data);
 			if (data && data.length) {
@@ -4430,17 +4284,7 @@ export function getIdNotify(id, index = 2) {
 		// res = id.slice(0, 14);
 		res = (id + '').split('_');
 		if (res.length > 6) {
-			return (
-				res[2] +
-				'_' +
-				res[3] +
-				'_' +
-				res[4] +
-				'_' +
-				res[5] +
-				'_' +
-				res[6]
-			);
+			return res[2] + '_' + res[3] + '_' + res[4] + '_' + res[5] + '_' + res[6];
 		}
 		return '';
 	} catch (error) {
@@ -4763,7 +4607,8 @@ export function getSymbolInfo(symbol) {
 	return new Promise((resolve, reject) => {
 		const newTxt = Util.encodeSymbol(symbol);
 		const url = `${api.getSymbolUrl(false, true)}${newTxt}`;
-		api.requestData(url)
+		api
+			.requestData(url)
 			.then((data) => {
 				if (Array.isArray(data) && data.length > 0) {
 					const res = data[0];
@@ -4822,16 +4667,12 @@ export function getNotiBody(notif, fnCb) {
 
 export function getNotiContentOnMarket(data, displayName) {
 	const orderType = getOrderTypeNoti(data);
-	const side = data.is_buy
-		? `${I18n.t('buyUpper')}`
-		: `${I18n.t('sellUpper')}`;
+	const side = data.is_buy ? `${I18n.t('buyUpper')}` : `${I18n.t('sellUpper')}`;
 	const volume = data.volume || 0;
 	const limitPrice = data.limit_price || 0;
 	const stopPrice = data.stop_price || 0;
 	const type =
-		orderType || data.order_type
-			? (data.order_type + '').toUpperCase()
-			: '';
+		orderType || data.order_type ? (data.order_type + '').toUpperCase() : '';
 	switch (type) {
 		case OrderType.MARKETTOLIMIT:
 		case OrderType.MARKETTOLIMIT_ORDER:
@@ -4902,10 +4743,7 @@ export function getNotiContentOnMarket(data, displayName) {
 					)
 					.replace(
 						'##trailingValue##',
-						`${formatNumberNew2(
-							trailingValue,
-							PRICE_DECIMAL.VALUE
-						)}`
+						`${formatNumberNew2(trailingValue, PRICE_DECIMAL.VALUE)}`
 					);
 			} else {
 				return I18n.t('onMarketTrailingPercentStopLimit')
@@ -4922,10 +4760,7 @@ export function getNotiContentOnMarket(data, displayName) {
 					)
 					.replace(
 						'##trailingValue##',
-						`${formatNumberNew2(
-							trailingValue,
-							PRICE_DECIMAL.VALUE
-						)}`
+						`${formatNumberNew2(trailingValue, PRICE_DECIMAL.VALUE)}`
 					);
 			}
 		default:
@@ -4935,9 +4770,7 @@ export function getNotiContentOnMarket(data, displayName) {
 
 export function getNotiContentPartialFill(data, displayName) {
 	const orderType = getOrderTypeNoti(data);
-	const side = data.is_buy
-		? `${I18n.t('buyUpper')}`
-		: `${I18n.t('sellUpper')}`;
+	const side = data.is_buy ? `${I18n.t('buyUpper')}` : `${I18n.t('sellUpper')}`;
 	const volume = data.volume || 0;
 	const limitPrice = data.limit_price || 0;
 	const stopPrice = data.stop_price || 0;
@@ -4951,10 +4784,7 @@ export function getNotiContentPartialFill(data, displayName) {
 				.replace('##side##', `${side}`)
 				.replace(/##volume##/g, `${formatNumber(volume)}`)
 				.replace('##symbol##', `${displayName}`)
-				.replace(
-					'##filledQuantity##',
-					`${formatNumber(filledQuantity)}`
-				)
+				.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 				.replace(
 					'##filledPrice##',
 					formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -4965,10 +4795,7 @@ export function getNotiContentPartialFill(data, displayName) {
 				.replace('##side##', `${side}`)
 				.replace(/##volume##/g, `${formatNumber(volume)}`)
 				.replace('##symbol##', `${displayName}`)
-				.replace(
-					'##filledQuantity##',
-					`${formatNumber(filledQuantity)}`
-				)
+				.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 				.replace(
 					'##filledPrice##',
 					formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -4979,10 +4806,7 @@ export function getNotiContentPartialFill(data, displayName) {
 				.replace('##side##', `${side}`)
 				.replace(/##volume##/g, `${formatNumber(volume)}`)
 				.replace('##symbol##', `${displayName}`)
-				.replace(
-					'##filledQuantity##',
-					`${formatNumber(filledQuantity)}`
-				)
+				.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 				.replace(
 					'##filledPrice##',
 					formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -4997,10 +4821,7 @@ export function getNotiContentPartialFill(data, displayName) {
 				.replace('##side##', `${side}`)
 				.replace(/##volume##/g, `${formatNumber(volume)}`)
 				.replace('##symbol##', `${displayName}`)
-				.replace(
-					'##filledQuantity##',
-					`${formatNumber(filledQuantity)}`
-				)
+				.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 				.replace(
 					'##filledPrice##',
 					formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5015,10 +4836,7 @@ export function getNotiContentPartialFill(data, displayName) {
 				.replace('##side##', `${side}`)
 				.replace(/##volume##/g, `${formatNumber(volume)}`)
 				.replace('##symbol##', `${displayName}`)
-				.replace(
-					'##filledQuantity##',
-					`${formatNumber(filledQuantity)}`
-				)
+				.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 				.replace(
 					'##filledPrice##',
 					formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5042,10 +4860,7 @@ export function getNotiContentPartialFill(data, displayName) {
 					.replace('##side##', `${side}`)
 					.replace(/##volume##/g, `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5058,19 +4873,13 @@ export function getNotiContentPartialFill(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue####',
-						formatNumberNew2(trailingValue)
-					);
+					.replace('##trailingValue####', formatNumberNew2(trailingValue));
 			} else {
 				return I18n.t('partialFillTrailingPercentStopLimit')
 					.replace('##side##', `${side}`)
 					.replace(/##volume##/g, `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5083,10 +4892,7 @@ export function getNotiContentPartialFill(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue##',
-						formatNumberNew2(trailingValue)
-					);
+					.replace('##trailingValue##', formatNumberNew2(trailingValue));
 			}
 		default:
 			return '';
@@ -5095,9 +4901,7 @@ export function getNotiContentPartialFill(data, displayName) {
 
 export function getNotiContentFilled(data, displayName) {
 	const orderType = getOrderTypeNoti(data);
-	const side = data.is_buy
-		? `${I18n.t('buyUpper')}`
-		: `${I18n.t('sellUpper')}`;
+	const side = data.is_buy ? `${I18n.t('buyUpper')}` : `${I18n.t('sellUpper')}`;
 	const volume = data.volume || 0;
 	const limitPrice = data.limit_price || 0;
 	const stopPrice = data.stop_price || 0;
@@ -5169,10 +4973,7 @@ export function getNotiContentFilled(data, displayName) {
 					.replace('##side##', `${side}`)
 					.replace('##volume##', `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5181,10 +4982,7 @@ export function getNotiContentFilled(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue##',
-						`${formatNumber(trailingValue)}`
-					)
+					.replace('##trailingValue##', `${formatNumber(trailingValue)}`)
 					.replace(
 						'##averagePrice##',
 						formatNumberNew2(avgPrice, PRICE_DECIMAL.PRICE)
@@ -5194,10 +4992,7 @@ export function getNotiContentFilled(data, displayName) {
 					.replace('##side##', `${side}`)
 					.replace('##volume##', `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5206,10 +5001,7 @@ export function getNotiContentFilled(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue##',
-						`${formatNumber(trailingValue)}`
-					)
+					.replace('##trailingValue##', `${formatNumber(trailingValue)}`)
 					.replace(
 						'##averagePrice##',
 						formatNumberNew2(avgPrice, PRICE_DECIMAL.PRICE)
@@ -5222,9 +5014,7 @@ export function getNotiContentFilled(data, displayName) {
 
 export function getNotiContentCancelled(data, displayName) {
 	const orderType = getOrderTypeNoti(data);
-	const side = data.is_buy
-		? `${I18n.t('buyUpper')}`
-		: `${I18n.t('sellUpper')}`;
+	const side = data.is_buy ? `${I18n.t('buyUpper')}` : `${I18n.t('sellUpper')}`;
 	let volume = data.volume || 0;
 	const filledQuantity = data.filled_quantity || 0;
 	const restVolume = volume - filledQuantity;
@@ -5310,10 +5100,7 @@ export function getNotiContentCancelled(data, displayName) {
 					.replace('##side##', `${side}`)
 					.replace('##volume##', `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5322,10 +5109,7 @@ export function getNotiContentCancelled(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue##',
-						`${formatNumber(trailingValue)}`
-					)
+					.replace('##trailingValue##', `${formatNumber(trailingValue)}`)
 					.replace(
 						'##averagePrice##',
 						formatNumberNew2(avgPrice, PRICE_DECIMAL.PRICE)
@@ -5335,10 +5119,7 @@ export function getNotiContentCancelled(data, displayName) {
 					.replace('##side##', `${side}`)
 					.replace('##volume##', `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5347,10 +5128,7 @@ export function getNotiContentCancelled(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue##',
-						`${formatNumber(trailingValue)}`
-					)
+					.replace('##trailingValue##', `${formatNumber(trailingValue)}`)
 					.replace(
 						'##averagePrice##',
 						formatNumberNew2(avgPrice, PRICE_DECIMAL.PRICE)
@@ -5363,9 +5141,7 @@ export function getNotiContentCancelled(data, displayName) {
 
 export function getNotiContentRejected(data, displayName) {
 	const orderType = getOrderTypeNoti(data);
-	const side = data.is_buy
-		? `${I18n.t('buyUpper')}`
-		: `${I18n.t('sellUpper')}`;
+	const side = data.is_buy ? `${I18n.t('buyUpper')}` : `${I18n.t('sellUpper')}`;
 	let volume = data.volume || 0;
 	const filledQuantity = data.filled_quantity || 0;
 	const limitPrice = data.limit_price || 0;
@@ -5424,10 +5200,7 @@ export function getNotiContentRejected(data, displayName) {
 					.replace('##side##', `${side}`)
 					.replace('##volume##', `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5436,19 +5209,13 @@ export function getNotiContentRejected(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue##',
-						`${formatNumber(trailingValue)}`
-					);
+					.replace('##trailingValue##', `${formatNumber(trailingValue)}`);
 			} else {
 				return I18n.t('rejectedTrailingPercentStopLimit')
 					.replace('##side##', `${side}`)
 					.replace('##volume##', `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5457,10 +5224,7 @@ export function getNotiContentRejected(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue##',
-						`${formatNumber(trailingValue)}`
-					);
+					.replace('##trailingValue##', `${formatNumber(trailingValue)}`);
 			}
 		default:
 			return '';
@@ -5469,9 +5233,7 @@ export function getNotiContentRejected(data, displayName) {
 
 export function getNotiContentExpired(data, displayName) {
 	const orderType = getOrderTypeNoti(data);
-	const side = data.is_buy
-		? `${I18n.t('buyUpper')}`
-		: `${I18n.t('sellUpper')}`;
+	const side = data.is_buy ? `${I18n.t('buyUpper')}` : `${I18n.t('sellUpper')}`;
 	let volume = data.volume || 0;
 	const limitPrice = data.limit_price || 0;
 	const filledQuantity = data.filled_quantity || 0;
@@ -5537,10 +5299,7 @@ export function getNotiContentExpired(data, displayName) {
 					.replace('##side##', `${side}`)
 					.replace('##volume##', `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5549,19 +5308,13 @@ export function getNotiContentExpired(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue##',
-						`${formatNumber(trailingValue)}`
-					);
+					.replace('##trailingValue##', `${formatNumber(trailingValue)}`);
 			} else {
 				return I18n.t('expiredTrailingPriceStopLimit')
 					.replace('##side##', pen`${side}`)
 					.replace('##volume##', `${formatNumber(volume)}`)
 					.replace('##symbol##', `${displayName}`)
-					.replace(
-						'##filledQuantity##',
-						`${formatNumber(filledQuantity)}`
-					)
+					.replace('##filledQuantity##', `${formatNumber(filledQuantity)}`)
 					.replace(
 						'##filledPrice##',
 						formatNumberNew2(filledPrice, PRICE_DECIMAL.PRICE)
@@ -5570,10 +5323,7 @@ export function getNotiContentExpired(data, displayName) {
 						'##stopPrice##',
 						formatNumberNew2(stopPrice, PRICE_DECIMAL.PRICE)
 					)
-					.replace(
-						'##trailingValue##',
-						`${formatNumber(trailingValue)}`
-					);
+					.replace('##trailingValue##', `${formatNumber(trailingValue)}`);
 			}
 		default:
 			return '';
@@ -5594,15 +5344,13 @@ export function subcribleChannel() {
 		const devicetoken = {};
 		devicetoken[deviceId] = token;
 		obj.list_register.push(devicetoken);
-		api.postData(url, { data: obj })
+		api
+			.postData(url, { data: obj })
 			.then(() => {
 				// console.log('subcrible channel notification success with token', token)
 			})
 			.catch((error) => {
-				logDevice(
-					'info',
-					`cannot subcrible notification error: ${error}`
-				);
+				logDevice('info', `cannot subcrible notification error: ${error}`);
 			});
 	}
 }
@@ -5611,7 +5359,8 @@ export function sendRequestSyncNoti(bodyData) {
 	const userId = func.getUserId();
 	// link to back-end recei request and handle push noti for all devices of this user
 	const url = api.getRequestSyncNotiUrl(userId);
-	api.postData(url, { data: bodyData })
+	api
+		.postData(url, { data: bodyData })
 		.then((param) => {})
 		.catch((error) => {
 			logDevice(
@@ -5625,7 +5374,8 @@ export function unRegisterReceiverNoti() {
 	const deviceId = dataStorage.deviceId;
 	const userId = func.getUserId();
 	const url = `${api.getSubcribleChannelUrl()}/${userId}?device_id=${deviceId}`;
-	api.deleteData(url)
+	api
+		.deleteData(url)
 		.then((param) => {})
 		.catch((error) => {
 			logDevice(
@@ -5657,10 +5407,7 @@ export function deleteAllNotiNews() {
 			let listNewsUnread = [];
 			Object.keys(listUnread).map((k) => {
 				if (k && listUnread[k]) {
-					listNewsUnread = Object.assign(
-						listNewsUnread,
-						listUnread[k]
-					);
+					listNewsUnread = Object.assign(listNewsUnread, listUnread[k]);
 				}
 			});
 			Object.keys(listNewsUnread).map((n) => {
@@ -5677,9 +5424,7 @@ export function deleteAllNotiNews() {
 						data: JSON.stringify(notiStatus)
 					};
 					sendRequestSyncNoti(obj);
-					Controller.dispatch(
-						newsActions.updateNotiStatus(notiStatus)
-					);
+					Controller.dispatch(newsActions.updateNotiStatus(notiStatus));
 				})
 				.catch((error) => {
 					// console.log('delete all news noti status failured', error);
@@ -5719,16 +5464,14 @@ export function getPriceMultiExchange(stringQuery, userType, cb) {
 			new Promise((resolve, reject) => {
 				const expireSymbol = [];
 				const isContain = false;
-				api.requestData(url)
+				api
+					.requestData(url)
 					.then((bodyData) => {
 						if (!bodyData) return resolve([]);
 						resolve(bodyData);
 					})
 					.catch((error) => {
-						logDevice(
-							'info',
-							`GET PRICE FROM URL: ${url} FAILED: ${error}`
-						);
+						logDevice('info', `GET PRICE FROM URL: ${url} FAILED: ${error}`);
 						resolve([]);
 					});
 			})
@@ -5789,9 +5532,7 @@ export function deleteNotiNewsByCode(symbol) {
 						listDel: listTemp
 					};
 					sendRequestSyncNoti(obj);
-					Controller.dispatch(
-						newsActions.updateNotiStatus(notiStatus)
-					);
+					Controller.dispatch(newsActions.updateNotiStatus(notiStatus));
 				})
 				.catch((error) => {
 					// console.log('deleteNotiNewsByCode update failured', error);
@@ -5886,10 +5627,7 @@ export function getNotiNewsStatus() {
 			let listNewsUnread = [];
 			Object.keys(listUnread).map((k) => {
 				if (k && listUnread[k]) {
-					listNewsUnread = Object.assign(
-						listNewsUnread,
-						listUnread[k]
-					);
+					listNewsUnread = Object.assign(listNewsUnread, listUnread[k]);
 				}
 			});
 			dataStorage.list_news_unread = listNewsUnread;
@@ -5915,8 +5653,7 @@ export function updateNewsNotiStatus(newsId, changeValue, symbol) {
 					notiStatus = JSON.parse(result);
 				}
 				notiStatus.unread += changeValue;
-				const listNewsUnreadSymbol =
-					notiStatus.listUnread[symbol] || {};
+				const listNewsUnreadSymbol = notiStatus.listUnread[symbol] || {};
 				if (changeValue === 0) {
 					notiStatus.readOverview = true;
 				} else {
@@ -5931,10 +5668,7 @@ export function updateNewsNotiStatus(newsId, changeValue, symbol) {
 						let listNewsUnread = {};
 						Object.keys(listUnread).map((k) => {
 							if (k && listUnread[k]) {
-								listNewsUnread = Object.assign(
-									listNewsUnread,
-									listUnread[k]
-								);
+								listNewsUnread = Object.assign(listNewsUnread, listUnread[k]);
 							}
 						});
 						const obj = {
@@ -5944,9 +5678,7 @@ export function updateNewsNotiStatus(newsId, changeValue, symbol) {
 						};
 						sendRequestSyncNoti(obj);
 						dataStorage.list_news_unread = listNewsUnread;
-						Controller.dispatch(
-							newsActions.updateNotiStatus(notiStatus)
-						);
+						Controller.dispatch(newsActions.updateNotiStatus(notiStatus));
 					})
 					.catch((error) => {
 						// console.log('updateNewsNotiStatus 1 failured', error);
@@ -6043,10 +5775,7 @@ export function syncNotiNews(key, notiStatus) {
 					let listNewsUnread = {};
 					Object.keys(listUnread).map((k) => {
 						if (k && listUnread[k]) {
-							listNewsUnread = Object.assign(
-								listNewsUnread,
-								listUnread[k]
-							);
+							listNewsUnread = Object.assign(listNewsUnread, listUnread[k]);
 						}
 					});
 					Object.keys(curListNewsUnread).map((n) => {
@@ -6103,9 +5832,7 @@ export function deleteNotiOrderByCode(type, symbol, accountId) {
 					};
 					sendRequestSyncNoti(obj);
 					delete notiStatus.listUnread;
-					Controller.dispatch(
-						ordersActions.updateNotiStatus(type, notiStatus)
-					);
+					Controller.dispatch(ordersActions.updateNotiStatus(type, notiStatus));
 				})
 				.catch((error) => {
 					// console.log('deleteNotiOrderByCode update failured', error);
@@ -6347,12 +6074,7 @@ export function checkPropsStateShouldUpdate(
 				const listData = item[key1];
 				for (let j = 0; j < listData.length; j++) {
 					const item1 = listData[j];
-					if (
-						!_.isEqual(
-							nextProps[key1][item1],
-							curProps[key1][item1]
-						)
-					) {
+					if (!_.isEqual(nextProps[key1][item1], curProps[key1][item1])) {
 						return true;
 					}
 				}
@@ -6369,12 +6091,7 @@ export function checkPropsStateShouldUpdate(
 				const listData1 = item2[key2];
 				for (let j = 0; j < listData1.length; j++) {
 					const item3 = listData1[j];
-					if (
-						!_.isEqual(
-							nextState[key2][item3],
-							curState[key2][item3]
-						)
-					) {
+					if (!_.isEqual(nextState[key2][item3], curState[key2][item3])) {
 						return true;
 					}
 				}
@@ -7500,10 +7217,7 @@ export function StringFormat(format, args) {
 		var i;
 		if (args instanceof Array) {
 			for (i = 0; i < args.length; i++) {
-				value = value.replace(
-					new RegExp('\\{' + i + '\\}', 'gm'),
-					args[i]
-				);
+				value = value.replace(new RegExp('\\{' + i + '\\}', 'gm'), args[i]);
 			}
 			return value;
 		}
@@ -7602,10 +7316,7 @@ export function convertNullValue(valueInput, isChgLimit, byPass) {
 	value = value.replace('+', '');
 
 	const check = convertFormatToNumber(value);
-	if (
-		isNullOrEmpty(value) ||
-		convertFormatToNumber(value).toString() === '0'
-	) {
+	if (isNullOrEmpty(value) || convertFormatToNumber(value).toString() === '0') {
 		return isChgLimit ? '0' : '--';
 	} else {
 		return value;
@@ -7758,7 +7469,8 @@ export function initAllPosition() {
 
 export function getRelatedSymbol(cb) {
 	const url = api.getRelatedSymbolUrl();
-	api.requestData(url)
+	api
+		.requestData(url)
 		.then((res) => {
 			console.log('----------get Data analys symbol success-----------');
 			if (res && res.length) {
@@ -8097,7 +7809,8 @@ export function isDotAtEndString(text) {
 	}
 }
 export function getSearchSymbolReccent({ cb }) {
-	func.getReccentSearchSymbol()
+	func
+		.getReccentSearchSymbol()
 		.then((data) => {
 			cb && cb(data);
 		})

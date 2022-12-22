@@ -12,7 +12,7 @@ import PriceDisplay from './constants/price_display_type';
 import * as Channel from './streaming/channel';
 import I18n from './modules/language/';
 import * as Controller from './memory/controller';
-import AsyncStorages from '@react-native-community/async-storage';
+import AsyncStorages from '@react-native-async-storage/async-storage';
 
 const tableCheck = 'last_updated';
 const USER_PRICE_SOURCE = Enum.USER_PRICE_SOURCE;
@@ -240,7 +240,7 @@ export const dataStorage = {
 	isLoadAnalys: false,
 	isInitTabCos: true,
 	isNeedSubSymbolOnNewOrder: true,
-	functionSnapToClose: () => { },
+	functionSnapToClose: () => {},
 	userPriceBoard: '',
 	isReloading: true,
 	loginSuccess: '',
@@ -253,43 +253,47 @@ const TIME_COMPARE_15 = 15 * 50 * 1000;
 
 export const func = {
 	setBrokerName(brokerName = '') {
-		const userId = Controller.getUserId()
-		const key = `brokerName#${userId}`
-		AsyncStorages.setItem(key, brokerName)
+		const userId = Controller.getUserId();
+		const key = `brokerName#${userId}`;
+		AsyncStorages.setItem(key, brokerName);
 	},
 	getBrokerName() {
-		const userId = Controller.getUserId()
-		const key = `brokerName#${userId}`
-		return new Promise(resolve => {
-			AsyncStorages.getItem(key).then(brokerName => {
-				resolve(brokerName || '')
-			}).catch(err => {
-				resolve({})
-			})
-		})
+		const userId = Controller.getUserId();
+		const key = `brokerName#${userId}`;
+		return new Promise((resolve) => {
+			AsyncStorages.getItem(key)
+				.then((brokerName) => {
+					resolve(brokerName || '');
+				})
+				.catch((err) => {
+					resolve({});
+				});
+		});
 	},
 	setRegionSelected(region = {}) {
-		const userId = Controller.getUserId()
-		const key = `region#selected#${userId}`
-		const data = JSON.stringify(region)
-		AsyncStorages.setItem(key, data)
+		const userId = Controller.getUserId();
+		const key = `region#selected#${userId}`;
+		const data = JSON.stringify(region);
+		AsyncStorages.setItem(key, data);
 	},
 	getRegionSelected() {
-		const userId = Controller.getUserId()
-		const key = `region#selected#${userId}`
-		return new Promise(resolve => {
-			AsyncStorages.getItem(key).then(region => {
-				const result = JSON.parse(region)
-				resolve(result)
-			}).catch(err => {
-				resolve({})
-			})
-		})
+		const userId = Controller.getUserId();
+		const key = `region#selected#${userId}`;
+		return new Promise((resolve) => {
+			AsyncStorages.getItem(key)
+				.then((region) => {
+					const result = JSON.parse(region);
+					resolve(result);
+				})
+				.catch((err) => {
+					resolve({});
+				});
+		});
 	},
 	async clearRegionSelected() {
-		const userId = Controller.getUserId()
-		const key = `region#selected#${userId}`
-		await AsyncStorages.removeItem(key)
+		const userId = Controller.getUserId();
+		const key = `region#selected#${userId}`;
+		await AsyncStorages.removeItem(key);
 	},
 	setCurrentScreenId(screenId) {
 		dataStorage.currentScreenId = screenId;
@@ -339,9 +343,7 @@ export const func = {
 		if (!priceBoardDetail) {
 			logDevice(
 				'info',
-				`(Add) Priceboard detail not exist, data: ${JSON.stringify(
-					objChanged
-				)}`
+				`(Add) Priceboard detail not exist, data: ${JSON.stringify(objChanged)}`
 			);
 			return;
 		}
@@ -354,9 +356,8 @@ export const func = {
 			item.rank = ++currentTime;
 		});
 
-		dataStorage.dicWatchlist[objChanged.watchlist] = PureFunc.clone(
-			priceBoardDetail
-		);
+		dataStorage.dicWatchlist[objChanged.watchlist] =
+			PureFunc.clone(priceBoardDetail);
 		const channelName = Channel.getChannelWatchlistChanged(
 			objChanged.watchlist
 		);
@@ -377,10 +378,7 @@ export const func = {
 		const priceBoardDetail = func.getPriceboardDetailInPriceBoard(
 			objChanged.watchlist
 		);
-		if (
-			!priceBoardDetail ||
-			!PureFunc.arrayHasItem(priceBoardDetail.value)
-		) {
+		if (!priceBoardDetail || !PureFunc.arrayHasItem(priceBoardDetail.value)) {
 			logDevice(
 				'info',
 				`(Remove) Priceboard detail not exist, data: ${JSON.stringify(
@@ -404,9 +402,8 @@ export const func = {
 			priceBoardDetail.value.splice(index, 1);
 		}
 
-		dataStorage.dicWatchlist[objChanged.watchlist] = PureFunc.clone(
-			priceBoardDetail
-		);
+		dataStorage.dicWatchlist[objChanged.watchlist] =
+			PureFunc.clone(priceBoardDetail);
 		const channelName = Channel.getChannelWatchlistChanged(
 			objChanged.watchlist
 		);
@@ -422,9 +419,7 @@ export const func = {
 			value: res.value || []
 		});
 		objChanged.value.sort((a, b) => a.rank - b.rank);
-		dataStorage.dicWatchlist[objChanged.watchlist] = PureFunc.clone(
-			objChanged
-		);
+		dataStorage.dicWatchlist[objChanged.watchlist] = PureFunc.clone(objChanged);
 
 		const channelName = Channel.getChannelWatchlistChanged(
 			objChanged.watchlist
@@ -444,9 +439,7 @@ export const func = {
 			value: res.value || []
 		});
 		objChanged.value.sort((a, b) => a.rank - b.rank);
-		dataStorage.dicWatchlist[objChanged.watchlist] = PureFunc.clone(
-			objChanged
-		);
+		dataStorage.dicWatchlist[objChanged.watchlist] = PureFunc.clone(objChanged);
 
 		const channelName = Channel.getChannelAddNewPriceboard();
 		Emitter.emit(channelName, objChanged);
@@ -455,9 +448,7 @@ export const func = {
 	},
 	deletePriceboard(priceBoardId) {
 		try {
-			const oldPriceboard = func.getPriceboardDetailInPriceBoard(
-				priceBoardId
-			);
+			const oldPriceboard = func.getPriceboardDetailInPriceBoard(priceBoardId);
 			delete dataStorage.dicWatchlist[priceBoardId];
 
 			// Show notification
@@ -497,9 +488,7 @@ export const func = {
 			: null;
 	},
 	getPriceboardNameInPriceBoard(priceboardId) {
-		const priceboardDetail = func.getPriceboardDetailInPriceBoard(
-			priceboardId
-		);
+		const priceboardDetail = func.getPriceboardDetailInPriceBoard(priceboardId);
 		const typePriceboard = func.getTypeOfCurrentPriceboard(priceboardId);
 
 		switch (typePriceboard) {
@@ -520,10 +509,8 @@ export const func = {
 			: func.getPriceboardPersonalById(priceboardId);
 	},
 	getFavoritesPriceboard() {
-		const {
-			watchlist: priceboardId,
-			watchlist_name: priceboardName
-		} = func.getPriceboardDefault();
+		const { watchlist: priceboardId, watchlist_name: priceboardName } =
+			func.getPriceboardDefault();
 		if (dataStorage.dicWatchlist[priceboardId]) {
 			return PureFunc.clone(dataStorage.dicWatchlist[priceboardId]);
 		}
@@ -534,18 +521,12 @@ export const func = {
 			(item) =>
 				item &&
 				item.watchlist_name &&
-				item.watchlist_name.toUpperCase() ===
-				priceboardName.toUpperCase()
+				item.watchlist_name.toUpperCase() === priceboardName.toUpperCase()
 		);
 	},
 	getDicSymbolOfPriceboard(priceboardId) {
-		const priceboardDetail = func.getPriceboardDetailInPriceBoard(
-			priceboardId
-		);
-		if (
-			!priceboardDetail ||
-			!PureFunc.arrayHasItem(priceboardDetail.value)
-		) {
+		const priceboardDetail = func.getPriceboardDetailInPriceBoard(priceboardId);
+		if (!priceboardDetail || !PureFunc.arrayHasItem(priceboardDetail.value)) {
 			return {};
 		}
 		const dicSymbol = {};
@@ -590,12 +571,9 @@ export const func = {
 		return func.checkSymbolInPriceboard(WATCHLIST.USER_WATCHLIST, symbol);
 	},
 	checkSymbolInPriceboard(priceBoardId, symbol) {
-		const priceboardDetail = func.getPriceboardDetailInPriceBoard(
-			priceBoardId
-		);
+		const priceboardDetail = func.getPriceboardDetailInPriceBoard(priceBoardId);
 		return priceboardDetail && priceboardDetail.value
-			? priceboardDetail.value.find((item) => item.symbol === symbol) !=
-			null
+			? priceboardDetail.value.find((item) => item.symbol === symbol) != null
 			: false;
 	},
 	getTypeOfCurrentPriceboard(
@@ -607,16 +585,12 @@ export const func = {
 			return TYPE_PRICEBOARD.FAVORITES;
 		}
 		if (
-			listPriceboardAu.find(
-				(item) => item.watchlist === currentPriceboardId
-			)
+			listPriceboardAu.find((item) => item.watchlist === currentPriceboardId)
 		) {
 			return TYPE_PRICEBOARD.AU;
 		}
 		if (
-			listPriceboardUs.find(
-				(item) => item.watchlist === currentPriceboardId
-			)
+			listPriceboardUs.find((item) => item.watchlist === currentPriceboardId)
 		) {
 			return TYPE_PRICEBOARD.US;
 		}
@@ -669,8 +643,8 @@ export const func = {
 			.catch((err) => {
 				const newAccount = JSON.stringify([accountObj].slice(0, 10));
 				AsyncStorage.setItem(key, newAccount)
-					.then((data) => { })
-					.catch((error) => { });
+					.then((data) => {})
+					.catch((error) => {});
 				console.log('getLastestPriceBoard error', err);
 			});
 	},
@@ -729,8 +703,8 @@ export const func = {
 				// return
 				const newSymbols = JSON.stringify([symbolObj]);
 				AsyncStorage.setItem(key, newSymbols)
-					.then((data) => { })
-					.catch((error) => { });
+					.then((data) => {})
+					.catch((error) => {});
 			});
 	},
 	getLastestPriceBoard(userId) {
@@ -761,23 +735,18 @@ export const func = {
 	getAllPriceboardStatic() {
 		return PureFunc.clone(Enum.LIST_PRICE_OBJECT);
 	},
-	checkCurrentPriceboardIsStatic(
-		priceboardId = func.getCurrentPriceboardId()
-	) {
+	checkCurrentPriceboardIsStatic(priceboardId = func.getCurrentPriceboardId()) {
 		if (!priceboardId) return true;
 
 		const listPriceboardStatic = func.getAllPriceboardStatic();
 		return (
-			listPriceboardStatic.find(
-				(item) => item.watchlist === priceboardId
-			) != null
+			listPriceboardStatic.find((item) => item.watchlist === priceboardId) !=
+			null
 		);
 	},
 	getPriceboardStaticById(priceboardId) {
 		const listPriceboardStatic = PureFunc.clone(Enum.LIST_PRICE_OBJECT);
-		return listPriceboardStatic.find(
-			(item) => item.watchlist === priceboardId
-		);
+		return listPriceboardStatic.find((item) => item.watchlist === priceboardId);
 	},
 	getPriceboardPersonalById(priceboardId) {
 		return dataStorage.dicWatchlist[priceboardId]
@@ -799,11 +768,12 @@ export const func = {
 	getListSymbolObject(name) {
 		return dataStorage.dicListSymbolObject[name];
 	},
-	setWatchlistIDForm() { },
+	setWatchlistIDForm() {},
 	getDisplayAccount() {
 		if (!dataStorage.currentAccount) return ``;
-		return `${dataStorage.currentAccount.account_name || ''} (${dataStorage.currentAccount.account_id || ''
-			})`;
+		return `${dataStorage.currentAccount.account_name || ''} (${
+			dataStorage.currentAccount.account_id || ''
+		})`;
 	},
 	setSymbols(data) {
 		dataStorage.symbolEquity = data;
@@ -815,9 +785,7 @@ export const func = {
 		const { symbol, exchanges } = data;
 		const exchange = exchanges && exchanges[0] ? exchanges[0] : '';
 		if (
-			(data &&
-				symbol &&
-				!dataStorage.symbolEquity[`${symbol}#${exchange}`]) ||
+			(data && symbol && !dataStorage.symbolEquity[`${symbol}#${exchange}`]) ||
 			forceUpdate
 		) {
 			dataStorage.symbolEquity[`${symbol}#${exchange}`] = data;
@@ -831,8 +799,7 @@ export const func = {
 	},
 	setHomeScreen(tabSelected = {}, forceUpdate = true) {
 		dataStorage.homeScreen = tabSelected.id || 0;
-		forceUpdate &&
-			(dataStorage.tabIndexSelected = tabSelected.tabIndex || 0);
+		forceUpdate && (dataStorage.tabIndexSelected = tabSelected.tabIndex || 0);
 	},
 	setMenuSelected(homeScreen) {
 		switch (homeScreen) {
@@ -1012,9 +979,7 @@ export const func = {
 	},
 	getCompanyName(symbol) {
 		const symbolObj = func.getSymbolObj(symbol);
-		return symbolObj
-			? symbolObj.company_name || symbolObj.company || ''
-			: '';
+		return symbolObj ? symbolObj.company_name || symbolObj.company || '' : '';
 	},
 	getDisplayNameSymbol(symbol) {
 		return dataStorage.symbolEquity[symbol] &&
@@ -1073,79 +1038,87 @@ export const func = {
 		AsyncStorage.clear();
 	},
 	setCacheLoginSuccess(isLogin = false) {
-		const key = 'loginSuccess'
-		AsyncStorages.setItem(key, JSON.stringify(isLogin))
+		const key = 'loginSuccess';
+		AsyncStorages.setItem(key, JSON.stringify(isLogin));
 	},
 	getCacheLoginSuccess() {
-		const key = 'loginSuccess'
-		return new Promise(resolve => {
-			AsyncStorages.getItem(key).then(res => {
-				console.info('loginSuccess', res)
-				if (res === null) {
-					resolve(false)
-				} else {
-					resolve(res)
-				}
-			}).catch(err => {
-				resolve(false)
-			})
-		})
+		const key = 'loginSuccess';
+		return new Promise((resolve) => {
+			AsyncStorages.getItem(key)
+				.then((res) => {
+					console.info('loginSuccess', res);
+					if (res === null) {
+						resolve(false);
+					} else {
+						resolve(res);
+					}
+				})
+				.catch((err) => {
+					resolve(false);
+				});
+		});
 	},
 	async clearCacheLoginSuccess() {
-		const key = 'loginSuccess'
-		await AsyncStorage.removeItem(key)
+		const key = 'loginSuccess';
+		await AsyncStorage.removeItem(key);
 	},
 	setCacheNotification(notiAlert = false) {
-		const key = 'setting_notification'
+		const key = 'setting_notification';
 		const value = `${notiAlert}`; // string true or false
-		AsyncStorages.setItem(key, value)
+		AsyncStorages.setItem(key, value);
 	},
 	getCacheNotification() {
-		const key = 'setting_notification'
-		return new Promise(resolve => {
-			AsyncStorages.getItem(key).then(res => {
-				const isShowNotification = (res === 'true');
-				resolve(isShowNotification)
-			}).catch(err => {
-				resolve(false)
-			})
-		})
+		const key = 'setting_notification';
+		return new Promise((resolve) => {
+			AsyncStorages.getItem(key)
+				.then((res) => {
+					const isShowNotification = res === 'true';
+					resolve(isShowNotification);
+				})
+				.catch((err) => {
+					resolve(false);
+				});
+		});
 	},
 	async clearCacheNotification() {
-		const key = 'setting_notification'
-		await AsyncStorage.removeItem(key)
+		const key = 'setting_notification';
+		await AsyncStorage.removeItem(key);
 	},
 	setFirstEnableNotification(enable) {
-		const key = 'first_enable_notification'
+		const key = 'first_enable_notification';
 		const value = `${enable}`; // string true or false
-		AsyncStorages.setItem(key, value)
+		AsyncStorages.setItem(key, value);
 	},
 	getFirstEnableNotification() {
-		const key = 'first_enable_notification'
-		return new Promise(resolve => {
-			AsyncStorages.getItem(key).then(res => {
-				const enable = (res === 'true');
-				console.info('enable', enable)
-				resolve(enable)
-			}).catch(err => {
-				resolve(false)
-			})
-		})
+		const key = 'first_enable_notification';
+		return new Promise((resolve) => {
+			AsyncStorages.getItem(key)
+				.then((res) => {
+					const enable = res === 'true';
+					console.info('enable', enable);
+					resolve(enable);
+				})
+				.catch((err) => {
+					resolve(false);
+				});
+		});
 	},
 	setAutoOktaLogin(enable = true) {
-		const key = 'auto_okta_login'
+		const key = 'auto_okta_login';
 		const value = `${enable}`; // string true or false
-		AsyncStorages.setItem(key, value)
+		AsyncStorages.setItem(key, value);
 	},
 	getAutoOktaLogin() {
-		const key = 'auto_okta_login'
-		return new Promise(resolve => {
-			AsyncStorages.getItem(key).then(res => {
-				const enable = (res === 'true');
-				resolve(enable)
-			}).catch(err => {
-				resolve(false)
-			})
-		})
+		const key = 'auto_okta_login';
+		return new Promise((resolve) => {
+			AsyncStorages.getItem(key)
+				.then((res) => {
+					const enable = res === 'true';
+					resolve(enable);
+				})
+				.catch((err) => {
+					resolve(false);
+				});
+		});
 	}
 };

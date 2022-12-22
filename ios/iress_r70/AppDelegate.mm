@@ -6,6 +6,11 @@
 
 #import <React/RCTAppSetupUtils.h>
 
+#import "ReactNativeConfig.h"
+#import <Firebase.h>
+#import "RNSplashScreen.h"
+#import <CodePush/CodePush.h>
+
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -32,6 +37,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   RCTAppSetupPrepareApp(application);
+  [FIRApp configure];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
 
@@ -57,6 +63,9 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+//  [RNSplashScreen showSplash:@"LaunchScreen" inRootView:rootView];
+  [RNSplashScreen show];
   return YES;
 }
 
@@ -87,7 +96,8 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  return [CodePush bundleURL];
+  // return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
 

@@ -27,7 +27,7 @@ import ORDER_ENUM from '../../../src/constants/order_enum';
 import * as Controller from '../../memory/controller';
 import { getDispathchFunc } from '../../memory/model';
 import * as Emitter from '@lib/vietnam-emitter';
-// import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as Util from '../../util';
 import * as RoleUser from '../../roleUser';
@@ -264,7 +264,8 @@ export function saveAccountInfo(payload) {
 function getUserSetting(userId) {
 	return new Promise((resolve) => {
 		const urlGet = api.getUrlUserSettingByUserId(userId, 'get');
-		api.requestData(urlGet, true)
+		api
+			.requestData(urlGet, true)
 			.then(async (data) => {
 				if (data && data !== 'null') {
 					// Set history search
@@ -275,9 +276,7 @@ function getUserSetting(userId) {
 					const isSound = data.notiSound;
 					// const homeScreen = data.homeScreen !== undefined && data.homeScreen !== null ? (data.homeScreen === 0 || data.homeScreen === 1) ? 0 : 2 : 0;
 					const tabId =
-						data.homeScreen && data.homeScreen !== -1
-							? data.homeScreen
-							: 0;
+						data.homeScreen && data.homeScreen !== -1 ? data.homeScreen : 0;
 					const tabSelected = HOME_SCREEN.find((e) => {
 						return e.id === tabId;
 					});
@@ -301,9 +300,7 @@ function getUserSetting(userId) {
 							? data.noti
 							: isNotify;
 					// Cập nhật lại setting language
-					Controller.dispatch(
-						settingActions.settingResponse(data, userId)
-					);
+					Controller.dispatch(settingActions.settingResponse(data, userId));
 					Controller.setLang(data.lang);
 					Controller.setFontSize(data.textFontSize);
 					// Change theme
@@ -355,16 +352,10 @@ export async function setDataLoginSuccess(
 				logDevice('info', `REFRESH TOKEN AT ${new Date()}`);
 				refreshToken()
 					.then(() => {
-						logDevice(
-							'info',
-							'auto refresh token after 15 minus success'
-						);
+						logDevice('info', 'auto refresh token after 15 minus success');
 					})
 					.catch((error) => {
-						logDevice(
-							'info',
-							'auto refresh token after 15 minus failed'
-						);
+						logDevice('info', 'auto refresh token after 15 minus failed');
 					});
 			}, TIME_REFRESH_TOKEN);
 		}
@@ -387,8 +378,7 @@ export async function setDataLoginSuccess(
 				initCacheOrderTransactions();
 			}
 
-			dataStorage.reloadAppAfterLogin &&
-				dataStorage.reloadAppAfterLogin();
+			dataStorage.reloadAppAfterLogin && dataStorage.reloadAppAfterLogin();
 		});
 	} catch (error) {
 		logAndReport(
@@ -396,10 +386,7 @@ export async function setDataLoginSuccess(
 			error,
 			'setDataLoginSuccess login action'
 		);
-		logDevice(
-			'info',
-			`setDataLoginSuccess login action exception: ${error}`
-		);
+		logDevice('info', `setDataLoginSuccess login action exception: ${error}`);
 	}
 }
 
@@ -425,9 +412,9 @@ function loginWithCustomToken(
 		};
 		logDevice(
 			'info',
-			`POST PIN - ACCOUNT: ${
-				objParam.email
-			} - DATA BODY - ${JSON.stringify(bodyData)}`
+			`POST PIN - ACCOUNT: ${objParam.email} - DATA BODY - ${JSON.stringify(
+				bodyData
+			)}`
 		);
 		console.log('PIN -', token);
 		const authUrl = api.getAuthUrl();
@@ -446,26 +433,21 @@ function loginWithCustomToken(
 					objParam.dispatch && objParam.dispatch(saveToken(data));
 					if (objParam.email === config.username) {
 						if (dataStorage.guestRefreshTokenInterval) {
-							clearInterval(
-								dataStorage.guestRefreshTokenInterval
-							);
+							clearInterval(dataStorage.guestRefreshTokenInterval);
 						}
 						if (dataStorage.refreshTokenInterval) {
 							clearInterval(dataStorage.refreshTokenInterval);
 						}
-						dataStorage.guestRefreshTokenInterval = setInterval(
-							() => {
-								refreshToken()
-									.then(() => {})
-									.catch((error) => {
-										logDevice(
-											'info',
-											`auto refresh token after 15 minus failed - ${error}`
-										);
-									});
-							},
-							TIME_REFRESH_TOKEN
-						);
+						dataStorage.guestRefreshTokenInterval = setInterval(() => {
+							refreshToken()
+								.then(() => {})
+								.catch((error) => {
+									logDevice(
+										'info',
+										`auto refresh token after 15 minus failed - ${error}`
+									);
+								});
+						}, TIME_REFRESH_TOKEN);
 						dataStorage.loginDefaultAccount &&
 							dataStorage.loginDefaultAccount(checked);
 						// Set lai email login in persist store
@@ -502,8 +484,7 @@ function setPinBeforeSignin(token, objParam) {
 					result ? JSON.stringify(result) : 'LOCAL STORAGE IS NULL'
 				}`
 			);
-			dataStorage.setNewPin &&
-				dataStorage.setNewPin(objParam, token, result);
+			dataStorage.setNewPin && dataStorage.setNewPin(objParam, token, result);
 		}
 	);
 }
@@ -639,8 +620,7 @@ export function loginIress({ accessToken }) {
 	HeaderNewsController.getDataCategory();
 	getPortfolioTypeAndLastAccount();
 	getUserPriceBoard(() => {
-		dataStorage.reloadAppAfterLogin &&
-			dataStorage.reloadAppAfterLogin(true);
+		dataStorage.reloadAppAfterLogin && dataStorage.reloadAppAfterLogin(true);
 	});
 	getStaticPriceBoard();
 	return dataStorage.reloadAppAfterLogin && dataStorage.reloadAppAfterLogin();
@@ -729,11 +709,7 @@ export function loginOkta(email, password, cbSuccess, cbFail) {
 						});
 					dataStorage.emailLogin = data.userLoginId || '';
 					setTimeout(() => {
-						handleStorage(
-							data.userLoginId,
-							data.accessToken,
-							dispatch
-						);
+						handleStorage(data.userLoginId, data.accessToken, dispatch);
 					}, 1000);
 
 					return loginIress({
@@ -817,8 +793,7 @@ export function login(
 					.then((data) => {
 						const { errorCode, code, message } = data;
 						if (errorCode) {
-							const errorMessage =
-								Business.getArrayError(errorCode);
+							const errorMessage = Business.getArrayError(errorCode);
 							return dispatch(loginError(errorMessage));
 						}
 						if (code || !data.accessToken) {
@@ -860,10 +835,7 @@ export function login(
 						});
 						errorCallback && errorCallback();
 						console.log('err: ', errorMessage);
-						logDevice(
-							'err',
-							`LOGIN PARITECH EXCEPTION ${errorMessage}`
-						);
+						logDevice('err', `LOGIN PARITECH EXCEPTION ${errorMessage}`);
 					});
 			} else {
 				// Auto login
@@ -978,8 +950,7 @@ export function resetPasswordQuantEdge(
 						} else {
 							errorCode = data.errorCode;
 						}
-						const errorText =
-							ORDER_ENUM[errorCode] || 'unknown_error';
+						const errorText = ORDER_ENUM[errorCode] || 'unknown_error';
 
 						errorCallback && errorCallback(errorCode);
 					}
@@ -1028,8 +999,7 @@ export function sendEmailForgotPassword(
 						} else {
 							errorCode = data.errorCode;
 						}
-						const errorText =
-							ORDER_ENUM[errorCode] || 'unknown_error';
+						const errorText = ORDER_ENUM[errorCode] || 'unknown_error';
 
 						errorCallback && errorCallback(errorText);
 						// const errorCode = data.errorCode

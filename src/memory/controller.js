@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Enum from '../enum';
 import Config from '../config';
 import I18n from '../modules/language';
@@ -735,8 +735,7 @@ export function checkCurrentPriceboardIsStatic(
 
 	const listPriceboardStatic = getAllPriceboardStatic();
 	return (
-		listPriceboardStatic.find((item) => item.watchlist === priceboardId) !=
-		null
+		listPriceboardStatic.find((item) => item.watchlist === priceboardId) != null
 	);
 }
 export function getPriceboardStaticById(priceboardId) {
@@ -766,9 +765,7 @@ export function addToWatchList(data) {
 			return null;
 		}
 
-		const priceBoardDetail = getPriceboardDetailInPriceBoard(
-			newData.watchlist
-		);
+		const priceBoardDetail = getPriceboardDetailInPriceBoard(newData.watchlist);
 		if (!priceBoardDetail) {
 			console.log('(Add) Priceboard detail not exist');
 			return null;
@@ -805,13 +802,8 @@ export function removeInWatchList(data) {
 			return null;
 		}
 
-		const priceBoardDetail = getPriceboardDetailInPriceBoard(
-			newData.watchlist
-		);
-		if (
-			!priceBoardDetail ||
-			!PureFunc.arrayHasItem(priceBoardDetail.value)
-		) {
+		const priceBoardDetail = getPriceboardDetailInPriceBoard(newData.watchlist);
+		if (!priceBoardDetail || !PureFunc.arrayHasItem(priceBoardDetail.value)) {
 			console.warn(
 				'(Remove)',
 				'Priceboard detail not exist, data:',
@@ -834,9 +826,7 @@ export function removeInWatchList(data) {
 		}
 		updateWatchlistById(priceBoardDetail);
 
-		const channelName = Channel.getChannelWatchlistChanged(
-			newData.watchlist
-		);
+		const channelName = Channel.getChannelWatchlistChanged(newData.watchlist);
 		Emitter.emit(channelName, priceBoardDetail);
 
 		return priceBoardDetail;
@@ -856,9 +846,7 @@ export function resetPriceBoardWatchList(data) {
 		newData.value.sort((a, b) => a.rank - b.rank);
 		updateWatchlistById(newData);
 
-		const channelChange = Channel.getChannelWatchlistChanged(
-			newData.watchlist
-		);
+		const channelChange = Channel.getChannelWatchlistChanged(newData.watchlist);
 		const channelUpdate = Channel.getChannelUpdatePriceboard();
 		Emitter.emit(channelChange, newData);
 		Emitter.emit(channelUpdate, newData);

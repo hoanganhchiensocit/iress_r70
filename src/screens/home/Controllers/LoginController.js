@@ -1,6 +1,5 @@
 import * as Controller from '~/memory/controller';
 import { Keyboard } from 'react-native';
-import AsyncStorages from '@react-native-community/async-storage';
 import {
 	changeEmail,
 	changePassWord,

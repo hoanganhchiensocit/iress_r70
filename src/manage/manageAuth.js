@@ -18,7 +18,7 @@ import {
 	oktaGetAccessToken,
 	oktaSignInWithBrowser
 } from '~/manage/manageOktaAuth';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as settingActions from '~s/setting/setting.actions';
 import * as FunctionUtil from '~/lib/base/functionUtil';
 // Enum
@@ -618,11 +618,7 @@ export function storeLastUserOktaLoginId() {
 			console.log('storeLastUserOktaLoginId SUCCESS');
 		})
 		.catch((err) => {
-			console.log(
-				'storeLastUserOktaLoginId EXCEPTION',
-				error,
-				error.message
-			);
+			console.log('storeLastUserOktaLoginId EXCEPTION', error, error.message);
 		});
 }
 export function getLastUserOktaLoginId() {
@@ -644,11 +640,7 @@ export function storeBiometricSetting(biometric) {
 			console.log('storeBiometricSetting SUCCESS');
 		})
 		.catch((err) => {
-			console.log(
-				'storeBiometricSetting EXCEPTION',
-				error,
-				error.message
-			);
+			console.log('storeBiometricSetting EXCEPTION', error, error.message);
 		});
 }
 export const getBiometricSetting = async () => {
