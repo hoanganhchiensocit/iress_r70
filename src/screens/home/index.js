@@ -174,13 +174,13 @@ const Home = ({ navigator }) => {
 	}, []);
 
 	useEffect(() => {
-		navigator.setDrawerEnabled({
+		navigator?.setDrawerEnabled({
 			side: 'left',
 			enabled: false
 		});
 
 		return () => {
-			navigator.setDrawerEnabled({
+			navigator?.setDrawerEnabled({
 				side: 'left',
 				enabled: true
 			});

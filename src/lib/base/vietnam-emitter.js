@@ -5,14 +5,14 @@ const dicPTC = {};
 const dicMidd = {};
 
 export function getId() {
-	return uuidv4();
+	return uuidv4.v4();
 }
 
 export function addListener(event, id, cb) {
 	if (!cb) return;
 	if (!dicFunc[event]) dicFunc[event] = [];
 	const idEvent = id || getId();
-	if (dicFunc[event].find(item => item.id === idEvent)) return;
+	if (dicFunc[event].find((item) => item.id === idEvent)) return;
 	dicFunc[event].push({
 		id: idEvent,
 		func: cb
@@ -26,7 +26,7 @@ export function emit(event, data) {
 	if (dicMidd[event] && typeof dicMidd[event] === 'function') {
 		newData = dicMidd[event](newData, data);
 	}
-	dicFunc[event].map(item => item.func(newData));
+	dicFunc[event].map((item) => item.func(newData));
 }
 
 export function emitById(event, id, data) {
@@ -35,9 +35,9 @@ export function emitById(event, id, data) {
 	if (dicMidd[event] && typeof dicMidd[event] === 'function') {
 		newData = dicMidd[event](newData, data);
 	}
-	dicFunc[event].map(item => item.func(newData));
-	const objEmit = dicFunc[event].find(e => e.id === id)
-	objEmit && objEmit.func && objEmit.func(newData)
+	dicFunc[event].map((item) => item.func(newData));
+	const objEmit = dicFunc[event].find((e) => e.id === id);
+	objEmit && objEmit.func && objEmit.func(newData);
 }
 
 export function setMiddleware(event, handleDataFunc) {
@@ -63,22 +63,22 @@ export function deleteEvent(event) {
 }
 
 export function deleteEventById(event, id) {
-	if (!dicFunc[event]) return
-	const idx = dicFunc[event].findIndex(e => e.id === id)
-	if (idx === -1) return
+	if (!dicFunc[event]) return;
+	const idx = dicFunc[event].findIndex((e) => e.id === id);
+	if (idx === -1) return;
 	dicFunc[event].splice(idx, 1);
 }
 
 export function deleteByIdEvent(idEvent) {
 	if (!dicFunc) return;
-	Object.keys(dicFunc).map(event => {
+	Object.keys(dicFunc).map((event) => {
 		deleteListener(event, idEvent);
 	});
 }
 
 export function addChildPTC(parentID, childID, func) {
 	dicPTC[parentID] = dicPTC[parentID] || [];
-	if (dicPTC[parentID].find(a => a.childID === childID)) return;
+	if (dicPTC[parentID].find((a) => a.childID === childID)) return;
 	dicPTC[parentID].push({
 		childID,
 		func
@@ -86,9 +86,9 @@ export function addChildPTC(parentID, childID, func) {
 }
 
 export function parentEmitPTC(parentID, param = {}, isPromise) {
-	return new Promise(resolve => {
+	return new Promise((resolve) => {
 		if (!dicPTC[parentID]) return resolve();
-		const listResul = dicPTC[parentID].map(item => item.func(clone(param)));
+		const listResul = dicPTC[parentID].map((item) => item.func(clone(param)));
 		return isPromise
 			? Promise.all(listResul).then(resolve)
 			: resolve(listResul);
