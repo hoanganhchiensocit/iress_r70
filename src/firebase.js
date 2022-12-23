@@ -1,4 +1,4 @@
-import RNFirebase from '@react-native-firebase/app';
+import RNFirebase from 'react-native-firebase';
 // const configurationOptions = {
 // 	debug: false,
 // 	errorOnMissingPlayServices: true,
