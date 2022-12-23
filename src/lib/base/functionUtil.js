@@ -8,7 +8,7 @@ import {
 import _ from 'underscore';
 import Big from 'big.js';
 import firebase from '../../firebase';
-import RNFirebase from '@react-native-firebase/app';
+import RNFirebase from 'react-native-firebase';
 import { iconsMap } from '../../utils/AppIcons';
 import { func, dataStorage } from '../../storage';
 import userType from '../../constants/user_type';
