@@ -11,6 +11,7 @@ import BusyBox from '../screens/busybox/busybox';
 import { ScreenEnum } from '../navigation/screenEnum';
 import Home from '../screens/home/';
 import Splash from '../screens/splash/Splash';
+import { Login } from '~/screens/login/login';
 
 const Stack = createNativeStackNavigator();
 const screenOptions = {
@@ -24,22 +25,22 @@ function AppStack() {
 	return (
 		<NavigationContainer ref={navigationRef}>
 			<Stack.Navigator>
-				{/* <Stack.Screen
+				<Stack.Screen
 					name={ScreenEnum.SPLASH}
 					component={Splash}
 					options={screenOptions}
-				/> */}
+				/>
 				<Stack.Screen
 					name={ScreenEnum.HOME}
 					component={Home}
 					options={screenOptions}
 				/>
 				{/*<Stack.Screen name="Login" component={Login}/>*/}
-				<Stack.Screen
+				{/* <Stack.Screen
 					name={ScreenEnum.BUSY_BOX}
 					component={BusyBox}
 					options={screenOptions}
-				/>
+				/> */}
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

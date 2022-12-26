@@ -95,10 +95,12 @@ const LoginButton = React.forwardRef((props, ref) => {
 	);
 
 	const error = useSelector((state) => state.login.error, shallowEqual);
-	const isLoading = useSelector(
-		(state) => state.login.isLoading,
-		shallowEqual
-	);
+	//DUCLM
+	const isLoading = false;
+	// const isLoading = useSelector(
+	// 	(state) => state.login.isLoading,
+	// 	shallowEqual
+	// );
 	const disabled =
 		props.loginType === LOGIN_TYPE.OKTA
 			? useDisabledButtonByOkata({
@@ -150,10 +152,8 @@ const LoginButton = React.forwardRef((props, ref) => {
 			Controller.dispatch(loginActions.loginRequestGuest());
 
 			const checkAutoLogin = async (refreshToken) => {
-				const {
-					link_okta: linkOkta = '',
-					okta_app_client_id: clientId = ''
-				} = getRegionSelected() || {};
+				const { link_okta: linkOkta = '', okta_app_client_id: clientId = '' } =
+					getRegionSelected() || {};
 				let url = linkOkta + '/v1/token?';
 				const query = {
 					client_id: clientId,
@@ -215,10 +215,7 @@ const LoginButton = React.forwardRef((props, ref) => {
 					dataStorage.isOkta = true;
 					dataStorage.isLoggedInOkta = true;
 					Controller.dispatch(
-						loginActions.loginOkta(
-							'okta@novus-fintech',
-							accessToken
-						)
+						loginActions.loginOkta('okta@novus-fintech', accessToken)
 					);
 				} else {
 					throw new Error('isLogout');
