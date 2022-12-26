@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.iress_r70">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.iress_r70">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <!--    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />-->
@@ -76,21 +77,21 @@
         </provider>
 
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-<!--        <activity-->
-<!--                tools:node="replace"-->
-<!--                android:name="com.okta.oidc.OktaRedirectActivity"-->
-<!--                android:autoRemoveFromRecents="true"-->
-<!--                android:exported="true"-->
-<!--                android:launchMode="singleInstance"-->
-<!--                tools:targetApi="lollipop" >-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+        <activity
+                tools:node="replace"
+                android:name="com.okta.oidc.OktaRedirectActivity"
+                android:autoRemoveFromRecents="true"
+                android:exported="true"
+                android:launchMode="singleInstance"
+                tools:targetApi="lollipop" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-<!--                <data android:scheme="com.iress.tmd.mobile.prod.iress" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+                <data android:scheme="com.iress.tmd.mobile.prod.iress" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

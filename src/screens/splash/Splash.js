@@ -8,7 +8,7 @@ import {
 	postBrokerName2
 } from '../home/Controllers/RegionController';
 import { dataStorage } from '~/storage';
-import { navigationRef } from '~/navigator/Navigation';
+import Navigation from '~/navigator/Navigation';
 import performanceEnum from '../../constants/performance';
 import config from '../../config';
 import ENUM from '~/enum';
@@ -25,6 +25,7 @@ import Perf from '../../lib/base/performance_monitor';
 import { resetLoginLoading } from '../login/login.actions';
 import { setBrokerName } from '../home/Model/LoginModel';
 import { logDevice } from '../../lib/base/functionUtil';
+import { ScreenEnum } from "../../navigation";
 
 const { height, width } = Dimensions.get('window');
 const topHeight = height * 0.45;
@@ -196,7 +197,13 @@ export class Splash extends React.PureComponent {
 			const listRegion = await getListRegion();
 			console.log('listRegion', listRegion);
 			dataStorage.listRegion = listRegion;
-			navigationRef.navigate('Home');
+			// Navigation.navigate('Home');
+
+			//ChienHA
+			//tạm fix
+			// Navigation.navigate(ScreenEnum.AUTO_LOGIN);
+			// Navigation.navigate(ScreenEnum.MAIN);
+			Navigation.navigate(ScreenEnum.ACTIVITIES);
 		} catch (error) {
 			dataStorage.listRegion = [];
 			// loginError(error.message);

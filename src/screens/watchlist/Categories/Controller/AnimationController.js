@@ -46,22 +46,23 @@ export function getAniStyles(animated, animation, index, options) {
     const config = ANIMATION_DEFINITIONS[animation] || { from: 0, to: 0 };
     const styleConfig = getStyleConfig(config);
     const styles = {};
-    _.forEach(styleConfig, (value, key) => {
-        const mapState = interpolate(animated, {
-            inputRange: getInputRange(index, options),
-            outputRange: [value.from, value.from, value.to, value.to]
-        });
-        if (TRANSFORM_STYLE_PROPERTIES.indexOf(key) !== -1) {
-            if (!styles.transform) {
-                styles.transform = [];
-            }
-            styles.transform.push({
-                [key]: mapState
-            });
-        } else {
-            styles[key] = mapState;
-        }
-    });
+    //ChienHA
+    // _.forEach(styleConfig, (value, key) => {
+    //     const mapState = interpolate(animated, {
+    //         inputRange: getInputRange(index, options),
+    //         outputRange: [value.from, value.from, value.to, value.to]
+    //     });
+    //     if (TRANSFORM_STYLE_PROPERTIES.indexOf(key) !== -1) {
+    //         if (!styles.transform) {
+    //             styles.transform = [];
+    //         }
+    //         styles.transform.push({
+    //             [key]: mapState
+    //         });
+    //     } else {
+    //         styles[key] = mapState;
+    //     }
+    // });
 
     return styles;
 }

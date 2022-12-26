@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 export const ScreenEnum = {
-	TRADE: 'Trade',
 	FIND_WATCH_LIST: 'FindWatchlist',
 	CREATE_PRICEBOARD: 'CreatePriceboard',
 	MANAGE_PRICEBOARD_PERSONAL: 'ManagePriceboardPersonal',
@@ -17,11 +16,16 @@ export const ScreenEnum = {
 	ABOUT_US: 'AboutUs',
 	LOGS: 'Logs',
 	NETWORK_ALERT: 'NetworkAlert',
-	ORDERS: 'Orders',
 	HOME: 'Home',
 	LOGIN: 'Login',
 	USER: 'User',
-	SPLASH: 'Splash'
+	SPLASH: 'Splash',
+
+	MAIN: 'Main',
+	ACTIVITIES: 'Activities',
+	TRADE: 'Trade',
+	PORTFOLIO: 'Portfolio',
+	ORDERS: 'Orders',
 };
 
 // const addPreKeyScreen = () => {

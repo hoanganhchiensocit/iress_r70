@@ -362,8 +362,6 @@ export class AutoLogin extends Component {
 	_onPinCompleted(pinCode) {
 		this.pin = pinCode
 		const refPin = this.authenPin
-		const store = Controller.getGlobalState();
-		const login = store.login;
 		const refreshToken = this.props.token
 		pinComplete(pinCode, refPin, this.authenSuccessCb, this.authenErrorCb, this.params, refreshToken, true, this.closeAuthenPin)
 	}
