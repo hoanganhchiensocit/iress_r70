@@ -25,6 +25,11 @@
 		B78166A829537CD200215DBC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B79E2A1629536B310055DD5C /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B79E2A1529536B310055DD5C /* beep.mp3 */; };
 		B79E2A1929536B5B0055DD5C /* Iress_r70.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79E2A1829536B5B0055DD5C /* Iress_r70.swift */; };
+		B7AE2E54295948AE00B8A793 /* SmartInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AE2E4A295948AE00B8A793 /* SmartInput.swift */; };
+		B7AE2E55295948AE00B8A793 /* SmartInputManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AE2E4B295948AE00B8A793 /* SmartInputManager.m */; };
+		B7AE2E56295948AE00B8A793 /* SmartInputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AE2E4C295948AE00B8A793 /* SmartInputManager.swift */; };
+		B7AE2E57295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AE2E50295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboard.m */; };
+		B7AE2E58295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AE2E51295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboardManager.m */; };
 		B7B66678295365B2001610A4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7B66677295365B2001610A4 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +72,14 @@
 		B79E2A1529536B310055DD5C /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = beep.mp3; path = ../src/media/beep.mp3; sourceTree = "<group>"; };
 		B79E2A1729536B5A0055DD5C /* iress_r70-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iress_r70-Bridging-Header.h"; sourceTree = "<group>"; };
 		B79E2A1829536B5B0055DD5C /* Iress_r70.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iress_r70.swift; sourceTree = "<group>"; };
+		B7AE2E4A295948AE00B8A793 /* SmartInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartInput.swift; sourceTree = "<group>"; };
+		B7AE2E4B295948AE00B8A793 /* SmartInputManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmartInputManager.m; sourceTree = "<group>"; };
+		B7AE2E4C295948AE00B8A793 /* SmartInputManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartInputManager.swift; sourceTree = "<group>"; };
+		B7AE2E4F295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTSinglelineTextInputViewAvoidKeyboardManager.h; sourceTree = "<group>"; };
+		B7AE2E50295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTSinglelineTextInputViewAvoidKeyboard.m; sourceTree = "<group>"; };
+		B7AE2E51295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTSinglelineTextInputViewAvoidKeyboardManager.m; sourceTree = "<group>"; };
+		B7AE2E52295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTSinglelineTextInputViewAvoidKeyboard.h; sourceTree = "<group>"; };
+		B7AE2E53295948AE00B8A793 /* RCTBackedTextInputViewAvoidKeyboardProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTBackedTextInputViewAvoidKeyboardProtocol.h; sourceTree = "<group>"; };
 		B7B66677295365B2001610A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -111,6 +124,10 @@
 		13B07FAE1A68108700A75B9A /* iress_r70 */ = {
 			isa = PBXGroup;
 			children = (
+				B7AE2E4A295948AE00B8A793 /* SmartInput.swift */,
+				B7AE2E4B295948AE00B8A793 /* SmartInputManager.m */,
+				B7AE2E4C295948AE00B8A793 /* SmartInputManager.swift */,
+				B7AE2E4D295948AE00B8A793 /* TextInputAvoidKeyboard */,
 				B79E2A1529536B310055DD5C /* beep.mp3 */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -181,6 +198,26 @@
 				B7089F4E295410A60094EA53 /* SourceSansPro-SemiBold.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		B7AE2E4D295948AE00B8A793 /* TextInputAvoidKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				B7AE2E4E295948AE00B8A793 /* Singleline */,
+				B7AE2E53295948AE00B8A793 /* RCTBackedTextInputViewAvoidKeyboardProtocol.h */,
+			);
+			path = TextInputAvoidKeyboard;
+			sourceTree = "<group>";
+		};
+		B7AE2E4E295948AE00B8A793 /* Singleline */ = {
+			isa = PBXGroup;
+			children = (
+				B7AE2E4F295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboardManager.h */,
+				B7AE2E50295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboard.m */,
+				B7AE2E51295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboardManager.m */,
+				B7AE2E52295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboard.h */,
+			);
+			path = Singleline;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -470,7 +507,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				B7AE2E55295948AE00B8A793 /* SmartInputManager.m in Sources */,
+				B7AE2E56295948AE00B8A793 /* SmartInputManager.swift in Sources */,
 				B79E2A1929536B5B0055DD5C /* Iress_r70.swift in Sources */,
+				B7AE2E57295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboard.m in Sources */,
+				B7AE2E58295948AE00B8A793 /* RCTSinglelineTextInputViewAvoidKeyboardManager.m in Sources */,
+				B7AE2E54295948AE00B8A793 /* SmartInput.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
