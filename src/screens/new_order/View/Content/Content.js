@@ -1,11 +1,9 @@
-import React, { useEffect, useState, useCallback, useMemo, useLayoutEffect, useRef } from 'react'
-import { View, Text, Animated, Easing, Platform } from 'react-native'
-import PropTypes from 'prop-types'
-import ReAnimated from 'react-native-reanimated'
+import React, { useEffect, useState, useMemo, useLayoutEffect, useRef } from 'react'
+import { View, Animated, Platform } from 'react-native'
+import {EasingNode as Easing} from "react-native-reanimated";
 // View
 import SymbolInfo from './SymbolInfo'
 import AccountManage from '~/screens/new_order/View/Content/AccountManage.js'
-import LotsizeManage from '~/screens/new_order/View/Content/LotsizeManage'
 import TouchableDismissKeyboard from '~/component/virtual_keyboard/TouchableDismissKeyboard.js'
 import LayoutContent from '~/screens/new_order/View/Content/Layout/LayoutContent.js'
 import TabsLayout from '~/screens/new_order/View/Content/Layout/TabLayout.js'
@@ -21,7 +19,6 @@ import { activeContingent, changeLayout, changeTypeInputOrderContingent, setTrig
 import * as ConditionModel from '~/screens/new_order/Model/PriceBaseContingentConditionModel';
 import * as TabModel from '~/screens/new_order/Model/PriceBaseContingentTabModel';
 
-const { cond, greaterOrEq, lessThan, block, call, multiply, useCode } = ReAnimated
 const Comp = ({ index, animatedValue = new Animated.Value(0), children }) => {
 	const [isShow, setShow] = useState(false);
 	const dic = useRef({ init: true })

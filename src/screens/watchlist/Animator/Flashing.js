@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 
 import Animations from '~s/watchlist/Animator/Animations';
 import CommonStyle, { register } from '~/theme/theme_controller';

@@ -1,12 +1,8 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import {
-    View,
-    Text,
     StyleSheet,
-    TouchableOpacity,
-    TextInput
 } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 const {
     set,
     cond,

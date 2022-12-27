@@ -1,4 +1,4 @@
-import React, { PureComponent, useState, useEffect } from 'react';
+import React, { PureComponent } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -10,7 +10,7 @@ import FlatList from '../../Animator/FLatListAni';
 import Header from './header';
 import Row from './row';
 import TouchableOpacityOpt from '@component/touchableOpacityOpt';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 import ENUM from '~/enum';
 import {
 	setActiveScreen,

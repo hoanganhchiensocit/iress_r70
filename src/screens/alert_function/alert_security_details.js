@@ -1,13 +1,10 @@
 import React from 'react';
 import {
     View,
-    TextInput,
     Text,
-    TouchableOpacity,
     ScrollView,
     Dimensions
 } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
 // Emitter
 import * as Emitter from '@lib/vietnam-emitter';
 // Style
@@ -19,15 +16,11 @@ import * as FunctionUtil from '../../lib/base/functionUtil';
 // Component
 import XComponent from '../../component/xComponent/xComponent';
 import I18n from '../../modules/language/';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import PricePiece from '../../component/price_child/price_piece';
 import TextLoading from '~/component/loading_component/text.1';
-import ViewLoadingReAni from '~/component/loading_component/view1';
-const { SYMBOL_CLASS, SYMBOL_CLASS_QUERY, PRICE_DECIMAL } = ENUM;
+const { PRICE_DECIMAL } = ENUM;
 
 const { width, height } = Dimensions.get('window');
-const per3Screen = (width - 16) / 3;
-const per4Screen = (width - 16) / 4;
 const per2Dot5Screen = (width - 16) / 2.5;
 
 export default class SecurityDetails extends XComponent {

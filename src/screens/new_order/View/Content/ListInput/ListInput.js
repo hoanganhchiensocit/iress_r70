@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
-import { View, Animated, Easing } from 'react-native';
+import { View, Animated } from 'react-native';
+import {EasingNode as Easing} from "react-native-reanimated";
 import { useSelector } from 'react-redux';
 
 import OrderType from './OrderType';

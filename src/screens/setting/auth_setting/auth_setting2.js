@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // import { Navigation } from 'react-native-navigation'
 import {
-    View, Text, TouchableOpacity, Switch, Platform, ScrollView,
-    Image, PixelRatio, Keyboard, Linking, NativeModules, Alert, FlatList, TouchableWithoutFeedback,
-    Animated, Easing, Dimensions
+    View, Text, TouchableOpacity, Platform,
+    Image, PixelRatio, Keyboard, Linking, NativeModules, TouchableWithoutFeedback,
+    Animated, Dimensions
 } from 'react-native';
+import {EasingNode as Easing} from "react-native-reanimated";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import NetworkWarning from '../../../component/network_warning/network_warning';
 import * as loginActions from '../../login/login.actions';
 import * as authSettingActions from './auth_setting.actions';
 import * as settingActions from '../setting.actions'
@@ -17,44 +17,31 @@ import I18n from '../../../modules/language/index';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
 import {
-    logAndReport, log, setStyleNavigation, removeItemFromLocalStorage, saveItemInLocalStorage,
-    offTouchIDSetting, logDevice, pinComplete, authPin, setNewPinToken, forgotPinWithAccessToken,
+    logAndReport, saveItemInLocalStorage,
+    offTouchIDSetting, logDevice, pinComplete, forgotPinWithAccessToken,
     clone, isIphoneXorAbove
 } from '../../../lib/base/functionUtil';
-import firebase from '../../../firebase';
 import { func, dataStorage } from '../../../storage';
 import { setCurrentScreen } from '../../../lib/base/analytics';
 import Auth from '../../../lib/base/auth';
-import { iconsMap } from '../../../utils/AppIcons';
-import { List, ListItem } from 'react-native-elements';
+import { List } from 'react-native-elements';
 import config from '../../../config';
-// import LocalAuth from 'react-native-local-auth';
-// import Finger from 'react-native-touch-id-android'
-import { VibrancyView, BlurView } from '@react-native-community/blur';
-import Pin from '../../../component/pin/pin';
-import Modal from 'react-native-modal';
-import * as Animatable from 'react-native-animatable';
 import AuthenByPin from '../../../component/authen_by_pin/authen_by_pin';
 import PromptNew from '../../../component/new_prompt/prompt_new';
 import TouchAlert from './TouchAlert';
-import deviceModel from '../../../constants/device_model';
 import analyticsEnum from '../../../constants/analytics';
 import ScreenId from '../../../constants/screen_id'
-import ModalPicker from './../../modal_picker/modal_picker';
 import PIN_SETTING from '../../../constants/pin_setting.json'
 import SETTING_TYPE from '../../../constants/setting_type'
 import { translateCustomLang, getListInvertTranslate, getInvertTranslate } from '../../../../src/invert_translate';
-import PasswordPrompt from '../../../component/change_password/password_prompt';
 import * as Controller from '../../../memory/controller';
 import * as Util from '../../../util';
-import DeviceInfo from 'react-native-device-info';
 import TouchableOpacityOpt from '../../../component/touchableOpacityOpt';
 import ENUM from '../../../enum';
 import Header from '../../../../src/component/headerNavBar/index'
 import Icon from '../../../../src/component/headerNavBar/icon'
 import RowItem from './RowItem'
 import SwitchButton from '~/screens/alert_function/components/SwitchButton'
-import BottomTabBar from '~/component/tabbar'
 import FallHeader from '~/component/fall_header'
 import * as Emitter from '@lib/vietnam-emitter';
 import Uuid from 'react-native-uuid'

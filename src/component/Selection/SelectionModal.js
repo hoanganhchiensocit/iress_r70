@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ScrollView } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 
 import CommonStyle, { register } from '~/theme/theme_controller'
 

@@ -1,13 +1,11 @@
 import React, { useMemo, useState, useCallback, useRef, useImperativeHandle, useEffect } from 'react'
 import {
-    View, Text, Dimensions, StyleSheet, Animated as TestAnimated
+    View, Dimensions, StyleSheet
 } from 'react-native'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated  from 'react-native-reanimated'
 import BackDropView from '~s/watchlist/Component/BackDropView2';
 import NestedScrollView from '~s/watchlist/Component/NestedScroll/WatchlistNested';
 import * as Animatable from 'react-native-animatable'
-import I18n from '~/modules/language/';
-import HeaderPanner from '~s/watchlist/Detail/components/HeaderPanner';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
 import { func, dataStorage } from '~/storage';

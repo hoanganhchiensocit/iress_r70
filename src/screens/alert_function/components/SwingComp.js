@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
+import { StyleSheet} from 'react-native';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import React, { Component } from 'react';
 
 const {

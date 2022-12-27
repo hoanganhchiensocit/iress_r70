@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Keyboard, TextInput, Platform, Dimensions, StatusBar } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated'
+import { Keyboard, Platform, Dimensions, StatusBar } from 'react-native';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 const {
     Value,
     add,

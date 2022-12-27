@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef } from 'react'
-import { View, Text, Keyboard, Platform, StatusBar } from 'react-native'
-import Animated, { Easing } from 'react-native-reanimated';
+import { Keyboard, Platform } from 'react-native'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 const useRegisterKeyboard = ({ handleKeyboardShow, handleKeyboardHide }) => {
     return useEffect(() => {
         const showListener = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';

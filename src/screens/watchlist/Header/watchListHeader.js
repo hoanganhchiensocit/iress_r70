@@ -6,7 +6,7 @@ import {
     ActivityIndicator,
     Platform
 } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 
 import * as RoleUser from '~/roleUser';
 import * as Controller from '~/memory/controller';

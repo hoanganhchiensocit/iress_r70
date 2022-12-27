@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
-import { connect } from 'react-redux'
 import { View, Text, Dimensions } from 'react-native'
 import CustomIcon from '~/component/Icon'
 import CommonStyle from '~/theme/theme_controller'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 import * as Emitter from '@lib/vietnam-emitter';
 import { getChangeHideErrorNews, getChangeShowErrorNews } from '~/streaming/channel'
 import ENUM from '~/enum'
-import I18n from '~/modules/language'
-import Shadow from '~/component/shadow/SvgShadowBottom';
 
 const { width: widthDevices, height: heightDevices } = Dimensions.get('window')
 const { TIMEOUT_HIDE_ERROR, TYPE_MESSAGE } = ENUM

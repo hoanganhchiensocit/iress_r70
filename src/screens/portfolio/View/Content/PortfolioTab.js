@@ -6,7 +6,7 @@ import TabChangeButton from './TabChangeButton'
 import TabTitle from './TabTitle'
 import TabContent from './TabContent'
 import I18n from '~/modules/language/'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 import CommonStyle from '~/theme/theme_controller'
 import { useSelector } from 'react-redux'
 const {

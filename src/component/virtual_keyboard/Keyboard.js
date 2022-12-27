@@ -6,7 +6,6 @@ import React, {
 	useState,
 	useLayoutEffect
 } from 'react';
-import { connect } from 'react-redux';
 import {
 	View,
 	Text,
@@ -17,23 +16,17 @@ import {
 	Platform
 } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
-import Animated, { Easing } from 'react-native-reanimated';
-import PropsType from 'prop-types';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import Shadow from '~/component/shadow';
 import * as Emitter from '@lib/vietnam-emitter';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { runSpring } from '~/component/virtual_keyboard/HandleAnimation.js';
 import { timing } from '~/lib/redash/index.js';
 import * as Util from '~/util';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-// import InfoPrice from './InfoPrice'
 import CommonStyle, { register } from '~/theme/theme_controller';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/index';
-import ENUM from '~/enum';
 import { getChannelChangeOrderError } from '~/streaming/channel';
 import { dataStorage } from '~/storage';
-// import Shadow from '~/component/shadow/index.js'
-import ScreenId from '~/constants/screen_id';
 export function getChannelChangeText(inputId) {
 	return `${Channel.CHANGE_TEXT}#${inputId}`;
 }
@@ -716,9 +709,5 @@ const NumberInput = React.memo(
 	},
 	() => true
 );
-KeyBoardWithButtomConfirm.PropTypes = {
-	titleButton: PropsType.string.isRequired,
-	onConfirm: PropsType.func.isRequired
-};
 
 export default KeyBoardWithButtomConfirm;

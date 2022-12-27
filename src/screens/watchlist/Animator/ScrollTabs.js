@@ -1,8 +1,8 @@
-import React, { PureComponent, Component } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import React, { PureComponent } from 'react';
+import { TouchableOpacity, View, StyleSheet } from 'react-native';
 import _ from 'lodash';
 
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 
 const {
     set,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, Dimensions, Keyboard, Text, TextInput, TouchableOpacity, View, ImageBackground, StyleSheet } from 'react-native';
 import I18n from '../../../../modules/language/index';
-import ReAnimated, { Easing } from 'react-native-reanimated'
+import ReAnimated, { EasingNode as Easing } from 'react-native-reanimated'
 import { dataStorage } from '../../../../storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Emitter from '@lib/vietnam-emitter';

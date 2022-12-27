@@ -1,9 +1,9 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
-import { Text, View, Dimensions } from 'react-native';
+import React, { useEffect, useMemo } from 'react';
+import { Dimensions } from 'react-native';
 import * as Util from '~/util';
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 import * as Emitter from '@lib/vietnam-emitter';
-import { Channel, TYPE_SHOW } from './Keyboard'
+import { Channel } from './Keyboard'
 
 const { width: widthDevices, height: heightDevices } = Dimensions.get('window')
 const useListenShow = function (translateY) {

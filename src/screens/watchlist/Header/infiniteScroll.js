@@ -3,10 +3,10 @@ import {
 	FlatList,
 	Animated,
 	View,
-	Easing,
 	ScrollView,
 	TouchableWithoutFeedback
 } from 'react-native';
+import {EasingNode as Easing} from "react-native-reanimated";
 import _ from 'lodash';
 import * as Emitter from '@lib/vietnam-emitter'
 

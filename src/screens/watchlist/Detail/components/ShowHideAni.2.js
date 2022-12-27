@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 
 const {
     cond,

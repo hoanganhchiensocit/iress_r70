@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import Animation, { Easing } from 'react-native-reanimated'
+import Animation, { EasingNode as Easing } from 'react-native-reanimated'
 const { block, cond, and, Value, Clock, set, eq, timing, concat, clockRunning, startClock } = Animation
 
 export default class SwingAnimator extends Component {

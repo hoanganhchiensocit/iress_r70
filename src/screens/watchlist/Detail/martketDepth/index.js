@@ -10,7 +10,7 @@ import FlatList from '../../Animator/FLatListAni';
 import Header from './header';
 import Row from './row';
 import TouchableOpacityOpt from '@component/touchableOpacityOpt';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 
 const { block, call, cond, eq, and, set } = Animated;
 

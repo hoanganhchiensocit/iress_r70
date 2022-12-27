@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback } from 'react'
 import { View, Text } from 'react-native'
 import CommonStyle from '~/theme/theme_controller'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated  from 'react-native-reanimated'
 
 const {
     Value
