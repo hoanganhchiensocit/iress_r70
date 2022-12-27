@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, ImageBackground, Dimensions, Platform } from 'react-native'
-import pinBackground from '~/img/background_mobile/playBGNews1.png'
+import { View, Text, Dimensions, Platform } from 'react-native'
 import CommonStyle from '~/theme/theme_controller'
 import TagAffectedSymbol from './TagAffectedSymbol'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 import InfiniteScroll from '~s/watchlist/Component/InfinitScroll';
 import * as NewDetailController from '~s/news_v3/controller/NewDetailController'
 import ENUM from '~/enum'

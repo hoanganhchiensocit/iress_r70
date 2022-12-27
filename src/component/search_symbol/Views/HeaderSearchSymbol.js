@@ -1,7 +1,6 @@
-import React, { useRef, useMemo, useCallback, useContext, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated'
-import PropTypes from 'prop-types'
+import React, { useRef, useMemo, useCallback } from 'react';
+import { View } from 'react-native';
+import Animated  from 'react-native-reanimated'
 import * as Emitter from '@lib/vietnam-emitter'
 import { connect, useSelector, useDispatch, shallowEqual } from 'react-redux';
 

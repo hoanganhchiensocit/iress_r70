@@ -6,7 +6,7 @@ import {
     View
 } from 'react-native';
 import _ from 'lodash';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import {
     PanGestureHandler,
     TapGestureHandler,

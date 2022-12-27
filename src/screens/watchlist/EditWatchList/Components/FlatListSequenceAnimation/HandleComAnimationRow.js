@@ -1,7 +1,6 @@
-import React, { PureComponent, Component, useCallback, useEffect, useMemo } from 'react';
-import { View, Text, FlatList, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated'
-import DraggableFlatList from 'react-native-draggable-flatlist';
+import React, { useEffect, useMemo } from 'react';
+import { Dimensions } from 'react-native';
+import Animated  from 'react-native-reanimated'
 import { SquenceView } from '~/screens/watchlist/EditWatchList/Components/FlatListSequenceAnimation/index.js'
 
 import { timing } from '~/lib/redash/index.js'

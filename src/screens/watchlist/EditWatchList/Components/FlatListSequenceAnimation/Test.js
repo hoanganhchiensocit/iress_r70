@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import { View, Text } from 'react-native'
-import Animated, { Easing } from 'react-native-reanimated'
-import PropTypes from 'prop-types'
+import React, { useCallback, useMemo } from 'react'
+import { View } from 'react-native'
+import Animated  from 'react-native-reanimated'
 import SortableList from '~/component/sort_able/index'
 import RowSymbol from '~/screens/watchlist/EditWatchList/Views/Content/Row/Index.js'
 import { SquenceView, TYPE_ANIMATION } from '~/screens/watchlist/EditWatchList/Components/FlatListSequenceAnimation/index.js'
@@ -10,8 +9,7 @@ import * as PriceBoardModel from '~/screens/watchlist/EditWatchList/Model/PriceB
 
 import { useDispatch } from 'react-redux'
 import { updateKeyTopIndex as updateTopIndex, updateListSymbol } from '~/screens/watchlist/EditWatchList/Redux/actions.js'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-const { Extrapolate, block, eq, cond, set, clockRunning, stopClock, Value, not, Clock, call, and, sub } = Animated
+const { Value } = Animated
 
 const Test = ({
     data = []

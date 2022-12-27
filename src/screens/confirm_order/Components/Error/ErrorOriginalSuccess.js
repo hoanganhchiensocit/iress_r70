@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import CommonStyle from '~/theme/theme_controller'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 import * as Emitter from '@lib/vietnam-emitter';
 import { getChannelHideError, getChangeShowErrorSuccess, getChannelHideOrderError } from '~/streaming/channel'
 import ENUM from '~/enum'

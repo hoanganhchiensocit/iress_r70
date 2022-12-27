@@ -1,9 +1,8 @@
-import React, { useRef, useMemo, useCallback, useContext, useEffect, useState, useLayoutEffect } from 'react';
-import { Text, View, StyleSheet, UIManager } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated'
-import PropTypes from 'prop-types'
+import React, { useRef, useMemo, useCallback, useState, useLayoutEffect } from 'react';
+import { View, UIManager } from 'react-native';
+import Animated  from 'react-native-reanimated'
 import * as Emitter from '@lib/vietnam-emitter'
-import { connect, useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 import { ScrollBarUndelineCustomV2 } from '~/screens/alert_function/components/SearchBar/index.js';
 import TopHeader from '~/component/add_symbol/Views/Header/TopHeader.js'

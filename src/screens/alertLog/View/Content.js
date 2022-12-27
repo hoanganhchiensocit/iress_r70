@@ -1,17 +1,11 @@
-import React, { useCallback, useRef, useMemo, useEffect } from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import React, { useCallback } from 'react'
+import { StyleSheet, View, Dimensions } from 'react-native'
 import AlertList from '~s/alertLog/View/AlertList'
 import NotifcationList from '~/screens/alertLog/View/NotificationList'
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import ENUM from '~/enum'
 import { getAlertTag, getListAlertID } from '~s/alertLog/Model/AlertLogModel';
-import Animated, { Easing } from 'react-native-reanimated'
 
 const { ALERT_TAG } = ENUM
-const {
-    Value,
-    timing
-} = Animated
 const { width: DEVICE_WIDTH } = Dimensions.get('window')
 const Content = ({ navigator, updateActiveStatus, activeTab }) => {
     const renderContent = useCallback(() => {

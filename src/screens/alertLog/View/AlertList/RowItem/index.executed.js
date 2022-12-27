@@ -1,16 +1,14 @@
 import React, {
-    useEffect, useMemo, useRef, useImperativeHandle, useCallback, useState
+    useMemo, useRef, useCallback
 } from 'react'
-import { StyleSheet, Text, View, Dimensions, Platform } from 'react-native'
+import { StyleSheet, View, Dimensions, Platform } from 'react-native'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import RowLeftExecuted from '~/screens/alertLog/View/AlertList/RowItem/RowLeftExecuted'
 import RowRightExecuted from '~/screens/alertLog/View/AlertList/RowItem/RowRightExecuted'
 import CommonStyle from '~/theme/theme_controller'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated  from 'react-native-reanimated'
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 import Interactable from '~/component/Interactable/'
-import ENUM from '~/enum'
-import SvgIcon from '~s/watchlist/Component/Icon2'
 import { registerInteractable } from '~s/alertLog/Model/AlertLogModel'
 
 const { width: DEVICE_WIDTH } = Dimensions.get('window')

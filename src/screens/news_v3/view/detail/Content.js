@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AffectedSymbol from './AffectedSymbol'
 import Preview from './Preview'
 import PagingNews from './PagingNews'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 
 const {
     Value,

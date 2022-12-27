@@ -1,22 +1,15 @@
 import React, {
 	useRef,
 	useMemo,
-	useImperativeHandle,
 	useCallback,
-	useState,
 	useEffect
 } from 'react';
 import { View, Text, Keyboard, Dimensions, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 import ENUM from '~/enum';
 import Row from './Row';
 import _ from 'lodash';
-import {
-	RecyclerListView,
-	DataProvider,
-	LayoutProvider
-} from 'recyclerlistview';
 import I18n from '~/modules/language';
 import TransformAnimation from '~s/watchlist/Animator/Animations';
 import {

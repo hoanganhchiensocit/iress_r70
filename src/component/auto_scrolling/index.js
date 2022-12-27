@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import {
   Animated,
-  Easing,
   ScrollView,
   View
 } from 'react-native';
+import {EasingNode as Easing} from "react-native-reanimated";
 
 const AutoScrolling = ({
   style,

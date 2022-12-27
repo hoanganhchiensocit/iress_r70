@@ -1,9 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateCheckUserWLStatus } from '../Model/';
-import { syncManageWLButtonStatus } from '../Controller/';
+import Animated  from 'react-native-reanimated';
 import CommonStyle from '~/theme/theme_controller';
 import SvgIcon from '~s/watchlist/Component/Icon2';
 import ENUM from '~/enum';
@@ -11,10 +8,7 @@ import TouchableOpacityOpt from '~/component/touchableOpacityOpt/';
 import I18n from '~/modules/language/';
 import { useShadow } from '~/component/shadow/SvgShadow';
 import { func } from '~/storage';
-import CONFIG from '~/config';
 import { getFlagByCountryCode } from '~/business';
-import Flag from '~/component/flags/flagIress';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 const { WATCHLIST } = ENUM;
 const CHECKBOX_ROUNDED_STATUS = {
 	UNTICK: 0,

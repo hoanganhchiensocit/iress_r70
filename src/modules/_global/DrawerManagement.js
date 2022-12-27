@@ -8,15 +8,11 @@ import {
 	Alert,
 	Image,
 	BackHandler,
-	AppState,
 	Platform,
 	Keyboard,
 	Vibration,
-	PixelRatio,
 	Animated,
-	Easing,
 	ImageBackground,
-	FlatList,
 	Linking,
 	StatusBar
 } from 'react-native';
@@ -26,15 +22,10 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import I18n from '../language/';
 import styles from './styles/Drawer';
-import firebase from '../../firebase';
 import { bindActionCreators } from 'redux';
 import config from '../../config';
 import CommonStyle, { register } from '~/theme/theme_controller';
-import * as PureFunc from '~/utils/pure_func';
-import { initApp } from '../../initStorage';
-import FirebaseManager from '../../lib/base/firebase_manager';
 import { func, dataStorage } from '../../storage';
-import { iconsMap, iconsLoaded } from '../../utils/AppIcons';
 import { connect } from 'react-redux';
 import * as loginActions from '../../screens/login/login.actions';
 import * as appActions from '../../app.actions';
@@ -48,7 +39,6 @@ import {
 	offTouchIDSetting,
 	pinComplete,
 	forgotPinWithAccessToken,
-	setNewPinToken,
 	checkDisableScreenByRole
 } from '../../lib/base/functionUtil';
 
@@ -60,12 +50,10 @@ import Sound from 'react-native-sound';
 import AlertCustom from '../../screens/alert_custom/alert_custom';
 import loginUserType from '../../constants/login_user_type';
 import PromptNew from '../../component/new_prompt/prompt_new';
-import * as api from '../../api';
 import BadgeIcon from '../../component/badge/badge';
 import * as Animatable from 'react-native-animatable';
 import { setCurrentScreen } from '../../lib/base/analytics';
 import analyticsEnum from '../../constants/analytics';
-import deviceModel from '../../constants/device_model';
 import { resetNotiNews } from '../../screens/news/news.actions';
 import { loadDataFrom } from '../../screens/user/user.actions';
 import ScreenId from '../../constants/screen_id';
@@ -76,11 +64,9 @@ import { unregisterAllMessage } from '../../streaming';
 import ENUM from '../../enum';
 import * as Util from '../../util';
 import * as NewsBusiness from '../../streaming/news';
-import * as Emitter from '@lib/vietnam-emitter';
 import * as fbemit from '../../emitter';
 import {
 	checkRoleByKey,
-	getScreenText,
 	getScreenMenuSelected,
 	isViewOnly
 } from '../../roleUser';
@@ -92,7 +78,6 @@ import pinBackground from '~/img/background_mobile/pinVersion2Background.png';
 import { pushScreenToCurrentTab } from '~/navigation/controller.1';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/';
 import * as setTestId from '~/constants/testId';
-import logo from '~/img/background_mobile/logo.png';
 import LogDevice from '~/streaming/StreamComp/logDevice.js';
 import Timer from '~/streaming/StreamComp/timer.js';
 

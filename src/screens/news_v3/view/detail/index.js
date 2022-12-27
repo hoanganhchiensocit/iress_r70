@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Dimensions } from 'react-native'
+import { View, Dimensions } from 'react-native'
 import Content from './Content'
 import HeaderNav from './HeaderNav'
 import DetailScreen from '~s/watchlist/Navigation/DetailScreen.2';
 import AuthenPin from '~s/watchlist/authen_pin'
 import Overlay from './Overlay'
 
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 import CommonStyle from '~/theme/theme_controller'
 import { connect } from 'react-redux';
 

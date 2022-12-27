@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
+import { View, Dimensions } from 'react-native';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import { getInitValueTranslateX, getInitValueTranslateY, getInitValueOpacity, delay } from './common'
 const { height: heightDevices, width: widthDevices } = Dimensions.get('window');
 export const ENUM = {

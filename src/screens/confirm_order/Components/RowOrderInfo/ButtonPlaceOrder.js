@@ -1,15 +1,12 @@
-import React, { useEffect, useState, useCallback, useMemo, useContext, Component } from 'react'
-import Animated, { Easing } from 'react-native-reanimated'
+import React, { useCallback } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import * as Emitter from '@lib/vietnam-emitter';
-import { View, Text, Dimensions } from 'react-native'
-import PropTypes from 'prop-types'
+import { View, Dimensions } from 'react-native'
 import { getAccActive, getPorfolioTypeByCode, getDicPortfolioType } from '~s/portfolio/Model/PortfolioAccountModel'
 import CommonStyle from '~/theme/theme_controller'
-import Shadow from '~/component/shadow';
 import { setCode, getCode } from '~/component/error_system/Model/ErrorModel.js'
 import * as Controller from '~/memory/controller';
-import Keyboard, { ButtomConfirm } from '~/component/virtual_keyboard/Keyboard.js'
+import { ButtomConfirm } from '~/component/virtual_keyboard/Keyboard.js'
 
 import { getChannelShowConfirmPlaceButton, getChannelHideConfirmPlaceButton, getChannelChangeOrderError, getChannelHideOrderError } from '~/streaming/channel'
 import * as PlaceOrderController from '~/screens/confirm_order/Controllers/PlaceController.js'
@@ -18,7 +15,6 @@ import { changeLoadingButtonConfirm } from '~/screens/confirm_order/Redux/action
 import { resetStateNewOrder } from '~/screens/new_order/Redux/actions.js'
 import Enum from '~/enum'
 import * as Business from '~/business'
-import * as api from '~/api';
 // import { Navigation } from 'react-native-navigation'
 import { showErrorHandlingOrder } from '~/screens/confirm_order/Controllers/SwitchController';
 import { showOrders } from '~/navigation/controller.1';

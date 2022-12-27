@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { View, Dimensions, Platform, Alert, AppState } from 'react-native';
 import { WebView } from 'react-native-webview';
-// import Pdf from 'react-native-pdf';
 import CommonStyle from '~/theme/theme_controller';
 import ProgressBar from '~/modules/_global/ProgressBar';
 import RNFetchBlob from 'rn-fetch-blob';
 import Share from 'react-native-share';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import * as Business from '~/business';
-// import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import ENUM from '~/enum';
 import * as Http from '~/network/http/http';
 import * as Controller from '~/memory/controller';

@@ -1,7 +1,7 @@
-import React, { Component, useCallback, PureComponent, useState, useEffect, useMemo } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 
 const { Clock, Value, set, cond, startClock, clockRunning, timing, debug, stopClock, block, eq, greaterThan } = Animated
 const BoxLoading = ({ animatedValue = new Value(1), renderChildren, extraData, style, styleContent }) => {

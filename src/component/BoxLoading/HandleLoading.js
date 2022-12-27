@@ -1,7 +1,6 @@
-import React, { Component, useCallback, PureComponent, useState, useEffect, useMemo } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
 
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 
 const { Clock, Value, set, cond, startClock, clockRunning, timing, debug, stopClock, block, eq, call } = Animated
 export const STATE = {

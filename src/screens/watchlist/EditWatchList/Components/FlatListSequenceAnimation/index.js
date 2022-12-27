@@ -1,9 +1,7 @@
-import React, { PureComponent, Component, useCallback } from 'react';
-import { View, Text, FlatList, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated'
+import React, { PureComponent, Component } from 'react';
+import { View, Dimensions } from 'react-native';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 import DraggableFlatList from 'react-native-draggable-flatlist';
-
-import RowLoading from './RowLoading'
 import RowSymbol from '~/screens/watchlist/EditWatchList/Views/Content/Row/Index.js'
 
 import * as PriceBoardModel from '~/screens/watchlist/EditWatchList/Model/PriceBoardModel.js'

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { View, Animated, Dimensions, Easing, Keyboard } from 'react-native';
+import { View, Animated, Dimensions, Keyboard } from 'react-native';
+import {EasingNode as Easing} from "react-native-reanimated";
 import _ from 'lodash';
 import SCREEN from '~/screens/watchlist/screenEnum';
 

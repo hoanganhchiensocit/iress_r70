@@ -1,6 +1,6 @@
-import React, { useImperativeHandle, forwardRef, useRef } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
+import React, { useImperativeHandle, forwardRef } from 'react';
+import { StyleSheet } from 'react-native';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import _ from 'lodash';
 
 const {

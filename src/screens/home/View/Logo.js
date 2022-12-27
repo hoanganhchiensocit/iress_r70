@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Image } from 'react-native';
-import logo from '~/img/background_mobile/logo_shadow.png';
-import Animated, { Easing } from 'react-native-reanimated';
+import { Image } from 'react-native';
+import Animated  from 'react-native-reanimated';
 import CommonStyle from '~/theme/theme_controller';
 
 const Logo = ({ translateY }) => {

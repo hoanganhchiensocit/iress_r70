@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { Dimensions, Text, View } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
+import { Text, View } from 'react-native';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import CommonStyle from '~/theme/theme_controller'
 import Styles from '~/component/notify_order/style/alert_order.js';
-import Highlighter from 'react-native-highlight-words';
 import Enum from '~/enum';
-const { width } = Dimensions.get('window');
-const HEIGHT = 24;
 const TYPE = {
     WARNING: Styles.warningContainer1,
     ERROR: Styles.errorContainer1

@@ -6,10 +6,10 @@ import React, {
 	useCallback
 } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, Dimensions } from 'react-native';
+import { Text, Dimensions } from 'react-native';
 import CustomIcon from '~/component/Icon';
 import CommonStyle from '~/theme/theme_controller';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import * as Emitter from '@lib/vietnam-emitter';
 import {
 	getChannelChangeRealOrderError,

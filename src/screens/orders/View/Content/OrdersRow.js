@@ -22,7 +22,7 @@ import OrdersRowPieChart from '~s/orders/View/Content/OrdersRowPieChart';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/';
 import I18n from '~/modules/language/';
 import ENUM from '~/enum';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 import {
 	getOrderStatusProperty,
 	getFillStatusProperty,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import Animated, { Easing } from 'react-native-reanimated'
+import { View } from 'react-native'
+import Animated  from 'react-native-reanimated'
 
 const { Value, block, cond, eq, set, sub } = Animated
 

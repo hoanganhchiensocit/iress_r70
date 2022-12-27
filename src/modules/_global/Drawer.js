@@ -10,7 +10,6 @@ import {
 	Keyboard,
 	Vibration,
 	Animated,
-	Easing,
 	FlatList,
 	ImageBackground,
 	Linking,
@@ -18,6 +17,7 @@ import {
 	BackHandler,
 	Image
 } from 'react-native';
+import {EasingNode as Easing} from "react-native-reanimated";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';

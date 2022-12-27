@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import I18n from '~/modules/language';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 
 import CommonStyle from '~/theme/theme_controller';
-import SecondSubHeader, { keyAnimator } from '../Component/SecondSubHeader';
+import SecondSubHeader  from '../Component/SecondSubHeader';
 
 export const DelayWarning = props => (
     <View style={{ paddingVertical: 4 }}>

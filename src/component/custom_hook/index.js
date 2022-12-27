@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
-import Animated, { Easing } from 'react-native-reanimated'
+import { useEffect, useRef, useCallback } from 'react'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 const STATE_ANIM = {
     UNDETERMINE: 0,
     START: 1,

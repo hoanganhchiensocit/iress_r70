@@ -1,7 +1,6 @@
-import React, { useRef, useState, useEffect, useMemo, useCallback, useImperativeHandle, useLayoutEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback, useImperativeHandle } from 'react';
 import { StyleSheet, View } from 'react-native';
-import _ from 'lodash';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
 
 import HeaderSelecter from '~/screens/marketActivity/Components/HeaderSelecter.js';
@@ -15,11 +14,9 @@ import { changeAnimationType } from '~/component/loading_component/Redux/actions
 import { clearInteractable } from '~/screens/marketActivity/Models/MarketActivityModel.js'
 import * as Controller from '~/memory/controller'
 import Enum from '~/enum'
-import * as ManageAppState from '~/manage/manageAppState';
-import ScreenId from '~/constants/screen_id';
 
 const { ANIMATION_TYPE } = Enum
-const { multiply, Value, cond, block, debug } = Animated;
+const { Value } = Animated;
 
 const TABS1 = {
     ADVANCERS: 'Gainers',

@@ -1,4 +1,4 @@
-import { Easing } from 'react-native';
+import {EasingNode as Easing} from "react-native-reanimated";
 
 function makeZoomInTranslation(translationType, pivotPoint) {
   const modifier = Math.min(1, Math.max(-1, pivotPoint));

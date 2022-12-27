@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import {
-	View, Text, Keyboard, Platform, Alert, Image, Dimensions, BackHandler, StyleSheet, ImageBackground
+	View, Keyboard, Platform, Image, Dimensions, StyleSheet
 } from 'react-native';
 import AuthenByPin from '../../component/authen_by_pin/authen_by_pin';
-import ReAnimated, { Easing } from 'react-native-reanimated'
+import ReAnimated, { EasingNode as Easing } from 'react-native-reanimated'
 import TouchAlert from '../setting/auth_setting/TouchAlert';
 import { func, dataStorage } from '../../storage';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-	offTouchIDSetting, removeItemFromLocalStorage, pinComplete, touchIDComplete, setNewPinToken,
-	authPin, logDevice, forgotPinWithAccessToken, getListTradingHalt
+	offTouchIDSetting, pinComplete, touchIDComplete,
+	logDevice, forgotPinWithAccessToken
 } from '../../lib/base/functionUtil';
 import * as authSettingActions from '../setting/auth_setting/auth_setting.actions';
 import * as loginActions from '../login/login.actions';
@@ -19,16 +19,10 @@ import config from '../../config';
 import background from '../../img/background_mobile/ios82.png'
 import backgroundAndroid from '../../img/background_mobile/android.png'
 import logo from '../../img/background_mobile/logo.png'
-import { postData, requestData } from '../../api'
 import SplashScreen from 'react-native-splash-screen'
 import PromptNew from '../../component/new_prompt/prompt_new'
-import BusyBox from '../../screens/busybox/busybox'
-import * as fbemit from '../../emitter';
 import CommonStyle, { register } from '~/theme/theme_controller'
-import * as PureFunc from '~/utils/pure_func'
 import I18n from '../../modules/language/index'
-import ProgressBarLight from '../../modules/_global/ProgressBarLight'
-import pinBackground from '~/img/background_mobile/pinVersion2Background.png'
 import * as Controller from '../../memory/controller'
 import ScreenId from '~/constants/screen_id'
 

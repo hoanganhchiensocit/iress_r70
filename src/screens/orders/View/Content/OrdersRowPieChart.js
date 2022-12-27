@@ -1,7 +1,7 @@
 import React, { useMemo, useImperativeHandle, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import CommonStyle from '~/theme/theme_controller';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 
 const { Value, multiply, min, sub, divide, concat } = Animated;
 

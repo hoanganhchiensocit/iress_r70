@@ -1,6 +1,6 @@
-import React, { PureComponent, Component, useMemo } from 'react';
-import { View, Text, FlatList, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated'
+import React, { PureComponent, useMemo } from 'react';
+import { View, FlatList, Dimensions } from 'react-native';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 
 import RowLoading from './RowLoading'
 import { timing } from '~/lib/redash/index.js'

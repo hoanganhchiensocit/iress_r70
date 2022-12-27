@@ -1,28 +1,21 @@
-import React, { Component } from 'react'
-import { View, Text, Platform, Dimensions, PixelRatio, TouchableOpacity, TextInput, StyleSheet, Animated, Easing } from 'react-native';
-import PropTypes from 'prop-types';
-import { iconsMap as IconsMap } from '../../utils/AppIcons';
-import * as Util from '../../util';
-import { isIphoneXorAbove, changeAnimationSearch } from './../../lib/base/functionUtil';
+import React  from 'react'
+import { View, Text, Platform, Dimensions, PixelRatio, TouchableOpacity, TextInput, StyleSheet, Animated } from 'react-native';
+import {EasingNode as Easing} from "react-native-reanimated";
+import { isIphoneXorAbove } from './../../lib/base/functionUtil';
 import ScrollBarUndelineCustom from '~/component/scrollbar_underline'
 import CustomIcon from '~/component/Icon'
 import Enum from '../../enum';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
-import Config from '../../config';
 import * as Controller from '../../memory/controller'
 import I18n from '../../modules/language/';
 // Components
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt';
-import PickerCustom from './new_picker';
-import ModalPicker from './../modal_picker/modal_picker';
 import userType from '~/constants/user_type';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ScreenId from '../../constants/screen_id'
 import XComponent from '../../component/xComponent/xComponent'
-import ScrollBarUndeline from '~/component/scrollbar_underline/scrollbar_underline'
 
-import { func, dataStorage } from '../../storage';
+import { dataStorage } from '../../storage';
 import DebonceButton from '~/component/debounce_button'
 // ENUM
 const ICON_NAME = Enum.ICON_NAME;

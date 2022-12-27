@@ -3,23 +3,20 @@ import {
     View,
     Text,
     StyleSheet,
-    ActivityIndicator,
-    Platform
 } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 
 import * as Controller from '~/memory/controller';
 import { renderTime, isIphoneXorAbove, getMarginTopDevice } from '~/lib/base/functionUtil';
 import CommonStyle, { register } from '~/theme/theme_controller';
 import * as PureFunc from '~/utils/pure_func';
 import I18n from '~/modules/language';
-import { connect } from 'react-redux';
 import Icon from '~/component/icon/icon'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt';
 
 import FirstSubHeader from '~s/watchlist/Component/FirstSubHeader';
-import SecondSubHeader, { keyAnimator } from '~s/watchlist/Component/SecondSubHeader';
+import { keyAnimator } from '~s/watchlist/Component/SecondSubHeader';
 import * as ANIMATION_DEFINITIONS from '~s/watchlist/Animator/definitions';
 
 import SubHeader, { ConnectComp, DelayWarning } from '~s/watchlist/Component/SubHeader';

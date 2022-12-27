@@ -1,190 +1,191 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Animated, Easing } from 'react-native';
+import { Animated } from 'react-native';
+import { EasingNode as Easing } from "react-native-reanimated";
 
 export default class Indicator extends PureComponent {
-    static defaultProps = {
-        animationEasing: Easing.linear,
-        animationDuration: 1200,
-        hideAnimationDuration: 200,
+  static defaultProps = {
+    animationEasing: Easing.linear,
+    animationDuration: 1200,
+    hideAnimationDuration: 200,
 
-        animating: true,
-        interaction: true,
-        hidesWhenStopped: true,
+    animating: true,
+    interaction: true,
+    hidesWhenStopped: true,
 
-        count: 1
+    count: 1
+  };
+
+  static propTypes = {
+    animationEasing: PropTypes.func,
+    animationDuration: PropTypes.number,
+    hideAnimationDuration: PropTypes.number,
+
+    animating: PropTypes.bool,
+    interaction: PropTypes.bool,
+    hidesWhenStopped: PropTypes.bool,
+
+    renderComponent: PropTypes.func,
+    count: PropTypes.number
+  };
+
+  constructor(props) {
+    super(props);
+
+    /*
+     *  0 -> 1
+     *    | startAnimation
+     *    | resumeAnimation
+     *
+     *  1 -> -1
+     *    | stopAnimation
+     *
+     * -1 -> 0
+     *    | saveAnimation
+     */
+    this.animationState = 0;
+    this.savedValue = 0;
+
+    let { animating } = this.props;
+
+    this.state = {
+      progress: new Animated.Value(0),
+      hideAnimation: new Animated.Value(animating ? 1 : 0)
     };
+  }
 
-    static propTypes = {
-        animationEasing: PropTypes.func,
-        animationDuration: PropTypes.number,
-        hideAnimationDuration: PropTypes.number,
+  componentDidMount() {
+    let { animating } = this.props;
 
-        animating: PropTypes.bool,
-        interaction: PropTypes.bool,
-        hidesWhenStopped: PropTypes.bool,
+    if (animating) {
+      this.startAnimation();
+    }
+  }
 
-        renderComponent: PropTypes.func,
-        count: PropTypes.number
-    };
+  componentDidUpdate(prevProps) {
+    let { animating } = this.props;
 
-    constructor(props) {
-        super(props);
-
-        /*
-         *  0 -> 1
-         *    | startAnimation
-         *    | resumeAnimation
-         *
-         *  1 -> -1
-         *    | stopAnimation
-         *
-         * -1 -> 0
-         *    | saveAnimation
-         */
-        this.animationState = 0;
-        this.savedValue = 0;
-
-        let { animating } = this.props;
-
-        this.state = {
-            progress: new Animated.Value(0),
-            hideAnimation: new Animated.Value(animating ? 1 : 0)
-        };
+    if (animating && !prevProps.animating) {
+      this.resumeAnimation();
     }
 
-    componentDidMount() {
-        let { animating } = this.props;
-
-        if (animating) {
-            this.startAnimation();
-        }
+    if (!animating && prevProps.animating) {
+      this.stopAnimation();
     }
 
-    componentDidUpdate(prevProps) {
-        let { animating } = this.props;
+    if (animating ^ prevProps.animating) {
+      let { hideAnimation } = this.state;
+      let { hideAnimationDuration: duration } = this.props;
 
-        if (animating && !prevProps.animating) {
-            this.resumeAnimation();
-        }
+      Animated
+        .timing(hideAnimation, { toValue: animating ? 1 : 0, duration })
+        .start();
+    }
+  }
 
-        if (!animating && prevProps.animating) {
-            this.stopAnimation();
-        }
+  startAnimation() {
+    let { progress } = this.state;
+    let { interaction, animationEasing, animationDuration } = this.props;
 
-        if (animating ^ prevProps.animating) {
-            let { hideAnimation } = this.state;
-            let { hideAnimationDuration: duration } = this.props;
-
-            Animated
-                .timing(hideAnimation, { toValue: animating ? 1 : 0, duration })
-                .start();
-        }
+    if (this.animationState !== 0) {
+      return;
     }
 
-    startAnimation() {
-        let { progress } = this.state;
-        let { interaction, animationEasing, animationDuration } = this.props;
+    let animation = Animated
+      .timing(progress, {
+        duration: animationDuration,
+        easing: animationEasing,
+        useNativeDriver: true,
+        isInteraction: interaction,
+        toValue: 1
+      });
 
-        if (this.animationState !== 0) {
-            return;
-        }
+    Animated
+      .loop(animation)
+      .start();
 
-        let animation = Animated
-            .timing(progress, {
-                duration: animationDuration,
-                easing: animationEasing,
-                useNativeDriver: true,
-                isInteraction: interaction,
-                toValue: 1
-            });
+    this.animationState = 1;
+  }
 
-        Animated
-            .loop(animation)
-            .start();
+  stopAnimation() {
+    let { progress } = this.state;
 
-        this.animationState = 1;
+    if (this.animationState !== 1) {
+      return;
     }
 
-    stopAnimation() {
-        let { progress } = this.state;
+    let listener = progress
+      .addListener(({ value }) => {
+        progress.removeListener(listener);
+        progress.stopAnimation(() => this.saveAnimation(value));
+      });
 
-        if (this.animationState !== 1) {
-            return;
-        }
+    this.animationState = -1;
+  }
 
-        let listener = progress
-            .addListener(({ value }) => {
-                progress.removeListener(listener);
-                progress.stopAnimation(() => this.saveAnimation(value));
-            });
+  saveAnimation(value) {
+    let { animating } = this.props;
 
-        this.animationState = -1;
+    this.savedValue = value;
+    this.animationState = 0;
+
+    if (animating) {
+      this.resumeAnimation();
+    }
+  }
+
+  resumeAnimation() {
+    let { progress } = this.state;
+    let { interaction, animationDuration } = this.props;
+
+    if (this.animationState !== 0) {
+      return;
     }
 
-    saveAnimation(value) {
-        let { animating } = this.props;
+    Animated
+      .timing(progress, {
+        useNativeDriver: true,
+        isInteraction: interaction,
+        duration: (1 - this.savedValue) * animationDuration,
+        toValue: 1
+      })
+      .start(({ finished }) => {
+        if (finished) {
+          progress.setValue(0);
 
-        this.savedValue = value;
-        this.animationState = 0;
-
-        if (animating) {
-            this.resumeAnimation();
+          this.animationState = 0;
+          this.startAnimation();
         }
+      });
+
+    this.savedValue = 0;
+    this.animationState = 1;
+  }
+
+  renderComponent(item, index) {
+    let { progress } = this.state;
+    let { renderComponent, count } = this.props;
+
+    if (typeof renderComponent === 'function') {
+      return renderComponent({ index, count, progress });
     }
 
-    resumeAnimation() {
-        let { progress } = this.state;
-        let { interaction, animationDuration } = this.props;
+    return null;
+  }
 
-        if (this.animationState !== 0) {
-            return;
-        }
+  render() {
+    let { hideAnimation } = this.state;
+    let { count, hidesWhenStopped, ...props } = this.props;
 
-        Animated
-            .timing(progress, {
-                useNativeDriver: true,
-                isInteraction: interaction,
-                duration: (1 - this.savedValue) * animationDuration,
-                toValue: 1
-            })
-            .start(({ finished }) => {
-                if (finished) {
-                    progress.setValue(0);
-
-                    this.animationState = 0;
-                    this.startAnimation();
-                }
-            });
-
-        this.savedValue = 0;
-        this.animationState = 1;
+    if (hidesWhenStopped) {
+      props.style = []
+        .concat(props.style || [], { opacity: hideAnimation });
     }
 
-    renderComponent(item, index) {
-        let { progress } = this.state;
-        let { renderComponent, count } = this.props;
-
-        if (typeof renderComponent === 'function') {
-            return renderComponent({ index, count, progress });
-        }
-
-        return null;
-    }
-
-    render() {
-        let { hideAnimation } = this.state;
-        let { count, hidesWhenStopped, ...props } = this.props;
-
-        if (hidesWhenStopped) {
-            props.style = []
-                .concat(props.style || [], { opacity: hideAnimation });
-        }
-
-        return (
-            <Animated.View {...props}>
-                {Array.from(new Array(count), this.renderComponent, this)}
-            </Animated.View>
-        );
-    }
+    return (
+      <Animated.View {...props}>
+        {Array.from(new Array(count), this.renderComponent, this)}
+      </Animated.View>
+    );
+  }
 }

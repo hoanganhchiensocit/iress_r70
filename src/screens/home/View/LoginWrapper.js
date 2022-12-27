@@ -12,7 +12,6 @@ import _ from 'lodash';
 
 import CommonStyle from '~/theme/theme_controller';
 import LoginHeader from '~s/home/View/RegionHeader';
-import LoginType from '~s/home/View/LoginType';
 import LoginUsernamePw from '~s/home/View/LoginUsernamePw';
 import LoginButton, { useRefButton } from '~s/home/View/LoginButton';
 import LoginForgotPW from '~s/home/View/LoginForgotPW';
@@ -30,12 +29,10 @@ import {
 } from '~/screens/home/Controllers/LoginController.js';
 import Enum from '~/enum';
 import BoxShadow from './BoxShadow';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 import { useKeyboardSmart } from '~/component/keyboard_smart/HandleListenerKeyboard.js';
 const { LOGIN_TYPE, REGION_ACCESS, ENV_TYPE } = Enum;
 const { width: DEVICE_WIDTH } = Dimensions.get('window');
-
-const { Value, timing } = Animated;
 
 const useListenerLoginByOkata = () => {
 	return useEffect(() => {

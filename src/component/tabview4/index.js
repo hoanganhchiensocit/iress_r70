@@ -2,9 +2,8 @@ import React, { useEffect, useCallback, useMemo, useState, useRef, useImperative
 import {
     View, Text, TouchableOpacity
 } from 'react-native'
-import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 import CommonStyle from '~/theme/theme_controller'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated, { EasingNode as Easing } from 'react-native-reanimated'
 import I18n from '~/modules/language/'
 import { usePrevious } from '~/component/custom_hook/'
 

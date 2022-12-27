@@ -23,7 +23,7 @@ import {
 	setRegionSelected,
 	getRegionSelected
 } from '~/screens/home/Model/LoginModel.js';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import { dataStorage, func } from '~/storage';
 
 if (

@@ -4,65 +4,42 @@ import {
     Text,
     Platform,
     Dimensions,
-    PixelRatio,
-    TouchableOpacity,
-    Keyboard,
-    InteractionManager,
-    StatusBar,
-    Image,
     KeyboardAvoidingView,
     LayoutAnimation,
     UIManager
 } from 'react-native';
-import Tabs, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as newsActions from './news.actions';
 import { iconsMap } from '../../utils/AppIcons';
 import config from '../../config';
 import * as Business from '~/business';
-import NewsWatchlist from './related_news';
 import I18n from '../../modules/language/';
 import CommonStyle, { register } from '~/theme/theme_controller';
 import * as PureFunc from '~/utils/pure_func';
 import {
-    logAndReport,
-    removeItemFromLocalStorage,
-    offTouchIDSetting,
     logDevice,
     switchForm,
     readOverviewNotiNew,
     deleteAllNoti,
-    setDicReAuthen,
     deleteAllNotiNews,
     showNewsDetail,
-    getIdModalPicker,
-    pushToVerifyMailScreen,
-    checkNewTag,
-    getUniqueList,
     setRefTabbar
 } from '../../lib/base/functionUtil';
 import { func, dataStorage } from '../../storage';
-import NewsEverything from './everything';
 import CustomIcon from '~/component/Icon';
 import FallHeader from '~/component/fall_header';
 import ModalPicker from './../modal_picker/modal_picker_ver2';
-import filterType from '../../constants/filter_type';
-import newsCount from '../../constants/news_count';
 import BadgeIcon from '../../component/badge/badge';
 import { setCurrentScreen } from '../../lib/base/analytics';
 import analyticsEnum from '../../constants/analytics';
 import performanceEnum from '../../constants/performance';
-import { TAGS, TIME } from '../../constants/news';
+import { TIME } from '../../constants/news';
 import ScreenId from '../../constants/screen_id';
 import Perf from '../../lib/base/performance_monitor';
-import * as api from '../../api';
-import * as fbemit from '../../emitter';
 import * as Emitter from '@lib/vietnam-emitter';
 import * as Util from '../../util';
-import * as translate from '../../../src/invert_translate';
-import XComponent from '../../component/xComponent/xComponent';
 import Enum from '../../enum';
 import * as NewsBusiness from '../../streaming/news';
 import * as StreamingBusiness from '../../streaming/streaming_business';
@@ -74,16 +51,12 @@ import BottomTabBar from '~/component/tabbar';
 import Header from '../../../src/component/headerNavBar/index';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import CustomDate from '~/component/customDate';
-import TabView from '~/component/tabView';
 import TabViewV2 from '~/component/tabView2';
 import SearchBar from '~/component/search_bar/search_bar';
-import * as timeUtils from '~/lib/base/dateTime';
 import {
     getAllTagNewSelected,
     isSelectAll
 } from '~s/alert_function/functionCommon';
-/* icon import region */
-import filter from '~/img/iconVer2/filled-filter-24.png';
 import NewsContent from './newContent';
 import * as newsControl from './controller';
 import * as model from './model';

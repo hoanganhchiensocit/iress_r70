@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-    View, Text, TouchableOpacity, Switch, Platform, ScrollView,
-    Alert, PixelRatio, Easing, Dimensions, Animated
+    View, Text, TouchableOpacity, ScrollView,
+    Dimensions, Animated
 } from 'react-native';
-import styles from '../style/setting.styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import NetworkWarning from '../../../component/network_warning/network_warning';
+import {EasingNode as Easing} from "react-native-reanimated";
 import * as settingActions from '../setting.actions';
 import * as loginActions from '../../login/login.actions';
 import I18n from '../../../modules/language/index';

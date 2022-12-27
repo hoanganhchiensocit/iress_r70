@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
-import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
+import { Dimensions, StyleSheet, ScrollView } from 'react-native';
 
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import {
   TapGestureHandler,
   PanGestureHandler,

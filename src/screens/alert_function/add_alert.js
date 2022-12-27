@@ -3,13 +3,10 @@ import {
     View,
     Text,
     TouchableOpacity,
-    ListView,
     Dimensions,
     Animated,
     PanResponder,
     FlatList,
-    Easing,
-    ScrollView,
     DeviceEventEmitter,
     NativeAppEventEmitter,
     Platform
@@ -20,8 +17,6 @@ import { bindActionCreators } from 'redux';
 import * as alertActions from './redux/actions';
 // Api
 import * as Api from '../../api';
-// Util
-import * as Util from '../../util';
 import * as Business from '../../business';
 import * as FunctionUtil from '../../lib/base/functionUtil';
 import * as Controller from '../../memory/controller';
@@ -42,14 +37,12 @@ import TouchableOpacityOpt from '~/component/touchableOpacityOpt';
 import * as Animatable from 'react-native-animatable';
 import TransitionView from '~/component/animation_component/transition_view';
 import XComponent from '../../component/xComponent/xComponent';
-import InvertibleScrollView from 'react-native-invertible-scroll-view';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Flag from '../../component/flags/flag';
 import I18n from '../../modules/language/';
 import { checkRoleByKey } from '~/roleUser';
 import NetworkWarning from '../../component/network_warning/network_warning';
 import ScreenId from '../../constants/screen_id';
-import NotifyOrder from '../../component/notify_order';
 import HeaderSpecial from './components/Header/index';
 import ItemSeparator from './components/ItemSeparator';
 import RowLoading from './components/RowLoading';

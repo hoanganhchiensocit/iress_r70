@@ -1,81 +1,52 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import {
 	View,
 	Text,
 	Platform,
 	Dimensions,
-	TouchableOpacity,
-	AppState,
-	Alert,
 	Animated,
 	PixelRatio,
 	Keyboard,
-	InteractionManager,
 	Image,
 	Linking,
-	ActivityIndicator,
 	ScrollView,
-	KeyboardAvoidingView,
-	TextInput,
 	TouchableWithoutFeedback,
 	StatusBar
 } from 'react-native';
 import {
-	getPriceSource,
 	logDevice,
-	checkPropsStateShouldUpdate,
-	logAndReport,
-	removeItemFromLocalStorage,
-	offTouchIDSetting,
-	pinComplete,
-	setDicReAuthen,
 	declareAnimation,
 	declareSequenceAnimation,
 	declareParallelAnimation
 } from '../../lib/base/functionUtil';
 import I18n from '../../modules/language/';
-import { iconsMap } from '../../utils/AppIcons';
 import config from '../../config';
 import { dataStorage, func } from '../../storage';
-import NetworkWarning from '../../component/network_warning/network_warning';
-import userType from '../../constants/user_type';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginActions from '../login/login.actions';
 import * as authSettingActions from '../setting/auth_setting/auth_setting.actions';
-import AuthenByPin from '../../component/authen_by_pin/authen_by_pin';
-import TouchAlert from '../setting/auth_setting/TouchAlert';
-import { setCurrentScreen } from '../../lib/base/analytics';
-import analyticsEnum from '../../constants/analytics';
 import performanceEnum from '../../constants/performance';
 import Perf from '../../lib/base/performance_monitor';
 import styles from './style/home_page';
 import CommonStyle, { register } from '~/theme/theme_controller';
-import * as PureFunc from '~/utils/pure_func';
-import Auth from '../../lib/base/auth';
 import background from '../../img/background_mobile/ios82.png';
 import backgroundAndroid from '../../img/background_mobile/android.png';
-// import logo from '../../img/background_mobile/logo.png';
 import ScreenId from '../../constants/screen_id';
-// import SignIn from './signin'
-// import Register from './register'
 import SignIn from './signin.2';
 import Register from './register.2';
 import Connecting from './connecting';
-import ProgressBarLight from '../../modules/_global/ProgressBarLight';
 import ForgotParent from './forgot_parent';
 import ResetPassword from './resetPassword';
 import XComponent from '../../component/xComponent/xComponent';
-import ENUM from '../../enum';
 import * as Util from '../../util';
-import * as Controller from '~/memory/controller';
 import ExtraDimensions from 'react-native-extra-dimensions-android';
 // Business
 import * as AuthBusiness from '../../channel/auth_business';
 
 // Emitter
 import * as Emitter from '@lib/vietnam-emitter';
-import ReAnimated, { Easing } from 'react-native-reanimated'
+import ReAnimated, { EasingNode as Easing } from 'react-native-reanimated'
 const {
 	Value,
 	timing

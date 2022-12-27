@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback, Dimensions, Platform, Animated } from 'react-native';
-// import Animated, { Easing } from 'react-native-reanimated'
 import { connect } from 'react-redux'
 // Components
 import Item from './Item'
 // Redux
 import { updatePicker } from '../../redux/actions'
 import CommonStyle, { register } from '~/theme/theme_controller'
-import ExtraDimensions from 'react-native-extra-dimensions-android';
 let { width, height: heightScreen } = Dimensions.get('window')
 const heightItem = 56
-const defaultNumberRowVisible = 4.5
 const defaultNumberRowVisibleAlwaysDown = 6.5
 const heightSoftBar =
     Platform.OS === 'android'

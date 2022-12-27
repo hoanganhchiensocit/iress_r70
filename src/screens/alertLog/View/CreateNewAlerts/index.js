@@ -1,6 +1,6 @@
 
-import React, { useCallback, useRef, useMemo, useEffect, useLayoutEffect } from 'react';
-import { Text, View, StyleSheet, Dimensions, Platform, ScrollView, Easing } from 'react-native';
+import React, { useCallback, useMemo, useEffect } from 'react';
+import { Text, View, Dimensions, Platform, ScrollView } from 'react-native';
 import Animated from 'react-native-reanimated'
 import CommonStyle from '~/theme/theme_controller';
 
@@ -8,8 +8,7 @@ import SymbolInfo from '~s/watchlist/Detail/symbolInfoDetail';
 import TradeInfo from '~s/watchlist/Detail/components/TradeInfo.2';
 import HeaderPanner from '~/screens/alertLog/View/CreateNewAlerts/HeaderPanner';
 import BottomSheetBehavior, { useRefBottomSheet } from '~/component/bottom_sheet_reanimated/index'
-import KeyboardNewOrder from '~/screens/new_order/View/Keyboard/Keyboard.js'
-import SearchAccountWrapper, { useRefSearchAccount } from '~/component/search_account/SearchAccountWrapper'
+import { useRefSearchAccount } from '~/component/search_account/SearchAccountWrapper'
 import KeyboardAvoidView from '~/component/keyboard_avoid_view/index.js'
 import HandleDisableTouchabled from '~/component/bottom_sheet_reanimated/HandleDisableTouchabled'
 import TouchableDismissKeyboard from '~/component/virtual_keyboard/TouchableDismissKeyboard.js'
@@ -32,7 +31,6 @@ import Enum from '~/enum'
 import ScreenId from '~/constants/screen_id';
 import * as InputModel from '~/screens/new_order/Model/InputModel.js'
 import * as AttributeModel from '~/screens/new_order/Model/AttributeModel.js'
-import LayoutContent from '~/screens/new_order/View/Content/Layout/LayoutContent.js'
 
 import { changeSymbolExchange, resetStateNewOrder } from '~/screens/new_order/Redux/actions.js';
 const { height: heightDevice } = Dimensions.get('window');

@@ -1,8 +1,8 @@
 import React, { useMemo, useState, useCallback, useRef, useImperativeHandle, useEffect } from 'react'
 import {
-    View, Text, Dimensions, StyleSheet
+    View, Dimensions, StyleSheet
 } from 'react-native'
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated  from 'react-native-reanimated'
 import BackDropView from '~s/watchlist/Component/BackDropView2';
 import BottomSheet from '~/component/bottom_sheet_reanimated/index.js'
 import OrdersDetail from './OrdersDetail';
@@ -10,7 +10,7 @@ import HeaderPanner from '~s/watchlist/Detail/components/HeaderPanner';
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'
 import I18n from '~/modules/language/'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useShadow } from '~/component/shadow/SvgShadow';
 import { usePaddingTop, useSpaceTop, useCheckPanelStatus } from '~s/portfolio/Hook/'
 import { getDataRealtimeByKey } from '~s/orders/Model/OrdersStreaming'

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback, useLayoutEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 
@@ -18,7 +18,6 @@ import * as Business from '~/business';
 import AddToWLScreen from '~s/portfolio/View/AddToWL/';
 import CommonStyle from '~/theme/theme_controller'
 
-import SCREEN from '~s/watchlist/screenEnum';
 import { useAuth, useDetail } from '~s/watchlist';
 import { useNavigator } from '~s/watchlist/TradeList/tradelist.hook';
 
@@ -40,6 +39,7 @@ import I18n from '~/modules/language/'
 import ProgressBar from '~/modules/_global/ProgressBar';
 import { updateAllowStreaming } from './Models/MarketActivityModel';
 import { useUpdateChangeTheme } from '~/component/hook';
+
 const { ACTIVE_STREAMING } = ENUM;
 
 const getSymboInfoAndNews = (dispatch, listSymbol) => {
@@ -84,6 +84,8 @@ const showErrorMarketActivity = (errorCb, hideErrorFn) => {
     return errorCb && errorCb(getErrorCode(codeError))
   }
 }
+
+
 const MarketActivity = ({ navigator, fromDrawer }) => {
   const marketWatchlist = useSelector(
     (state) => state.marketActivity.marketWatchlist, shallowEqual
@@ -146,7 +148,8 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
     const isLogin = Controller.getLoginStatus()
     isLogin && dispatch.marketActivity.getMarketExchange();
     isLogin && dispatch.marketActivity.getMarketGroup();
-    return () => { };
+    return () => {
+    };
   }, []);
 
   useEffect(() => {
@@ -206,8 +209,8 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
         height: '100%'
       }}
     >
-      <HandleWhenChangeNetwork reloadScreen={reloadScreen} />
-      <HeaderBar navigator={navigator} />
+      <HandleWhenChangeNetwork reloadScreen={reloadScreen}/>
+      <HeaderBar navigator={navigator}/>
       <View
         // onLayout={onLayout}
         style={{
@@ -215,10 +218,10 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
           overflow: 'hidden'
         }}
       >
-        {!isFirstLoad && <HeaderFilter navigator={navigator} ref={refHeaderOfList} />}
-        <NetworkWarning navigator={navigator} />
-        <ErrorHandling channel={channelShowMessage} />
-        <Error screenId={ScreenId.MARKET_ACTIVITY} onReTry={reloadScreen} />
+        {!isFirstLoad && <HeaderFilter navigator={navigator} ref={refHeaderOfList}/>}
+        <NetworkWarning navigator={navigator}/>
+        <ErrorHandling channel={channelShowMessage}/>
+        <Error screenId={ScreenId.MARKET_ACTIVITY} onReTry={reloadScreen}/>
         <Content
           showNewOrder={handleShowNewOrder}
           showAddToWl={showAddToWl}
@@ -234,14 +237,17 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
           }}
           showAddToWl={showAddToWl}
           ref={_detail}
-          onAuth={() => { }}
+          onAuth={() => {
+          }}
           navigator={navigator}
           listSymbol={listSymbolWithData}
           isHeaderLoading={isLoadingState}
         />}
         <AddToWLScreen
-          showHideTabbar={() => { }}
-          showHideBuySell={() => { }}
+          showHideTabbar={() => {
+          }}
+          showHideBuySell={() => {
+          }}
           ref={refAddToWl}
         />
       </View>
@@ -252,14 +258,14 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
         navigator={navigator}
         style={{ zIndex: 3 }}
       />
-      <Modal isRematch />
+      <Modal isRematch/>
       {
         isFirstLoad && <View style={[StyleSheet.absoluteFillObject, {
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: CommonStyle.backgroundColor
-        }]} >
-          <ProgressBar color={CommonStyle.fontColor} />
+        }]}>
+          <ProgressBar color={CommonStyle.fontColor}/>
         </View>
       }
     </View>

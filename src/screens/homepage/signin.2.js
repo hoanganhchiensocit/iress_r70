@@ -21,7 +21,7 @@ import {
 	offTouchIDSetting,
 	removeItemFromLocalStorage
 } from '../../lib/base/functionUtil';
-import ReAnimated, { Easing } from 'react-native-reanimated';
+import ReAnimated, { EasingNode as Easing } from 'react-native-reanimated';
 import I18n from '../../modules/language/';
 import config from '../../config';
 import { dataStorage, func } from '../../storage';

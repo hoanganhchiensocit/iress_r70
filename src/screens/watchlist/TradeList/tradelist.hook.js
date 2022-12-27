@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'react-fast-compare';
 
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import { State } from 'react-native-gesture-handler';
 import produce from 'immer';
 import { debounce } from 'lodash';

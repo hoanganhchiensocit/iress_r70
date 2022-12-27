@@ -3,7 +3,7 @@ import {
     View, Text, TouchableOpacity,
     Platform, Image, ScrollView
 } from 'react-native'
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 import * as loginActions from '../../screens/login/login.actions'

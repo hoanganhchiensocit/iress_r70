@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Animated, Easing, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Animated, Dimensions } from 'react-native';
+import {EasingNode as Easing} from "react-native-reanimated";
 import I18n from '~/modules/language'
 import CommonStyle, { register } from '~/theme/theme_controller'
 import * as PureFunc from '~/utils/pure_func'

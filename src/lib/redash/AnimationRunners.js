@@ -1,4 +1,4 @@
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import { SpringConfig } from './Animations';
 
 const {

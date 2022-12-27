@@ -3,7 +3,6 @@ import {
 	View,
 	StyleSheet,
 	Platform,
-	Text,
 	Dimensions,
 	TouchableOpacity,
 	Animated
@@ -16,12 +15,8 @@ import {
 	checkDisableScreenByRole
 } from '~/lib/base/functionUtil';
 // Components
-import QuickButton from '~/component/quick_button/quick_button';
-import IonIcons from 'react-native-vector-icons/Ionicons';
 import Tabs from './tabs';
 import TabInfo from '~/constants/tabs';
-import TabInfoNotLogin from '~/constants/tabs_not_login';
-import TouchableOpacityOpt from '@component/touchableOpacityOpt';
 import DebonceButton from '~/component/debounce_button';
 
 import { func, dataStorage } from '~/storage';
@@ -29,7 +24,6 @@ import * as Controller from '~/memory/controller';
 import { showNewOrderModal } from '~/navigation/controller.1';
 import * as RoleUser from '~/roleUser';
 import Enum from '~/enum';
-import Icon2 from '~s/watchlist/Component/Icon2';
 
 const { NAME_PANEL } = Enum;
 const { ROLE_USER } = Enum;
@@ -107,26 +101,6 @@ export default class TabBar extends Component {
 		Controller.setStatusModalCurrent(true);
 		this.props.navigator.push(nextScreenObj);
 		return;
-		return Navigation.showModal({
-			screen: 'equix.SearchSymbol',
-			animated: false,
-			animationType: 'none',
-			navigatorStyle: {
-				...CommonStyle.navigatorModalSpecialNoHeader,
-				modalPresentationStyle: 'overCurrentContext'
-			},
-			overrideBackPress: true,
-			passProps: {
-				namePanel: NAME_PANEL.ADD_AND_SEARCH,
-				isSwitchFromQuickButton: true,
-				enabledGestureInteraction: false
-				// onDone: onDone,
-				// dicSymbolSelected: { ...newDicSymbolSelected },
-				// onSelectedSymbol,
-				// disableSelected: disabled,
-				// priceBoardSelected
-			}
-		});
 	}
 
 	renderQuickButton() {

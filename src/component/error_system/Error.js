@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react'
-import { View, Text, StyleSheet, LayoutAnimation, UIManager, Platform, Dimensions } from 'react-native'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
+import { View, StyleSheet, LayoutAnimation, UIManager, Platform, Dimensions } from 'react-native'
 import { dataStorage } from '~/storage'
-import PropTypes from 'prop-types'
-import Animated, { Transitioning, Transition, Easing } from 'react-native-reanimated';
+import Animated  from 'react-native-reanimated';
 import { TYPE_ERROR_SYSTEM, ERROR_SYSTEM } from './Constants'
 import { useListenerShowError, useListenerHideError } from '~/component/error_system/Hook/Listenner.js'
 import { setCode, getCode } from '~/component/error_system/Model/ErrorModel.js'
 import CommonStyle, { register } from '~/theme/theme_controller';
-import SvgIcon from '~/component/svg_icon/SvgIcon.js'
 import ErrorRetryAndChangeUI from '~/component/error_system/Components/ErrorRetryAndChangeUI.js'
 import ErrorRetryAndShowPopup from '~/component/error_system/Components/ErrorRetryAndShowPopup.js'
 import ErrorRetryNotLimited from '~/component/error_system/Components/ErrorRetryNotLimited.js'

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
+import { View, Dimensions } from 'react-native';
+import Animated, { EasingNode as Easing} from 'react-native-reanimated';
 const { height: heightDevices, width: widthDevices } = Dimensions.get('window')
 const {
     set,

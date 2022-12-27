@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import Animated, { Easing } from 'react-native-reanimated';
-import { connect } from 'react-redux';
+import Animated, { EasingNode as Easing } from 'react-native-reanimated';
 import uuid from 'react-native-uuid';
 import _ from 'lodash';
-
-import animatorActions from './reducer';
 import * as ANIMATION_DEFINITIONS from './definitions';
 
 const {
