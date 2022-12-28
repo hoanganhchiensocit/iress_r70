@@ -24,6 +24,7 @@ export const ScreenEnum = {
 	MAIN: 'Main',
 	ACTIVITIES: 'Activities',
 	TRADE: 'Trade',
+	QUICK_ACTION: 'QuickActions',
 	PORTFOLIO: 'Portfolio',
 	ORDERS: 'Orders',
 };

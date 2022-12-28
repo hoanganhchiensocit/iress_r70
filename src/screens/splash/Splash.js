@@ -815,7 +815,8 @@ export class Splash extends React.PureComponent {
 
 	//DUCLM FUNC AFTER LOGIN OKTA SUCCESS
 	goToApp() {
-		Navigation.navigate(ScreenEnum.ACTIVITIES);
+		Navigation.navigate(ScreenEnum.MAIN);
+
 		// Set inApp status
 		// const tabSelected = HOME_SCREEN[3];
 		// dataStorage.tabIndexSelected = tabSelected.tabIndex;

@@ -20,6 +20,7 @@ import Activities from '~/screens/marketActivity';
 import Orders from '~/screens/orders/';
 import Portfolio from '~/screens/portfolio/';
 import Trade from '~/screens/watchlist';
+import MyBottomTabBar from '../component/tabbar/bottom_tabbar'
 
 
 const Tab = createBottomTabNavigator();
@@ -31,10 +32,16 @@ const screenOptions = {
   keyboardHidesTabBar: true
 };
 
+const QuickActions = () => {
+  return <View/>
+}
+
 function Main() {
-  return <Tab.Navigator>
+  return <Tab.Navigator screenOptions={screenOptions}
+                        tabBar={props => <MyBottomTabBar {...props}/>}>
     <Tab.Screen name={ScreenEnum.ACTIVITIES} component={Activities}/>
     <Tab.Screen name={ScreenEnum.TRADE} component={Trade}/>
+    <Tab.Screen name={ScreenEnum.QUICK_ACTION} component={QuickActions}/>
     <Tab.Screen name={ScreenEnum.PORTFOLIO} component={Portfolio}/>
     <Tab.Screen name={ScreenEnum.ORDERS} component={Orders}/>
   </Tab.Navigator>

@@ -130,22 +130,25 @@ const SignIn = ({ loginState, onDidmount, navigator }) => {
 
 export const DelayComp = ({ children, changeState, timeout = 0 }) => {
 	const [firstLoad, setFirstLoad] = useState(true);
-	useEffect(() => {
-		let timmer = null;
-		if (_.isNil(changeState)) {
-			timmer = setTimeout(() => {
-				setFirstLoad(false);
-			}, timeout);
-		} else if (changeState) {
-			timmer = setTimeout(() => {
-				setFirstLoad(false);
-			}, timeout);
-		}
 
-		return () => timmer && clearTimeout(timmer);
-	}, [changeState]);
+	// useEffect(() => {
+	// 	let timmer = null;
+	//
+	// 	if (_.isNil(changeState)) {
+	// 		timmer = setTimeout(() => {
+	// 			setFirstLoad(false);
+	// 		}, timeout);
+	// 	} else if (changeState) {
+	// 		timmer = setTimeout(() => {
+	// 			setFirstLoad(false);
+	// 		}, timeout);
+	// 	}
+  //
+	// 	return () => timmer && clearTimeout(timmer);
+	// }, [changeState]);
+  //
+	// if (firstLoad) return null;
 
-	if (firstLoad) return null;
 	return children || null;
 };
 

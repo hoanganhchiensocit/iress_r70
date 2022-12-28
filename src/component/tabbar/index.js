@@ -133,17 +133,14 @@ export default class TabBar extends Component {
 	}
 
 	changeTabActive(tabIndex) {
-		this.props.navigator.dismissAllModals();
-		// if (dataStorage.tabIndexSelected === tabIndex) {
-		// 	this.props.navigator.popToRoot({
-		// 		animated: false
-		// 	});
-		// } else {
+		//ChienHA
+		// this.props.navigator.dismissAllModals();
 		func.setTabActive(tabIndex);
-		this.props.navigator.popToRoot({
-			// reset Stack hien tai
-			animated: false
-		});
+		//ChienHA
+		// this.props.navigator.popToRoot({
+		// 	// reset Stack hien tai
+		// 	animated: false
+		// });
 		resetAnimation();
 		switch (tabIndex) {
 			// bo selected o menu drawer
@@ -292,19 +289,6 @@ export default class TabBar extends Component {
 			}),
 			Animated.timing(this.opacityAnim, {
 				toValue: 0,
-				duration: 100
-			})
-		]).start();
-	}
-
-	showTabbar() {
-		Animated.parallel([
-			Animated.timing(this.translateAnim, {
-				toValue: HEIGHT_TABBAR,
-				duration: 100
-			}),
-			Animated.timing(this.opacityAnim, {
-				toValue: 1,
 				duration: 100
 			})
 		]).start();

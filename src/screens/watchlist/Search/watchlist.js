@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { View, TouchableOpacity, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 
