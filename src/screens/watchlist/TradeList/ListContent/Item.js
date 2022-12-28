@@ -1,13 +1,13 @@
 import React, { forwardRef, useRef, useCallback } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
-import Animated from 'react-native-reanimated';
+import Animated, { interpolateNode } from 'react-native-reanimated';
 import _ from 'lodash';
 
 import { dataStorage } from '~/storage';
 
 import CommonStyle, { register } from '~/theme/theme_controller';
-import * as PureFunc from '~/utils/pure_func'
+import * as PureFunc from '~/utils/pure_func';
 
 import TradeListActions from './RowActions';
 import { HEIGHT_SEPERATOR } from '~s/watchlist/enum';
@@ -18,7 +18,7 @@ export const RowLoading = ({ _timer, index, duration = 1000 }) => {
 	const nextRowTimout = 50;
 	const durationRow = 300;
 
-	const showItem = Animated.interpolate(_timer, {
+	const showItem = interpolateNode(_timer, {
 		inputRange: [
 			0,
 			index * nextRowTimout,
@@ -28,25 +28,16 @@ export const RowLoading = ({ _timer, index, duration = 1000 }) => {
 		outputRange: [0, 0, 1, 1]
 	});
 
-	const opacity =
-		index * nextRowTimout + durationRow > duration ? 1 : showItem;
+	const opacity = index * nextRowTimout + durationRow > duration ? 1 : showItem;
 
 	return (
 		<Animated.View style={[styles.container, { opacity }]}>
 			<View style={styles.leftItem}>
-				<ViewLoading
-					width={78}
-					height={24}
-					style={{ marginBottom: 8 }}
-				/>
+				<ViewLoading width={78} height={24} style={{ marginBottom: 8 }} />
 			</View>
 
 			<View style={styles.rightItem}>
-				<ViewLoading
-					width={50}
-					height={20}
-					style={{ marginBottom: 8 }}
-				/>
+				<ViewLoading width={50} height={20} style={{ marginBottom: 8 }} />
 				<ViewLoading width={70} height={14} />
 			</View>
 		</Animated.View>
@@ -106,7 +97,7 @@ let Row = ({
 		onAddToWl && onAddToWl(index);
 	}, [index, dispatch]);
 	const onCreateAler = useCallback(() => {
-		onNewAlertLog && onNewAlertLog(index)
+		onNewAlertLog && onNewAlertLog(index);
 		dispatch.subWatchlist.resetActions();
 	}, [index, dispatch]);
 	const onOpenNewOrder = useCallback(() => {
@@ -176,7 +167,7 @@ Row = forwardRef(Row);
 // });
 export default Row;
 
-const styles = {}
+const styles = {};
 function getNewestStyle() {
 	const newStyle = StyleSheet.create({
 		container: {
@@ -192,7 +183,7 @@ function getNewestStyle() {
 
 		leftItem: { flex: 1, justifyContent: 'space-between' }
 	});
-	PureFunc.assignKeepRef(styles, newStyle)
+	PureFunc.assignKeepRef(styles, newStyle);
 }
-getNewestStyle()
-register(getNewestStyle)
+getNewestStyle();
+register(getNewestStyle);

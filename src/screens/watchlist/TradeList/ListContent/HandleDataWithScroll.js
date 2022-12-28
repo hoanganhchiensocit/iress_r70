@@ -33,7 +33,7 @@ const {
 	floor: aniFloor,
 	greaterOrEq,
 	greaterThan,
-	interpolate,
+	interpolateNode,
 	lessOrEq,
 	lessThan,
 	modulo: aniModulo,
@@ -85,130 +85,118 @@ const createDeleteBlock = (
 	items,
 	_sizeData
 ) => {
-	const _deleteTrans = new Value(0);
-	const _countTrans = new Value(0); // dem so luong item dich chuyen để di chuyển item delete xuống dưới cùng
-	const _doingDeletes = [];
-	const batchHeight = NUMBER_LIST * heightRow;
+	try {
+		const _deleteTrans = new Value(0);
+		const _countTrans = new Value(0); // dem so luong item dich chuyen để di chuyển item delete xuống dưới cùng
+		const _doingDeletes = [];
 
-	for (let i = 0; i < NUMBER_LIST; i++) {
-		_doingDeletes[i] = new Value(0);
-	}
+		for (let i = 0; i < NUMBER_LIST; i++) {
+			_doingDeletes[i] = new Value(0);
+		}
 
-	const result = [];
+		const result = [];
 
-	const canMoveToBottom = new Value(-1);
+		const canMoveToBottom = new Value(-1);
 
-	for (let i = 0; i < NUMBER_LIST; i++) {
-		const _offset = new Value(0);
-		const _isDeleting = new Value(0); // doing timing delete
-		const _tmpOffset = new Value(0);
-		const itemPosition = new Value(i * heightRow);
+		for (let i = 0; i < NUMBER_LIST; i++) {
+			const _offset = new Value(0);
+			const _isDeleting = new Value(0); // doing timing delete
+			const _tmpOffset = new Value(0);
+			const itemPosition = new Value(i * heightRow);
 
-		const _maxHeight = multiply(_sizeData, heightRow);
+			//  phan du itemPosition voi batchHeight
 
-		//  phan du itemPosition voi batchHeight
-		const posItemOnUIBatch = modulo(itemPosition, batchHeight);
-		const batchPos = sub(itemPosition, posItemOnUIBatch);
-		const isEndlessBatch = greaterOrEq(
-			add(batchPos, batchHeight),
-			_maxHeight
-		);
+			// thu tu chay :
+			// luot 1 :
+			// => change all _doingDeletes to 1
+			// => kich hoat timing
+			// => _deleteStatus === i => set _deleteTrans
+			// luot 2 (ke tu khi co _deleteTrans va _doingDeletes[i]) :
+			// => set _isDeleting true , luu offset hien tai
+			// => set luon _doingDeletes[i] false (dame bao 1 item chi chay 1 lan)
+			// => _isDeleting(con timing) => set lien tuc offset =>  done set _isDeleting false
+			// =>  thang bi delete nhet xuong cuoi batch
 
-		const spaceItemToEnd = sub(
-			cond(isEndlessBatch, modulo(_maxHeight, batchHeight), batchHeight),
-			posItemOnUIBatch,
-			heightRow
-		);
+			const doingOnce = [
+				cond(eq(_deleteStatus, i), [set(_deleteTrans, itemPosition)]), //  duyen 1-> 10 , den i thi set deleteTrans
 
-		// thu tu chay :
-		// luot 1 :
-		// => change all _doingDeletes to 1
-		// => kich hoat timing
-		// => _deleteStatus === i => set _deleteTrans
-		// luot 2 (ke tu khi co _deleteTrans va _doingDeletes[i]) :
-		// => set _isDeleting true , luu offset hien tai
-		// => set luon _doingDeletes[i] false (dame bao 1 item chi chay 1 lan)
-		// => _isDeleting(con timing) => set lien tuc offset =>  done set _isDeleting false
-		// =>  thang bi delete nhet xuong cuoi batch
-
-		const doingOnce = [
-			cond(eq(_deleteStatus, i), [set(_deleteTrans, itemPosition)]), //  duyen 1-> 10 , den i thi set deleteTrans
-
-			cond(and(..._doingDeletes), [set(_deleteStatus, -1)]), //  khong con thang nao dang chay timing xoa => done
-			cond(
-				and(_doingDeletes[i], greaterOrEq(itemPosition, _deleteTrans)),
-				[
+				cond(and(..._doingDeletes), [set(_deleteStatus, -1)]), //  khong con thang nao dang chay timing xoa => done
+				cond(and(_doingDeletes[i], greaterOrEq(itemPosition, _deleteTrans)), [
 					set(_isDeleting, 1),
 					set(_tmpOffset, _offset),
 					set(_countTrans, add(_countTrans, 1))
-				]
-			),
+				]),
 
-			cond(_doingDeletes[i], [set(_doingDeletes[i], 0)]) // chi cho chay 1 lan duy nhat
-		];
-
-		let runOnlyOnce = [];
-		if (i === 0) {
-			runOnlyOnce = [
-				cond(
-					and(neq(_deleteStatus, -1), not(or(..._doingDeletes))),
-					_doingDeletes.map((item) => set(item, 1))
-				), //  all _doingDeletes is 0 => change all _doingDeletes to 1
-				finished && cond(_doingDeletes[0], set(finished, 0)) // kich hoat timing xoa
+				cond(_doingDeletes[i], [set(_doingDeletes[i], 0)]) // chi cho chay 1 lan duy nhat
 			];
-		}
 
-		const runTiming = cond(
-			and(_isDeleting, not(finished)),
-			set(
-				_offset,
-				interpolate(_deleteTimer, {
-					inputRange: [0, heightRow],
-					outputRange: [_tmpOffset, sub(_tmpOffset, heightRow)]
-				})
-			)
-		);
+			let runOnlyOnce = [];
+			if (i === 0) {
+				runOnlyOnce = [
+					cond(
+						and(neq(_deleteStatus, -1), not(or(..._doingDeletes))),
+						_doingDeletes.map((item) => set(item, 1))
+					), //  all _doingDeletes is 0 => change all _doingDeletes to 1
+					finished && cond(_doingDeletes[0], set(finished, 0)) // kich hoat timing xoa
+				];
+			}
 
-		const moveBottomWhenDone = cond(neq(canMoveToBottom, -1), [
-			cond(eq(canMoveToBottom, i), [
-				set(_sizeData, max(sub(_sizeData, 1), 0)),
-				set(canMoveToBottom, -1),
+			//DUCLM
+			const runTiming = cond(
+				and(_isDeleting, not(finished)),
 				set(
-					// nhet xuong day
-					// nhet 3 xuong day
 					_offset,
-					add(_offset, multiply(_countTrans, heightRow))
-				),
+					interpolateNode(_deleteTimer, {
+						inputRange: [0, heightRow],
+						outputRange: [_tmpOffset, sub(_tmpOffset, heightRow)]
+					})
+				)
+			);
 
-				set(_countTrans, 0)
-			])
-		]);
+			const moveBottomWhenDone = cond(neq(canMoveToBottom, -1), [
+				cond(eq(canMoveToBottom, i), [
+					set(_sizeData, max(sub(_sizeData, 1), 0)),
+					set(canMoveToBottom, -1),
+					set(
+						// nhet xuong day
+						// nhet 3 xuong day
+						_offset,
+						add(_offset, multiply(_countTrans, heightRow))
+					),
 
-		const doneTiming = cond(and(_isDeleting, finished), [
-			..._doingDeletes.map((item) => set(item, 0)),
-			set(_offset, sub(_tmpOffset, heightRow)),
-			set(_isDeleting, 0),
-			cond(eq(itemPosition, _deleteTrans), [set(canMoveToBottom, i)])
-		]);
+					set(_countTrans, 0)
+				])
+			]);
 
-		result.push([
-			_offset,
-			[
-				// handle deteleStatus === i
-				// ex => 1 => 10 phan tu xoa phan tu 3
-				...doingOnce,
-				...runOnlyOnce,
-				// keo all xuong 1 row them timing
-				_deleteTimer && runTiming,
-				// done thi set dung vi tri cac item
-				finished && moveBottomWhenDone,
-				finished && doneTiming,
-				cond(finished, set(itemPosition, items[i]))
-			],
-			_tmpOffset
-		]);
+			const doneTiming = cond(and(_isDeleting, finished), [
+				..._doingDeletes.map((item) => set(item, 0)),
+				set(_offset, sub(_tmpOffset, heightRow)),
+				set(_isDeleting, 0),
+				cond(eq(itemPosition, _deleteTrans), [set(canMoveToBottom, i)])
+			]);
+
+			result.push([
+				_offset,
+				[
+					// handle deteleStatus === i
+					// ex => 1 => 10 phan tu xoa phan tu 3
+					...doingOnce,
+					...runOnlyOnce,
+					// keo all xuong 1 row them timing
+					_deleteTimer && runTiming,
+					// done thi set dung vi tri cac item
+					finished && moveBottomWhenDone,
+					finished && doneTiming,
+					cond(finished, set(itemPosition, items[i]))
+				],
+				_tmpOffset
+			]);
+		}
+		console.log('result', result);
+		return result;
+	} catch (error) {
+		console.log('error dm', error);
 	}
-	return result;
 };
 
 const useData = () =>
@@ -301,30 +289,23 @@ export const createMoveAnimater = ({
 }) => {
 	const batchHeight = NUMBER_LIST * heightRow;
 	const _limitTrans = multiply(_sizeData, heightRow);
-
 	// const _batchPos = sub(_trans, modulo(_trans, batchHeight));
 	// const _maxBatch = sub(_limitTrans, modulo(_limitTrans, batchHeight));
-
 	const _batchPos = multiply(batchHeight, floor(divide(_trans, batchHeight)));
 	const _maxBatch = multiply(
 		batchHeight,
 		floor(divide(_limitTrans, batchHeight))
 	);
-
 	const _limitBatch = max(0, min(_batchPos, _maxBatch));
 	let _dic = createnewDic();
 	let _dicDelete = [];
 	const resetting = new Value(0);
-
-	// let _ui = {};
-
+	let _ui = {};
 	const handleItem = (i, _offset, finished, _tmpResult) => {
 		// const _tmpPos = add(_limitBatch, i * heightRow, _offset);
 		const _result = new Value(i * heightRow);
 		const _diff = new Value(0);
-
 		const _originalPos = add(_limitBatch, i * heightRow);
-
 		return cond(
 			finished,
 			[
@@ -335,16 +316,10 @@ export const createMoveAnimater = ({
 					set(_result, add(_originalPos, _offset))
 				]),
 				// i === 3 && debug('_offset 2', _offset),
-				cond(
-					greaterThan(
-						_result,
-						add(_trans, DEVICE_HEIGHT, -HIDE_OFFSET)
-					),
-					[
-						set(_offset, sub(_offset, batchHeight)),
-						set(_result, add(_originalPos, _offset))
-					]
-				),
+				cond(greaterThan(_result, add(_trans, DEVICE_HEIGHT, -HIDE_OFFSET)), [
+					set(_offset, sub(_offset, batchHeight)),
+					set(_result, add(_originalPos, _offset))
+				]),
 				// i === 3 && debug('_offset 3', _offset),
 				cond(lessThan(_result, sub(0, divide(heightRow, 2))), [
 					set(_offset, add(_offset, batchHeight)),
@@ -355,17 +330,6 @@ export const createMoveAnimater = ({
 					set(_offset, sub(_offset, batchHeight)),
 					set(_result, add(_originalPos, _offset))
 				]),
-				// call([_result], ([r]) => {
-				//     _ui = produce(_ui, (draft) => {
-				//         if (!draft[i]) {
-				//             draft[i] = {
-				//                 ui: 0,
-				//                 data: 0
-				//             };
-				//         }
-				//         draft[i].ui = r / heightRow;
-				//     });
-				// }),
 				set(_diff, sub(_result, _tmpResult)),
 				cond(
 					and(not(resetting), greaterThan(abs(_diff), heightRow)),
@@ -375,30 +339,16 @@ export const createMoveAnimater = ({
 							if (Math.abs(d) < batchHeight) {
 								_dicDelete.push(draft[i]);
 							}
-							const tmp =
-								(draft[i] || i) + _.floor(d / heightRow);
+							const tmp = (draft[i] || i) + _.floor(d / heightRow);
 							draft[i] = handleDuplicate(
 								_.uniq([..._dicDelete, ..._.values(_dic)]),
 								tmp,
 								d > 0
 							);
-
 							// if (d < 0 && d > -batchHeight) {
 							//     draft[i] = draft[i] - 1;
 							// }
 						});
-
-						// _ui = produce(_ui, (draft) => {
-						//     if (!draft[i]) {
-						//         draft[i] = {
-						//             ui: 0,
-						//             data: 0
-						//         };
-						//     }
-						//     draft[i].ui = r / heightRow;
-						//     draft[i].data = _dic[i];
-						// });
-
 						const debounce = _.debounce(() => {
 							onChange(_dic);
 						}, 50);
@@ -411,14 +361,11 @@ export const createMoveAnimater = ({
 			add(_originalPos, _offset)
 		);
 	};
-
 	const _deleteStatus = new Value(-1);
-
 	const items = [];
 	for (let i = 0; i < NUMBER_LIST; i++) {
 		items[i] = new Value(0);
 	}
-
 	const deleteBlocks = createDeleteBlock(
 		heightRow,
 		finished,
@@ -427,14 +374,11 @@ export const createMoveAnimater = ({
 		items,
 		_sizeData
 	);
-
 	const result = {};
 	const dicForReset = [];
-
 	for (let i = 0; i < NUMBER_LIST; i++) {
 		const [_offset, deleteBlock, _tmpOffset] = deleteBlocks[i];
 		const _tmpResult = new Value(i * heightRow);
-
 		result[i] = block([
 			...deleteBlock,
 			set(items[i], handleItem(i, _offset, finished, _tmpResult)),
@@ -442,7 +386,6 @@ export const createMoveAnimater = ({
 		]);
 		dicForReset[i] = [_offset, items[i], _tmpOffset, _tmpResult];
 	}
-
 	const onDelete = (index, cb) => {
 		_deleteStatus.setValue(index);
 		cb && cb();
@@ -471,18 +414,11 @@ export const createMoveAnimater = ({
 			}, 100);
 		}, 100);
 	};
-
 	return [result, onDelete, onReset];
 };
 
 let HandleDataWithScroll = (
-	{
-		_scrollValue,
-		setData,
-		setSize,
-		heightRow = HEIGHT_EARCH_ROW,
-		setLoading
-	},
+	{ _scrollValue, setData, setSize, heightRow = HEIGHT_EARCH_ROW, setLoading },
 	ref
 ) => {
 	const timer = useRef();
