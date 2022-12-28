@@ -60,14 +60,14 @@ export class SquenceView extends PureComponent {
         }
     }
     getInterpolateOpacity = () => {
-        return Animated.interpolate(this.progressValue, {
+        return Animated.interpolateNode(this.progressValue, {
             inputRange: [this.getStartInterpolate(), this.getEndInterpolate()],
             outputRange: this.getOutputRangeOpacity(),
             extrapolate: Extrapolate.CLAMP
         })
     }
     getInterpolateTranslation = () => {
-        return Animated.interpolate(this.progressValue, {
+        return Animated.interpolateNode(this.progressValue, {
             inputRange: [this.getStartInterpolate(), this.getEndInterpolate()],
             outputRange: this.getOutputRangeTranslation(),
             extrapolate: Extrapolate.CLAMP

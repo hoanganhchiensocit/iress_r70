@@ -44,6 +44,7 @@ import Shadow from '~/component/shadow';
 import { isIphoneXorAbove } from '~/lib/base/functionUtil';
 import KeyboardAvoidView from '~/component/keyboard_avoid_view/index.js';
 import { changeTextSearch } from '~s/orders/Model/OrdersModel';
+import Navigation from "../../../navigator/Navigation";
 
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -74,11 +75,12 @@ const Title = (props) => {
 };
 
 const RightIcon = (props) => {
-  const { navigator } = props;
+  // const { navigator } = props;
   const onPress = () => {
     dataStorage.isReloading = false // off loading khi back ve screen watch list
     // dispatch(setManageButtonStatus(MANAGE_BUTTON_STATUS.MANAGE)) // reset manage button status to default
-    navigator && navigator.pop();
+    // navigator && navigator.pop();
+    Navigation.back()
   };
   return (
     <TouchableOpacity

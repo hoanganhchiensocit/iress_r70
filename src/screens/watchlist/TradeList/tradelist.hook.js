@@ -230,11 +230,10 @@ export const useNavigator = (navigator, arrCallback, deps) => {
 		});
 	}, deps || []);
 
-	//ChienHA
-	// useEffect(() => {
-	// 	const listener = navigator.addOnNavigatorEvent(onNavigatorEvent);
-	// 	return () => listener();
-	// }, [navigator]);
+	useEffect(() => {
+		const listener = navigator.addOnNavigatorEvent(onNavigatorEvent);
+		return () => listener();
+	}, [navigator]);
 };
 
 export const useNavigatorCallback = (navigator, callback, deps) => {

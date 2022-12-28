@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useCallback, useRef, useImperativeHandle, useMemo } from 'react'
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
-import PropTypes from 'prop-types'
+import React, { useRef, useImperativeHandle, useMemo } from 'react'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import { useSelector } from 'react-redux'
 import PanelComfirmDelete from '~/component/confirm_delete/ConfirmDelete.js'
-import HeaderPanel from '~/component/panel/HeaderPanel.js'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { ButtomConfirm } from '~/component/virtual_keyboard/Keyboard.js'
-import Icon from '~/component/svg_icon/SvgIcon.js'
 import ShadowTop from '~/component/shadow';
 import { useShadow } from '~/component/shadow/SvgShadow';
 

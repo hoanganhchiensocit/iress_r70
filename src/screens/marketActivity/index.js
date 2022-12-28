@@ -2,15 +2,12 @@ import React, { useEffect, useState, useRef, useCallback, useLayoutEffect } from
 import { StyleSheet, View } from 'react-native';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
-
-import { setRefTabbar } from '~/lib/base/functionUtil';
 import Modal from '~/component/Modal';
 import HeaderBar from './Views/HeaderBar';
 import HeaderFilter from './Views/HeaderFilter';
 import Content from './Views/Content'
 import { handleShowNewOrder } from '~/screens/new_order/Controller/SwitchController.js';
 import NetworkWarning from '~/component/network_warning/network_warning_layout_animation';
-import BottomTabBar from '~/component/tabbar';
 import Detail from '~/screens/watchlist/Navigation/DetailScreen.marketActivity.js';
 import ScreenId from '~/constants/screen_id';
 
@@ -19,7 +16,6 @@ import AddToWLScreen from '~s/portfolio/View/AddToWL/';
 import CommonStyle from '~/theme/theme_controller'
 
 import { useAuth, useDetail } from '~s/watchlist';
-import { useNavigator } from '~s/watchlist/TradeList/tradelist.hook';
 
 import { useShowAddToWl } from '~s/portfolio/Hook/';
 import * as Controller from '~/memory/controller'
@@ -39,6 +35,7 @@ import I18n from '~/modules/language/'
 import ProgressBar from '~/modules/_global/ProgressBar';
 import { updateAllowStreaming } from './Models/MarketActivityModel';
 import { useUpdateChangeTheme } from '~/component/hook';
+import { useFocusEffect } from '@react-navigation/native';
 
 const { ACTIVE_STREAMING } = ENUM;
 
@@ -59,6 +56,7 @@ const getSymboInfoAndNews = (dispatch, listSymbol) => {
     preList.current = listSymbol;
   }, [listSymbol]);
 };
+
 const getErrorCode = (code) => {
   if (code === -1) {
     return I18n.t('accessInvalid')
@@ -73,6 +71,7 @@ const getErrorCode = (code) => {
   }
   return ''
 }
+
 const showErrorMarketActivity = (errorCb, hideErrorFn) => {
   hideErrorFn && hideErrorFn({ type: 'error' })
   const codeError = useSelector(state => state.marketActivity.codeError)
@@ -122,16 +121,12 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
   }));
   const [isFirstLoad, setIsFirstLoad] = useState(true)
 
-  // const onLayout = useCallback((event) => {
-  // 	const { x, y } = event.nativeEvent.layout;
-  // 	setSize({ width: x, height: y });
-  // }, []);
-
   const dispatch = useDispatch();
 
   const onEnd = useCallback(() => {
     _list.current && _list.current.onCreate();
   }, [_list.current]);
+
   const reloadScreen = useCallback(() => {
     try {
       refHeaderOfList.current.reloadApp && refHeaderOfList.current.reloadApp()
@@ -139,6 +134,7 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
       console.log('ERROR MARKET ACTIVITY SYSTEMS', error)
     }
   }, [])
+
   // getSnapshot
   useLayoutEffect(() => {
     func.setCurrentScreenId(ScreenId.MARKET_ACTIVITY);
@@ -160,8 +156,9 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
 
   getSymboInfoAndNews(dispatch, listSymbol);
 
-  useNavigator(navigator, {
-    willAppear: () => {
+  useFocusEffect(
+    React.useCallback(() => {
+      //Screen was focused
       if (Controller.getStatusModalCurrent()) {
         return Controller.setStatusModalCurrent(false)
       } else {
@@ -170,27 +167,28 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
         dispatch.marketActivity.getMarketExchange();
         dispatch.marketActivity.getMarketGroup();
       }
-    },
-    didAppear: () => {
-      setIsFirstLoad(false)
-    },
-    didDisappear: () => {
-      if (Controller.getStatusModalCurrent()) {
-        return;
-      }
-      if (dataStorage.tabIndexSelected !== 0) {
-        clearInteractable && clearInteractable()
-        setIsFirstLoad(true)
-        setInactiveScreen(ACTIVE_STREAMING.MARKET_ACTIVITY)
-        updateAllowStreaming(false)
-      }
-    }
-  });
-  // if (isFirstLoad) {
-  // 	return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  // 		<ProgressBar color={CommonStyle.fontColor} />
-  // 	</View>
-  // }
+
+      const _timerFirst = setTimeout(() => {
+        setIsFirstLoad(false)
+      }, 300);
+
+
+      return () => {
+        // Screen was unfocused
+        if (Controller.getStatusModalCurrent()) {
+          return;
+        }
+        if (dataStorage.tabIndexSelected !== 0) {
+          clearInteractable && clearInteractable()
+          setIsFirstLoad(true)
+          setInactiveScreen(ACTIVE_STREAMING.MARKET_ACTIVITY)
+          updateAllowStreaming(false)
+        }
+        clearTimeout(_timerFirst)
+      };
+    }, [])
+  );
+
   useUpdateChangeTheme(navigator)
 
   useLayoutEffect(() => {
@@ -199,6 +197,7 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
       ManageAppState.unRegisterAppState(ScreenId.MARKET_ACTIVITY)
     }
   }, [])
+
   return (
     <View
       style={{
@@ -251,14 +250,8 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
           ref={refAddToWl}
         />
       </View>
-
-      <BottomTabBar
-        index={0}
-        ref={setRefTabbar}
-        navigator={navigator}
-        style={{ zIndex: 3 }}
-      />
       <Modal isRematch/>
+
       {
         isFirstLoad && <View style={[StyleSheet.absoluteFillObject, {
           justifyContent: 'center',
@@ -268,6 +261,7 @@ const MarketActivity = ({ navigator, fromDrawer }) => {
           <ProgressBar color={CommonStyle.fontColor}/>
         </View>
       }
+
     </View>
   );
 };

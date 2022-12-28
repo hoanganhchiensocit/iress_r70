@@ -1,38 +1,40 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import Animated, { interpolate } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import CommonStyle, { register } from '~/theme/theme_controller';
 import * as PureFunc from '~/utils/pure_func'
 import { DEVICE_WIDTH, DEVICE_HEIGHT } from '~s/watchlist/enum';
 import { useUpdateChangeTheme } from '~/component/hook';
 
+const { interpolateNode } = Animated;
+
 let BackDropView = ({ _scrollValue }) => {
   useUpdateChangeTheme()
   // ChienHA
-  // const opacity = interpolate(_scrollValue, {
-  //   inputRange: [-1, 0, DEVICE_HEIGHT, DEVICE_HEIGHT + 1],
-  //   outputRange: [1, 1, 0, 0]
-  // });
-  //
-  // const translateX = interpolate(_scrollValue, {
-  //   inputRange: [
-  //     DEVICE_HEIGHT - 2,
-  //     DEVICE_HEIGHT - 1,
-  //     DEVICE_HEIGHT,
-  //     DEVICE_HEIGHT + 1
-  //   ],
-  //   outputRange: [0, 0, DEVICE_WIDTH, DEVICE_WIDTH]
-  // });
+  const opacity = interpolateNode(_scrollValue, {
+    inputRange: [-1, 0, DEVICE_HEIGHT, DEVICE_HEIGHT + 1],
+    outputRange: [1, 1, 0, 0]
+  });
+
+  const translateX = interpolateNode(_scrollValue, {
+    inputRange: [
+      DEVICE_HEIGHT - 2,
+      DEVICE_HEIGHT - 1,
+      DEVICE_HEIGHT,
+      DEVICE_HEIGHT + 1
+    ],
+    outputRange: [0, 0, DEVICE_WIDTH, DEVICE_WIDTH]
+  });
 
   return (
     <Animated.View
       style={[
         styles.container,
-        // {
-        //   opacity,
-        //   transform: [{ translateX }]
-        // }
+        {
+          opacity,
+          transform: [{ translateX }]
+        }
       ]}
     />
   );

@@ -22,6 +22,9 @@ import Portfolio from '~/screens/portfolio/';
 import Trade from '~/screens/watchlist';
 import MyBottomTabBar from '../component/tabbar/bottom_tabbar'
 
+import CategoriesWL from '~s/watchlist/Categories/';
+import EditWatchList from '~/screens/watchlist/EditWatchList/EditWatchlist.js';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -81,8 +84,14 @@ function AppStack() {
         />
 
         <Stack.Screen
-          name={ScreenEnum.ACTIVITIES}
-          component={Activities}
+          name={ScreenEnum.CATEGORIES_WL}
+          component={CategoriesWL}
+          options={screenOptions}
+        />
+
+        <Stack.Screen
+          name={ScreenEnum.EDIT_WATCHLIST}
+          component={EditWatchList}
           options={screenOptions}
         />
 

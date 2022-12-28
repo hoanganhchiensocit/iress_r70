@@ -27,6 +27,9 @@ export const ScreenEnum = {
 	QUICK_ACTION: 'QuickActions',
 	PORTFOLIO: 'Portfolio',
 	ORDERS: 'Orders',
+
+	CATEGORIES_WL: 'CategoriesWL',
+	EDIT_WATCHLIST: 'EditWatchList',
 };
 
 // const addPreKeyScreen = () => {

@@ -26,7 +26,6 @@ import { showNewOrderModal } from '~/navigation/controller.1';
 import * as RoleUser from '~/roleUser';
 import Enum from '~/enum';
 import { Component } from "react";
-import { ScreenEnum } from "../../navigation";
 
 const { NAME_PANEL } = Enum;
 const { ROLE_USER } = Enum;
@@ -329,7 +328,7 @@ const styles = StyleSheet.create({
     width: WIDTH_DEVICE,
     height: HEIGHT_TABBAR,
     overflow: 'hidden',
-    backgroundColor: CommonStyle.backgroundColor,
+    backgroundColor: 'transparent',
     borderTopLeftRadius: CORNER_RADIUS,
     borderTopRightRadius: CORNER_RADIUS
   },

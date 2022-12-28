@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useCallback, useRef, useMemo, useReducer } from 'react'
-import { View, Text } from 'react-native'
-import PropTypes from 'prop-types'
+import React, { useState, useRef, useMemo } from 'react'
+import { View } from 'react-native'
 
 import BottomHeader from './BottomHeader'
 import HeaderMessage from './HeaderMessage'
@@ -8,7 +7,7 @@ import TopHeader from './TopHeader'
 
 import * as PriceBoardModel from '~/screens/watchlist/EditWatchList/Model/PriceBoardModel.js'
 
-import { useSelector, shallowEqual } from 'react-redux'
+import { useSelector } from 'react-redux'
 /**
  * Kiem tra xem data co thay doi ko
  */

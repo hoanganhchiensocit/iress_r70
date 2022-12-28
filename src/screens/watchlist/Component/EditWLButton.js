@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { View, Text } from 'react-native';
 import CommonStyle from '~/theme/theme_controller';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useFocusEffect } from '@react-navigation/native';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/';
 import I18n from '~/modules/language/';
 import { dataStorage } from '~/storage';
 import { useLoadingErrorSystem } from '~/component/error_system/Hook/Redux'
+import Navigation from "../../../navigator/Navigation";
+import { ScreenEnum } from "../../../navigation";
+import { updateAllowStreaming } from "../../marketActivity/Models/MarketActivityModel";
 let EditWLButton = ({ navigator, changeAllowUnmount }) => {
 	const dic = useRef({ mount: true });
 	const { isLoadingErrorSystem } = useLoadingErrorSystem()
@@ -15,31 +18,32 @@ let EditWLButton = ({ navigator, changeAllowUnmount }) => {
 		dataStorage &&
 			dataStorage.functionSnapToClose &&
 			dataStorage.functionSnapToClose();
-		const nextScreenObj = {
-			screen: 'equix.EditWatchList',
-			backButtonTitle: ' ',
-			animated: true,
-			animationType: 'slide-horizontal',
-			passProps: {},
-			navigatorStyle: CommonStyle.navigatorSpecial
-		};
+		// const nextScreenObj = {
+		// 	screen: 'equix.EditWatchList',
+		// 	backButtonTitle: ' ',
+		// 	animated: true,
+		// 	animationType: 'slide-horizontal',
+		// 	passProps: {},
+		// 	navigatorStyle: CommonStyle.navigatorSpecial
+		// };
 		if (!dic.current.mount) return;
 		dic.current.mount = false;
-		return navigator.push(nextScreenObj);
+		// return navigator.push(nextScreenObj);
+		Navigation.navigate(ScreenEnum.EDIT_WATCHLIST)
 	}, []);
-	const onNavigatorEvent = useCallback((event) => {
-		switch (event.id) {
-			case 'willAppear':
-				dic.current.mount = true;
-				break;
-			default:
-				break;
-		}
-	});
 
-	useEffect(() => {
-		navigator && navigator.addOnNavigatorEvent(onNavigatorEvent);
-	}, []);
+	useFocusEffect(
+		React.useCallback(() => {
+			//Screen was focused
+			dic.current.mount = true;
+
+			return () => {
+				// Screen was unfocused
+
+			};
+		}, [])
+	);
+
 	const color = isLoadingErrorSystem ? CommonStyle.fontNearLight6 : CommonStyle.color.modify
 	return (
 		<View style={{ marginRight: 16 }}>

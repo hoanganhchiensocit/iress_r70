@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import HeaderSelecter from '~/screens/marketActivity/Components/HeaderSelecter.js';
 import { useShadow } from '~/component/shadow/SvgShadow';
 import CommonStyle from '~/theme/theme_controller';
-import { useAppState, useNavigator } from '~s/watchlist/TradeList/tradelist.hook';
+import { useAppState } from '~s/watchlist/TradeList/tradelist.hook';
 import TabView from '~/component/tabview4/'
 import MarketDataStreaming from '~/screens/marketActivity/MarketDataStreaming.js'
 import { getAnimationTypeByIndex } from '~/screens/orders/Controller/AnimationController.js'
@@ -14,6 +14,7 @@ import { changeAnimationType } from '~/component/loading_component/Redux/actions
 import { clearInteractable } from '~/screens/marketActivity/Models/MarketActivityModel.js'
 import * as Controller from '~/memory/controller'
 import Enum from '~/enum'
+import { useFocusEffect } from '@react-navigation/native';
 
 const { ANIMATION_TYPE } = Enum
 const { Value } = Animated;
@@ -178,17 +179,17 @@ const TabFilter = React.memo(({ onTabsChange1, onTabsChange2, firstTabs, secondT
     const [Shadow, onLayout] = useShadow()
     const [Shadow2, onLayout2] = useShadow()
     const dispatch = useDispatch();
-    useNavigator(navigator, {
-        willAppear: () => {
 
-        },
-        didAppear: () => {
+    useFocusEffect(
+      React.useCallback(() => {
+          //Screen was focused
 
-        },
-        didDisappear: () => {
-            dispatch(changeAnimationType(ANIMATION_TYPE.FADE_IN_SPECIAL))
-        }
-    });
+          return () => {
+              // Screen was unfocused
+              dispatch(changeAnimationType(ANIMATION_TYPE.FADE_IN_SPECIAL))
+          };
+      }, [])
+    );
 
     return (
         <React.Fragment>

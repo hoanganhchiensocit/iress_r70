@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
 import { useSelector } from 'react-redux';
 

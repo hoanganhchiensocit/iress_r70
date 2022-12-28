@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { View, Text, KeyboardAvoidingView, Platform } from 'react-native'
+import React  from 'react'
+import { View, KeyboardAvoidingView, Platform } from 'react-native'
 
-import PropTypes from 'prop-types'
 import CommonStyle from '~/theme/theme_controller';
 const WrapperComponent = props => {
     const styles = {

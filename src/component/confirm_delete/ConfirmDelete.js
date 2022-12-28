@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback, useMemo, useImperativeHandle } from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import React, { useCallback, useMemo, useImperativeHandle } from 'react'
+import { StyleSheet, Dimensions } from 'react-native'
 import Animated from 'react-native-reanimated'
-import PropTypes from 'prop-types'
 import {
     clamp,
     timing
