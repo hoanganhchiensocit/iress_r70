@@ -6,7 +6,7 @@ import CommonStyle from '~/theme/theme_controller'
 import Animated from 'react-native-reanimated'
 
 const { width: DEVICE_WIDTH } = Dimensions.get('window')
-const { interpolate } = Animated
+const { interpolateNode } = Animated
 const Bar = ({ width, style, children, animated }) => {
     const BarComp = animated ? Animated.View : View
     return <BarComp style={[{
@@ -75,7 +75,7 @@ const SplitPoint = ({ maxWidth, widthAnimated, color, height }) => {
     }
     const totalWidth = leftProperty.width + midProperty.width + rightProperty.width
     const translateX = useMemo(() => {
-        return interpolate(widthAnimated, {
+        return interpolateNode(widthAnimated, {
             inputRange: [0, 1, maxWidth - 1, maxWidth],
             outputRange: [-totalWidth, 0, 0, totalWidth]
         })

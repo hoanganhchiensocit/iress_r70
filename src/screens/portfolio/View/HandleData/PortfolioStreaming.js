@@ -10,6 +10,7 @@ import ScreenId from '~/constants/screen_id';
 import { setOnDataFunction, setData } from '~/screens/portfolio/Model/StreamingModel.js'
 import { func, dataStorage } from '~/storage';
 import { errorSettingModel } from '~/screens/setting/main_setting/error_system_setting.js'
+
 const PortfolioStreaming = ({ navigator }) => {
     const accActive = useSelector(state => state.portfolio.accActive)
     const dispatch = useDispatch()
@@ -17,23 +18,11 @@ const PortfolioStreaming = ({ navigator }) => {
         nchanConnected: {},
         timeoutSub: null
     })
-    const onNavigatorEvent = useCallback((event) => {
-        if (event.type === 'NavBarButtonPress') {
-            console.log('HandleData NavBarButtonPress')
-        } else {
-            switch (event.id) {
-                case 'didAppear':
-                    break;
-                case 'didDisappear':
-                    break;
-                default:
-                    break;
-            }
-        }
-    }, [])
+
     const sub = useCallback(() => {
         createConnect({ accId: accActive })
     }, [accActive])
+
     const unsub = useCallback(() => {
         if (dic.current.timeoutSub) clearTimeout(dic.current.timeoutSub)
         forEach(dic.current.nchanConnected, (value, key) => {
@@ -48,12 +37,15 @@ const PortfolioStreaming = ({ navigator }) => {
         if (dataStorage.currentScreenId !== ScreenId.PORTFOLIO || (data && data.portfolio_id !== getAccActive())) return // Kiem tra neu dang o tai man hinh Portfolio thi ms ghi nhan data Streaming. Con case when active lai screenId thi phai getSnapShot. hoac la message khong con dung account
         data && dispatch(storePortfolioTotal(data))
     }, [])
+
     const onChangeNetwork = useCallback(() => {
 
     }, [])
+
     const onError = useCallback((error) => {
-        // console.info('PortfolioStreaming onError', error)
+        console.info('PortfolioStreaming onError', error)
     }, [])
+
     const createConnect = useCallback(({ accId }) => {
         const url = getPortfolioStreamingUrl(accId)
         const onConnect = () => {
@@ -72,14 +64,14 @@ const PortfolioStreaming = ({ navigator }) => {
             onChangeNetwork
         });
     }, [accActive])
+
     useEffect(() => {
-        const listener = navigator && navigator.addOnNavigatorEvent(onNavigatorEvent);
         setOnDataFunction(onData)
         return () => {
             unsub() // Unmount
-            listener()
         }
     }, [])
+
     useEffect(() => {
         unsub() // Change accActive unsub PrevAccActive
         if (dic.current.timeoutSub) clearTimeout(dic.current.timeoutSub)

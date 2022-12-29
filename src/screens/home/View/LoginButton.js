@@ -82,6 +82,7 @@ export const useRefButton = () => {
 	return [refButton, signIn];
 };
 const LoginButton = React.forwardRef((props, ref) => {
+	const dispatch = useDispatch()
 	const email = useSelector((state) => state.login.email, shallowEqual);
 	const password = useSelector((state) => state.login.password, shallowEqual);
 	const isConnected = useSelector(
@@ -96,11 +97,8 @@ const LoginButton = React.forwardRef((props, ref) => {
 
 	const error = useSelector((state) => state.login.error, shallowEqual);
 	//DUCLM
-	const isLoading = false;
-	// const isLoading = useSelector(
-	// 	(state) => state.login.isLoading,
-	// 	shallowEqual
-	// );
+	const isLoading = useSelector((state) => state.login.isLoading, shallowEqual);
+
 	const disabled =
 		props.loginType === LOGIN_TYPE.OKTA
 			? useDisabledButtonByOkata({
@@ -149,7 +147,7 @@ const LoginButton = React.forwardRef((props, ref) => {
 		};
 
 		try {
-			Controller.dispatch(loginActions.loginRequestGuest());
+			dispatch(loginActions.loginRequestGuest());
 
 			const checkAutoLogin = async (refreshToken) => {
 				const { link_okta: linkOkta = '', okta_app_client_id: clientId = '' } =
@@ -235,8 +233,9 @@ const LoginButton = React.forwardRef((props, ref) => {
 		};
 	});
 	useEffect(() => {
-		Controller.dispatch(resetLoginLoading());
-	}, []);
+		dispatch(resetLoginLoading())
+		// Controller.dispatch(resetLoginLoading());
+	},[]);
 
 	return (
 		<TouchableOpacityOpt
@@ -274,17 +273,5 @@ const LoginButton = React.forwardRef((props, ref) => {
 		</TouchableOpacityOpt>
 	);
 });
-function mapStateToProps(state) {
-	return {
-		isConnected: state.app.isConnected,
-		login: state.login,
-		setting: state.setting
-	};
-}
-function mapDispatchToProps(dispatch) {
-	return {
-		actions: bindActionCreators(loginActions, dispatch),
-		authSettingActions: bindActionCreators(authSettingActions, dispatch)
-	};
-}
+
 export default LoginButton;

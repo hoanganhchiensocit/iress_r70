@@ -102,20 +102,20 @@ const OrdersStreaming = ({ navigator }) => {
     const dic = useRef({
         nchanConnected: {}
     })
-    const onNavigatorEvent = useCallback((event) => {
-        if (event.type === 'NavBarButtonPress') {
-            console.log('HandleData NavBarButtonPress')
-        } else {
-            switch (event.id) {
-                case 'didAppear':
-                    break;
-                case 'didDisappear':
-                    break;
-                default:
-                    break;
-            }
-        }
-    }, [])
+    // const onNavigatorEvent = useCallback((event) => {
+    //     if (event.type === 'NavBarButtonPress') {
+    //         console.log('HandleData NavBarButtonPress')
+    //     } else {
+    //         switch (event.id) {
+    //             case 'didAppear':
+    //                 break;
+    //             case 'didDisappear':
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    // }, [])
     const sub = useCallback(() => {
         // fakeData(accActive, onData)
         createConnect({ accId: accActive })
@@ -157,11 +157,11 @@ const OrdersStreaming = ({ navigator }) => {
         });
     }, [accActive])
     useEffect(() => {
-        const listener = navigator && navigator.addOnNavigatorEvent(onNavigatorEvent);
+        // const listener = navigator && navigator.addOnNavigatorEvent(onNavigatorEvent);
         // setOnDataFunction(onData)
         return () => {
             unsub() // Unmount
-            listener()
+            // listener()
         }
     }, [])
     useEffect(() => {

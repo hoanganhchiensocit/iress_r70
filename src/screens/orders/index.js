@@ -33,6 +33,7 @@ import { destroy } from '~s/orders/Model/OrdersModel';
 import Error from '~/component/error_system/Error.js';
 import * as Controller from '~/memory/controller';
 import { useUpdateChangeTheme } from '~/component/hook';
+import { useFocusEffect } from '@react-navigation/native';
 
 UIManager.setLayoutAnimationEnabledExperimental &&
 	UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -70,7 +71,7 @@ const NetworkWarning = () => {
 	);
 };
 
-const OrdersWrapper = ({ navigator }) => {
+const OrdersWrapper = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const dic = useRef({
 		active: true,
@@ -79,6 +80,7 @@ const OrdersWrapper = ({ navigator }) => {
 		currentPosition: {},
 		timeoutLoadingPanel: null
 	});
+
 	const [isFirstLoad, setIsFirstLoad] = useState(true);
 	const [isFirstLoadPanel, setIsFirstLoadPanel] = useState(true);
 	const [refDetail, showDetail, hideDetail, updateDataRealtime] =
@@ -87,80 +89,126 @@ const OrdersWrapper = ({ navigator }) => {
 	const [refFooter, showHideTabbar] = useShowHideTabbar();
 	const refContent = useRef();
 	const [setSpaceTop] = useSetDetailSpaceTop(refDetail);
+
 	const updateActiveStatus = useCallback((newActive) => {
 		dic.current.active = newActive;
 	}, []);
+
 	const handleSelectAccount = useCallback(() => {
-		refContent.current.clearTextSearch &&
-			refContent.current.clearTextSearch();
+		refContent.current.clearTextSearch && refContent.current.clearTextSearch();
 		dispatch(resetFilterOrders()); // reset filter orders when change account
 		dispatch(changeAnimationType(ANIMATION_TYPE.FADE_IN_SPECIAL));
 		dispatch(changeLoadingState(true));
 		const isSortUpdated = true;
 		getOrders({ isSortUpdated });
 	}, []);
-	const onNavigatorEvent = useCallback((event) => {
-		switch (event.id) {
-			case 'willAppear':
-				func.setCurrentScreenId(ScreenId.ORDERS);
-				break;
-			case 'didAppear':
-				if (dic.current.active) {
-					setIsFirstLoad(false);
-					dic.current.timeoutLoadingPanel = setTimeout(() => {
-						setIsFirstLoadPanel(false);
-					}, 1000);
-					if (Controller.getStatusModalCurrent()) {
-						return Controller.setStatusModalCurrent(false);
-					}
-					dispatch(changeLoadingState(true));
-					const isSortUpdated = true;
-					getOrders({ isSortUpdated });
+
+	// const onNavigatorEvent = useCallback((event) => {
+	// 	switch (event.id) {
+	// 		case 'willAppear':
+	// 			func.setCurrentScreenId(ScreenId.ORDERS);
+	// 			break;
+	// 		case 'didAppear':
+	// 			if (dic.current.active) {
+	// 				setIsFirstLoad(false);
+	// 				dic.current.timeoutLoadingPanel = setTimeout(() => {
+	// 					setIsFirstLoadPanel(false);
+	// 				}, 1000);
+	// 				if (Controller.getStatusModalCurrent()) {
+	// 					return Controller.setStatusModalCurrent(false);
+	// 				}
+	// 				dispatch(changeLoadingState(true));
+	// 				const isSortUpdated = true;
+	// 				getOrders({ isSortUpdated });
+	// 			}
+	// 			func.setNavigatorGlobal({
+	// 				index: 4,
+	// 				navigator
+	// 			});
+	// 			func.setCurrentScreenId(ScreenId.ORDERS);
+	// 			updateActiveStatus(true);
+	// 			break;
+	// 		case 'didDisappear':
+	// 			if (dataStorage.tabIndexSelected !== 4) {
+	// 				dic.current.timeoutLoadingPanel &&
+	// 					clearTimeout(dic.current.timeoutLoadingPanel);
+	// 				// Reset filter and animation Type
+	// 				if (Controller.getStatusModalCurrent()) {
+	// 					return;
+	// 				}
+	// 				destroy(); // Reset orders model
+	// 				dispatch(resetFilterOrders()); // reset filter orders when change account
+	// 				dispatch(changeAnimationType(ANIMATION_TYPE.FADE_IN_SPECIAL));
+	// 				setIsFirstLoad(true);
+	// 				setIsFirstLoadPanel(true);
+	// 			}
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
+	// }, []);
+
+	useFocusEffect(
+		React.useCallback(() => {
+			if (dic.current.active) {
+				setIsFirstLoad(false);
+				dic.current.timeoutLoadingPanel = setTimeout(() => {
+					setIsFirstLoadPanel(false);
+				}, 1000);
+				if (Controller.getStatusModalCurrent()) {
+					return Controller.setStatusModalCurrent(false);
 				}
-				func.setNavigatorGlobal({
-					index: 4,
-					navigator
-				});
-				func.setCurrentScreenId(ScreenId.ORDERS);
-				updateActiveStatus(true);
-				break;
-			case 'didDisappear':
-				if (dataStorage.tabIndexSelected !== 4) {
-					dic.current.timeoutLoadingPanel &&
-						clearTimeout(dic.current.timeoutLoadingPanel);
-					// Reset filter and animation Type
-					if (Controller.getStatusModalCurrent()) {
-						return;
-					}
-					destroy(); // Reset orders model
-					dispatch(resetFilterOrders()); // reset filter orders when change account
-					dispatch(
-						changeAnimationType(ANIMATION_TYPE.FADE_IN_SPECIAL)
-					);
-					setIsFirstLoad(true);
-					setIsFirstLoadPanel(true);
+				dispatch(changeLoadingState(true));
+				const isSortUpdated = true;
+				getOrders({ isSortUpdated });
+			}
+			func.setNavigatorGlobal({
+				index: 4,
+				navigator
+			});
+			func.setCurrentScreenId(ScreenId.ORDERS);
+			updateActiveStatus(true);
+		}, [])
+	);
+
+	useEffect(()=>{
+		const unFocusEvent = navigation.addListener('blur',()=>{
+			if (dataStorage.tabIndexSelected !== 4) {
+				dic.current.timeoutLoadingPanel &&
+					clearTimeout(dic.current.timeoutLoadingPanel);
+				// Reset filter and animation Type
+				if (Controller.getStatusModalCurrent()) {
+					return;
 				}
-				break;
-			default:
-				break;
-		}
-	}, []);
+				destroy(); // Reset orders model
+				dispatch(resetFilterOrders()); // reset filter orders when change account
+				dispatch(changeAnimationType(ANIMATION_TYPE.FADE_IN_SPECIAL));
+				setIsFirstLoad(true);
+				setIsFirstLoadPanel(true);
+			}
+		})
+
+		return unFocusEvent
+	},[])
+
 	useLayoutEffect(() => {
-		const listener = navigator.addOnNavigatorEvent(onNavigatorEvent);
+		// const listener = navigator.addOnNavigatorEvent(onNavigatorEvent);
 		return () => {
 			dic.current.timeoutLoadingPanel &&
 				clearTimeout(dic.current.timeoutLoadingPanel);
 			// Reset filter and animation Type
 			dispatch(resetFilterOrders()); // reset filter orders when change account
 			dispatch(changeAnimationType(ANIMATION_TYPE.FADE_IN_SPECIAL));
-			listener();
 		};
 	}, []);
+
 	const onReTry = useCallback(() => {
 		const isSortUpdated = true;
 		getOrders({ isSortUpdated });
 	}, []);
+
 	useUpdateChangeTheme(navigator);
+
 	return isFirstLoad ? (
 		<View
 			style={{
@@ -173,9 +221,7 @@ const OrdersWrapper = ({ navigator }) => {
 			<ProgressBar color={CommonStyle.fontColor} />
 		</View>
 	) : (
-		<View
-			style={{ flex: 1, backgroundColor: CommonStyle.backgroundColor1 }}
-		>
+		<View style={{ flex: 1, backgroundColor: CommonStyle.backgroundColor1 }}>
 			<HandleAppState />
 			<HandleData navigator={navigator} />
 			<Header navigator={navigator} />

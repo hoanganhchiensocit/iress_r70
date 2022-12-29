@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, useLayoutEffect } from 'react';
+import React, {
+	useState,
+	useCallback,
+	useRef,
+	useLayoutEffect,
+	useEffect
+} from 'react';
 import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Header from '~s/portfolio/View/Header/';
@@ -30,8 +36,9 @@ import Error from '~/component/error_system/Error.js';
 import * as ManageAppState from '~/manage/manageAppState';
 import * as Controller from '~/memory/controller';
 import _ from 'lodash';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
-const PortfolioWrapper = ({ navigator }) => {
+const PortfolioWrapper = ({}) => {
 	const dispatch = useDispatch();
 
 	const updateActiveStatus = (newActive) => {
@@ -49,6 +56,7 @@ const PortfolioWrapper = ({ navigator }) => {
 	const [refBuySell, showHideBuySell] = useShowHideBuySell();
 	const [refAddToWl, showAddToWl] = useShowAddToWl();
 	const [setSpaceTop] = useSetDetailSpaceTop(refDetail);
+
 	const dic = useRef({
 		active: true,
 		symbol: null,
@@ -61,6 +69,7 @@ const PortfolioWrapper = ({ navigator }) => {
 		dic.current.exchange = exchange;
 		dic.current.currentPosition = position;
 	}, []);
+
 	const getSymbolExchange = useCallback(() => {
 		return {
 			symbol: dic.current.symbol,
@@ -68,39 +77,37 @@ const PortfolioWrapper = ({ navigator }) => {
 			currentPosition: dic.current.currentPosition
 		};
 	}, []);
+
 	const activeApp = useCallback(() => {
 		dispatch(changeLoadingState(true));
 		dispatch(resetPLState());
 		const accAvtive = getAccActive();
 		getPortfolioTotal(accAvtive);
 	}, []);
-	const onNavigatorEvent = useCallback((event) => {
-		switch (event.id) {
-			case 'willAppear':
-				func.setCurrentScreenId(ScreenId.PORTFOLIO);
-				break;
-			case 'didAppear':
-				if (getActiveStatus()) {
-					setIsFirstLoad(false);
-					dic.current.timeoutLoadingPanel = setTimeout(() => {
-						setIsFirstLoadPanel(false);
-					}, 1000);
-					if (Controller.getStatusModalCurrent()) {
-						return Controller.setStatusModalCurrent(false);
-					}
-					dispatch(changeLoadingState(true));
-					dispatch(resetPLState());
-					const accAvtive = getAccActive();
-					getPortfolioTotal(accAvtive);
+
+	useFocusEffect(
+		React.useCallback(() => {
+			func.setCurrentScreenId(ScreenId.PORTFOLIO);
+			if (getActiveStatus()) {
+				setIsFirstLoad(false);
+				dic.current.timeoutLoadingPanel = setTimeout(() => {
+					setIsFirstLoadPanel(false);
+				}, 1000);
+				if (Controller.getStatusModalCurrent()) {
+					return Controller.setStatusModalCurrent(false);
 				}
-				func.setNavigatorGlobal({
-					index: 3,
-					navigator
-				});
-				func.setCurrentScreenId(ScreenId.PORTFOLIO);
-				updateActiveStatus(true);
-				break;
-			case 'didDisappear':
+				dispatch(changeLoadingState(true));
+				dispatch(resetPLState());
+				const accAvtive = getAccActive();
+				getPortfolioTotal(accAvtive);
+			}
+			// func.setNavigatorGlobal({
+			// 	index: 3,
+			// 	navigator
+			// });
+			updateActiveStatus(true);
+
+			return () => {
 				if (Controller.getStatusModalCurrent()) {
 					return;
 				}
@@ -111,34 +118,70 @@ const PortfolioWrapper = ({ navigator }) => {
 					setIsFirstLoad(true);
 					setIsFirstLoadPanel(true);
 				}
-				break;
-			default:
-				break;
-		}
-	}, []);
+			};
+		}, [])
+	);
+
+	// const onNavigatorEvent = useCallback((event) => {
+	// 	switch (event.id) {
+	// 		case 'willAppear':
+	// 			func.setCurrentScreenId(ScreenId.PORTFOLIO);
+	// 			break;
+	// 		case 'didAppear':
+	// 			if (getActiveStatus()) {
+	// 				setIsFirstLoad(false);
+	// 				dic.current.timeoutLoadingPanel = setTimeout(() => {
+	// 					setIsFirstLoadPanel(false);
+	// 				}, 1000);
+	// 				if (Controller.getStatusModalCurrent()) {
+	// 					return Controller.setStatusModalCurrent(false);
+	// 				}
+	// 				dispatch(changeLoadingState(true));
+	// 				dispatch(resetPLState());
+	// 				const accAvtive = getAccActive();
+	// 				getPortfolioTotal(accAvtive);
+	// 			}
+	// 			func.setNavigatorGlobal({
+	// 				index: 3,
+	// 				navigator
+	// 			});
+	// 			func.setCurrentScreenId(ScreenId.PORTFOLIO);
+	// 			updateActiveStatus(true);
+	// 			break;
+	// 		case 'didDisappear':
+	// 			if (Controller.getStatusModalCurrent()) {
+	// 				return;
+	// 			}
+	// 			if (dataStorage.tabIndexSelected !== 3) {
+	// 				updateActiveStatus(true);
+	// 				dic.current.timeoutLoadingPanel &&
+	// 					clearTimeout(dic.current.timeoutLoadingPanel);
+	// 				setIsFirstLoad(true);
+	// 				setIsFirstLoadPanel(true);
+	// 			}
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
+	// }, []);
+
 	useLayoutEffect(() => {
-		const listener = navigator.addOnNavigatorEvent(onNavigatorEvent);
-		ManageAppState.registerAppStateChangeHandle(
-			ScreenId.PORTFOLIO,
-			activeApp
-		);
+		// const listener = navigator.addOnNavigatorEvent(onNavigatorEvent);
+		ManageAppState.registerAppStateChangeHandle(ScreenId.PORTFOLIO, activeApp);
 		return () => {
 			dic.current.timeoutLoadingPanel &&
 				clearTimeout(dic.current.timeoutLoadingPanel);
 			ManageAppState.unRegisterAppState(ScreenId.PORTFOLIO);
-			listener();
+			// listener();
 		};
 	}, []);
+
 	return isFirstLoad ? (
-		<View
-			style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-		>
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 			<ProgressBar color={CommonStyle.fontColor} />
 		</View>
 	) : (
-		<View
-			style={{ flex: 1, backgroundColor: CommonStyle.backgroundColor1 }}
-		>
+		<View style={{ flex: 1, backgroundColor: CommonStyle.backgroundColor1 }}>
 			<HandleData navigator={navigator} />
 			<Header navigator={navigator} />
 			<NetworkWarning navigator={navigator} />
