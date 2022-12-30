@@ -62,7 +62,6 @@ const DelayedIcon = ({ changeAllowUnmount }) => {
 				color={CommonStyle.colorProduct}
 				onPress={showDelayedMarketDataPopup}
 				style={{ paddingLeft: 10, top: 2 }}
-				color={CommonStyle.colorProduct}
 			/>
 		);
 	}
@@ -138,14 +137,16 @@ export class SymbolInfoDetail extends Component {
 	}
 
 	renderFirstRight() {
-		const { navigator, symbol, exchange } = this.props;
+		const {
+			symbol,
+			exchange
+		} = this.props;
 
 		return (
 			<View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
 				<AddToWatchlist onPress={this.handleShowAddWl} />
 
 				<NewAlertButton
-					navigator={navigator}
 					exchange={exchange}
 					symbol={symbol}
 				/>

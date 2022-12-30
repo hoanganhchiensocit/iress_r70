@@ -138,7 +138,7 @@ let Tabs = ({ onChange }, ref) => {
 Tabs = forwardRef(Tabs);
 
 let MartketInfo = (
-	{ symbol, exchange, isDisableShowNewDetail, navigator, changeAllowUnmount, reset },
+	{ symbol, exchange, isDisableShowNewDetail, changeAllowUnmount, reset },
 	ref
 ) => {
 	const _tabs = useRef();
@@ -172,7 +172,6 @@ let MartketInfo = (
 				}}
 				isDisableShowNewDetail={isDisableShowNewDetail}
 				symbol={symbol}
-				navigator={navigator}
 			/>
 		);
 	} else {
@@ -197,17 +196,17 @@ export default MartketInfo;
 const styles = {}
 function getNewestStyle() {
 	const newStyle = StyleSheet.create({
-	ticker: {
-		alignSelf: 'center',
-		width: '120%',
-		position: 'absolute',
-		height: 5,
-		borderRadius: 8,
-		backgroundColor: CommonStyle.color.turquoiseBlueHex,
-		bottom: -8
-	}
-});
-PureFunc.assignKeepRef(styles, newStyle)
+		ticker: {
+			alignSelf: 'center',
+			width: '120%',
+			position: 'absolute',
+			height: 5,
+			borderRadius: 8,
+			backgroundColor: CommonStyle.color.turquoiseBlueHex,
+			bottom: -8
+		}
+	});
+	PureFunc.assignKeepRef(styles, newStyle)
 }
 getNewestStyle()
 register(getNewestStyle)

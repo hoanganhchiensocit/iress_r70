@@ -30,6 +30,10 @@ export const ScreenEnum = {
 
 	CATEGORIES_WL: 'CategoriesWL',
 	EDIT_WATCHLIST: 'EditWatchList',
+	SEARCH_SYMBOL: 'SearchSymbol',
+	WATCH_LIST_DETAIL: 'WatchlistDetail',
+	NEW_DETAIL: 'NewDetail',
+	NEWS_DETAIL: 'NewsDetail'
 };
 
 // const addPreKeyScreen = () => {

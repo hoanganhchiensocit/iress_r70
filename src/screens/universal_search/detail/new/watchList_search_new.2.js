@@ -442,8 +442,8 @@ export class WatchListSearchNew extends PureComponent {
 		const { isDisableShowNewDetail } = this.props;
 		if (isDisableShowNewDetail) return;
 		const { news_id: newID = '' } = data || {};
-		const { navigator, isConnected } = this.props;
-		showNewsDetail(newID, navigator, isConnected);
+		const { isConnected } = this.props;
+		showNewsDetail(newID, null, isConnected);
 	}
 
 	compareTimeOpenLink(item) {
@@ -526,9 +526,8 @@ export class WatchListSearchNew extends PureComponent {
 		if (isDisableShowNewDetail) return;
 		reset && reset()
 		changeAllowUnmount && changeAllowUnmount(false);
-		const { navigator } = this.props;
 		const error = NewDetailController.getNewsError(dataNews);
-		return getInfoAndShowNewDetail({ dataNews, navigator, error });
+		return getInfoAndShowNewDetail({ dataNews, error });
 	}
 	loadMore = this.loadMore.bind(this);
 	loadMore() {
@@ -605,7 +604,7 @@ export class WatchListSearchNew extends PureComponent {
 				style={[{ paddingBottom: 8 }, style]}
 				onLayout={this.props.onLayout}
 			>
-				{}
+				{ }
 				{_.map(data, (item, index) => this.renderRow({ item, index }))}
 				{this.renderFooter()}
 			</View>

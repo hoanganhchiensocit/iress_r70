@@ -28,14 +28,17 @@ import { useData } from '~s/watchlist/Detail';
 import * as Channel from '~/streaming/channel';
 import * as Emitter from '@lib/vietnam-emitter';
 import Enum from '~/enum';
+import { useRoute } from '@react-navigation/native';
+import Navigation from '~/navigator/Navigation';
 const { INDICES } = Enum.SYMBOL_CLASS
-const WatchlistDetail = ({
-	navigator,
-	symbol,
-	exchange,
-	isDisableShowNewDetail,
-	isBackToSearch = false
-}) => {
+const WatchlistDetail = () => {
+	const routes = useRoute();
+	const {
+		symbol,
+		exchange,
+		isDisableShowNewDetail,
+		isBackToSearch = false
+	} = routes.params || {};
 	const [refAddToWl, showAddToWl] = useShowAddToWl();
 	const [isFirstLoad, setIsFirstLoad] = useState(true);
 	useEffect(() => {
@@ -44,7 +47,7 @@ const WatchlistDetail = ({
 		}, 100);
 	}, []);
 
-	useData(symbol, exchange, navigator);
+	useData(symbol, exchange);
 	const LoadingChannel = Channel.getChannelAlertLoading();
 	const isLoading = useSelector(
 		(state) =>
@@ -92,20 +95,22 @@ const WatchlistDetail = ({
 					<Icon
 						size={30}
 						onPress={() => {
-							navigator.dismissModal({
-								animated: true,
-								animationType: 'slide-horizontal'
-							})
+							// navigator.dismissModal({
+							//   animated: true,
+							//   animationType: 'slide-horizontal'
+							// })
 							if (isBackToSearch) {
-								navigator.pop({
-									animated: true,
-									animationType: 'slide-horizontal'
-								})
+								Navigation.back();
+								// navigator.pop({
+								//   animated: true,
+								//   animationType: 'slide-horizontal'
+								// })
 							} else {
-								navigator.popToRoot({
-									animated: true,
-									animationType: 'slide-horizontal'
-								})
+								Navigation.popToTop();
+								// navigator.popToRoot({
+								//   animated: true,
+								//   animationType: 'slide-horizontal'
+								// })
 							}
 						}
 						}
@@ -115,7 +120,6 @@ const WatchlistDetail = ({
 			</View>
 		</View>
 	);
-
 	const companyName = Business.getCompanyName({ symbol, exchange });
 	if (isFirstLoad) {
 		return (
@@ -123,7 +127,8 @@ const WatchlistDetail = ({
 				style={{
 					flex: 1,
 					justifyContent: 'center',
-					alignItems: 'center'
+					alignItems: 'center',
+					backgroundColor: CommonStyle.backgroundColor
 				}}
 			>
 				<ProgressBar color={CommonStyle.fontColor} />
@@ -181,7 +186,6 @@ const WatchlistDetail = ({
 				/> */}
 
 				<SymbolInfo
-					navigator={navigator}
 					symbol={symbol}
 					exchange={exchange}
 					showAddToWl={showAddToWl}
@@ -191,7 +195,6 @@ const WatchlistDetail = ({
 				<TradeInfo symbol={symbol} exchange={exchange} />
 
 				<ChartDetail
-					navigator={navigator}
 					symbol={symbol}
 					exchange={exchange}
 				/>
@@ -200,7 +203,6 @@ const WatchlistDetail = ({
 					isDisableShowNewDetail={isDisableShowNewDetail}
 					symbol={symbol}
 					exchange={exchange}
-					navigator={navigator}
 				/>
 				<View style={styles.bottomSpace} />
 			</ScrollView>

@@ -26,6 +26,8 @@ import { showNewOrderModal } from '~/navigation/controller.1';
 import * as RoleUser from '~/roleUser';
 import Enum from '~/enum';
 import { Component } from "react";
+import Navigation from "~/navigator/Navigation";
+import { ScreenEnum } from "~/navigation";
 
 const { NAME_PANEL } = Enum;
 const { ROLE_USER } = Enum;
@@ -88,22 +90,12 @@ export default class MyBottomTabBar extends Component {
 
   async openNewOrder() {
     dataStorage.isShowError = false;
-    const nextScreenObj = {
-      screen: 'equix.SearchSymbol',
-      // title: I18n.t('alertUpper'),
-      backButtonTitle: ' ',
-      animated: true,
-      animationType: 'slide-horizontal',
-      passProps: {
-        namePanel: NAME_PANEL.ADD_AND_SEARCH,
-        isSwitchFromQuickButton: true,
-        enabledGestureInteraction: false
-      },
-      navigatorStyle: CommonStyle.navigatorSpecialNoHeader
-    };
     Controller.setStatusModalCurrent(true);
-    //ChienHA open new
-    // this.props.navigator.push(nextScreenObj);
+    Navigation.navigate(ScreenEnum.SEARCH_SYMBOL, {
+      namePanel: NAME_PANEL.ADD_AND_SEARCH,
+      isSwitchFromQuickButton: true,
+      enabledGestureInteraction: false
+    })
     return;
   }
 
@@ -139,29 +131,29 @@ export default class MyBottomTabBar extends Component {
       // bo selected o menu drawer
       case 0:
         dataStorage.changeMenuSelected &&
-        dataStorage.changeMenuSelected(
-          Enum.MENU_SELECTED.activities
-        );
+          dataStorage.changeMenuSelected(
+            Enum.MENU_SELECTED.activities
+          );
         break;
       case 1:
         dataStorage.changeMenuSelected &&
-        dataStorage.changeMenuSelected(
-          Enum.MENU_SELECTED.watchlist_drawer
-        );
+          dataStorage.changeMenuSelected(
+            Enum.MENU_SELECTED.watchlist_drawer
+          );
         break;
       case 3:
         dataStorage.changeMenuSelected &&
-        dataStorage.changeMenuSelected(
-          Enum.MENU_SELECTED.portfolio
-        );
+          dataStorage.changeMenuSelected(
+            Enum.MENU_SELECTED.portfolio
+          );
         break;
       case 4:
         dataStorage.changeMenuSelected &&
-        dataStorage.changeMenuSelected(Enum.MENU_SELECTED.orders);
+          dataStorage.changeMenuSelected(Enum.MENU_SELECTED.orders);
         break;
       default:
         dataStorage.changeMenuSelected &&
-        dataStorage.changeMenuSelected(null);
+          dataStorage.changeMenuSelected(null);
         break;
     }
 
@@ -171,7 +163,7 @@ export default class MyBottomTabBar extends Component {
     // });
     // console.info('tabIndex', tabIndex);
     dataStorage.setTabActive[tabIndex] &&
-    dataStorage.setTabActive[tabIndex](tabIndex);
+      dataStorage.setTabActive[tabIndex](tabIndex);
   }
 
   renderQuickButton() {
@@ -259,16 +251,14 @@ export default class MyBottomTabBar extends Component {
           fill={svgColor.tabColor}
           d={`
                 M ${startingPointX},${startingPointY}
-                q -${
-          ditchControlPointDx - DELTA
+                q -${ditchControlPointDx - DELTA
             },0 -${ditchControlPointDx},-${ditchControlPointDy}
                 t -${ditchControlPointDx},-${ditchControlPointDy}
                 L 0,0
                 v ${HEIGHT_TABBAR}
                 h ${WIDTH_DEVICE / 2}
                 v -${HEIGHT_TABBAR_MOD}
-                q ${
-          ditchControlPointDx - DELTA
+                q ${ditchControlPointDx - DELTA
             },0 ${ditchControlPointDx},-${ditchControlPointDy}
                 t ${ditchControlPointDx},-${ditchControlPointDy}
                 L ${WIDTH_DEVICE},0

@@ -95,6 +95,8 @@ import HOME_SCREEN from '~/constants/home_screen.json';
 import * as ManageHistorySearch from '~/manage/manageHistorySearch';
 import { checkRoleByKey } from '~/roleUser';
 import { isErrorSystemByCode } from '~/component/error_system/Controllers/ErrorSystem.js';
+import Navigation from '~/navigator/Navigation';
+import { ScreenEnum } from '~/navigation';
 const {
 	SYMBOL_CLASS,
 	SYMBOL_CLASS_QUERY,
@@ -331,8 +333,8 @@ function getInitTabInfo({ isOutApp, type }) {
 export function handleDataNotification(notif) {
 	try {
 		/*  check data of Object Notification, more detail at Bussiness.setNotification.
-            have 2 type of notification data; front-end config & back-end config;
-        */
+						have 2 type of notification data; front-end config & back-end config;
+				*/
 		let payload;
 		if (notif._data && notif._data.payload) payload = notif._data.payload;
 		if (!payload || !notif) {
@@ -1022,7 +1024,7 @@ export async function openWhatsNewModal(nav, enableGetTime) {
 						// Reset isUpdating status
 						try {
 							AsyncStorage.setItem('whatsnew', JSON.stringify(data))
-								.then(() => {})
+								.then(() => { })
 								.catch((error) => {
 									logDevice(
 										'error',
@@ -1265,7 +1267,7 @@ export function showUnavailableNew({ dataNews, navigator, timeToAvailable }) {
 		});
 }
 
-function showNewWithUrl({ dataNews, navigator }) {
+function showNewWithUrl({ dataNews }) {
 	try {
 		const { news_code: newsCode } = dataNews;
 		const url = api.getLinkNewUrl(newsCode);
@@ -1277,21 +1279,28 @@ function showNewWithUrl({ dataNews, navigator }) {
 						// console.log(res.errorCode)
 					} else {
 						const { direct_link: directLink } = res;
-						navigator &&
-							navigator.push({
-								screen: 'equix.NewDetail',
-								overrideBackPress: true,
-								animated: false,
-								animationType: 'none',
-								navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
-								passProps: {
-									data: {
-										...dataNews,
-										documentType: DOCUMENT_TYPE_NEW.URL,
-										directLink
-									}
-								}
-							});
+						Navigation.navigate(ScreenEnum.NEW_DETAIL, {
+							data: {
+								...dataNews,
+								documentType: DOCUMENT_TYPE_NEW.URL,
+								directLink
+							}
+						});
+						// navigator &&
+						//   navigator.push({
+						//     screen: 'equix.NewDetail',
+						//     overrideBackPress: true,
+						//     animated: false,
+						//     animationType: 'none',
+						//     navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
+						//     passProps: {
+						//       data: {
+						//         ...dataNews,
+						//         documentType: DOCUMENT_TYPE_NEW.URL,
+						//         directLink
+						//       }
+						//     }
+						//   });
 					}
 				} else {
 					console.log('LINK NEW IS NULL');
@@ -1305,96 +1314,125 @@ function showNewWithUrl({ dataNews, navigator }) {
 	}
 }
 
-function showBlankNew({ dataNews, navigator, error }) {
+function showBlankNew({ dataNews, error }) {
 	const showUnavailableNew = true;
-	navigator &&
-		navigator.push({
-			screen: 'equix.NewDetail',
-			overrideBackPress: true,
-			animated: false,
-			animationType: 'none',
-			navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
-			passProps: {
-				data: {
-					...dataNews,
-					showUnavailableNew,
-					error
-				}
-			}
-		});
+	Navigation.navigate(ScreenEnum.NEW_DETAIL, {
+		data: {
+			...dataNews,
+			showUnavailableNew,
+			error
+		}
+	});
+	// navigator &&
+	//   navigator.push({
+	//     screen: 'equix.NewDetail',
+	//     overrideBackPress: true,
+	//     animated: false,
+	//     animationType: 'none',
+	//     navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
+	//     passProps: {
+	//       data: {
+	//         ...dataNews,
+	//         showUnavailableNew,
+	//         error
+	//       }
+	//     }
+	//   });
 }
 
-function showNewWithHtml({ dataNews, navigator, showUnavailableNew = false }) {
+function showNewWithHtml({ dataNews, showUnavailableNew = false }) {
 	const { news_code: newsCode } = dataNews;
 	const customStyleHtml = Business.genStyleHtmlNewDetail();
 	const params = Business.genParamsStyleHtmlNewDetail(customStyleHtml);
 	// const newsCode = 'b473c0682d1a711a86bbf4e5f8856d20a63848214545a46796e78ccb528a5193'
 	let streamUrl = api.getLinkNewUrl(newsCode);
 	streamUrl += `&${params}`;
-	navigator &&
-		navigator.push({
-			screen: 'equix.NewDetail',
-			overrideBackPress: true,
-			animated: false,
-			animationType: 'none',
-			navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
-			passProps: {
-				data: {
-					...dataNews,
-					showUnavailableNew,
-					documentType: DOCUMENT_TYPE_NEW.HTML,
-					streamUrl
-				}
-			}
-		});
+	Navigation.navigate(ScreenEnum.NEW_DETAIL, {
+		data: {
+			...dataNews,
+			showUnavailableNew,
+			documentType: DOCUMENT_TYPE_NEW.HTML,
+			streamUrl
+		}
+	});
+	// navigator &&
+	//   navigator.push({
+	//     screen: 'equix.NewDetail',
+	//     overrideBackPress: true,
+	//     animated: false,
+	//     animationType: 'none',
+	//     navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
+	//     passProps: {
+	//       data: {
+	//         ...dataNews,
+	//         showUnavailableNew,
+	//         documentType: DOCUMENT_TYPE_NEW.HTML,
+	//         streamUrl
+	//       }
+	//     }
+	//   });
 }
 
-function showNewWithText({ dataNews, navigator }) {
+function showNewWithText({ dataNews }) {
 	const { news_code: newsCode } = dataNews;
 	const customStyleHtml = Business.genStyleHtmlNewDetail();
 	const params = Business.genParamsStyleHtmlNewDetail(customStyleHtml);
 	// const newsCode = 'b473c0682d1a711a86bbf4e5f8856d20b1f221a3fef9df0ace6a7c8e87abbacb'
 	let streamUrl = api.getLinkNewUrl(newsCode);
 	streamUrl += `&${params}`;
-	navigator &&
-		navigator.push({
-			screen: 'equix.NewDetail',
-			overrideBackPress: true,
-			animated: false,
-			animationType: 'none',
-			navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
-			passProps: {
-				data: {
-					...dataNews,
-					documentType: DOCUMENT_TYPE_NEW.TEXT,
-					streamUrl
-				}
-			}
-		});
+	Navigation.navigate(ScreenEnum.NEW_DETAIL, {
+		data: {
+			...dataNews,
+			documentType: DOCUMENT_TYPE_NEW.TEXT,
+			streamUrl
+		}
+	});
+	// navigator &&
+	//   navigator.push({
+	//     screen: 'equix.NewDetail',
+	//     overrideBackPress: true,
+	//     animated: false,
+	//     animationType: 'none',
+	//     navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
+	//     passProps: {
+	//       data: {
+	//         ...dataNews,
+	//         documentType: DOCUMENT_TYPE_NEW.TEXT,
+	//         streamUrl
+	//       }
+	//     }
+	//   });
 }
 
-function showNewWithPdf({ dataNews, navigator }) {
+function showNewWithPdf({ dataNews }) {
 	const { news_code: newsCode } = dataNews;
 	// const newsCode = 'f9c6f58783eea2bea0353ed875854974f30dde6f9006977f338b2e6cdfd72bef5524d6fc3b5d12b826241e8d28b58f8e9df2c6ba6f3366bbd1051246b28a90729c7a02e6354d99b5aa82a5aa3aef0f92173ba36b16c265686dea5b3de1f7aa41'
 	const streamUrl = api.getLinkNewUrl(newsCode);
-	navigator &&
-		navigator.push({
-			screen: 'equix.NewDetail',
-			overrideBackPress: true,
-			animated: false,
-			animationType: 'none',
-			navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
-			passProps: {
-				data: {
-					...dataNews,
-					documentType: DOCUMENT_TYPE_NEW.PDF,
-					streamUrl
-				}
-			}
-		});
+	Navigation.navigate(ScreenEnum.NEW_DETAIL, {
+		data: {
+			...dataNews,
+			documentType: DOCUMENT_TYPE_NEW.PDF,
+			streamUrl
+		}
+	});
+	// navigator &&
+	//   navigator.push({
+	//     screen: 'equix.NewDetail',
+	//     overrideBackPress: true,
+	//     animated: false,
+	//     animationType: 'none',
+	//     navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
+	//     passProps: {
+	//       data: {
+	//         ...dataNews,
+	//         documentType: DOCUMENT_TYPE_NEW.PDF,
+	//         streamUrl
+	//       }
+	//     }
+	//   });
 }
 
-export function getInfoAndShowNewDetail({ dataNews, navigator, error }) {
+export function getInfoAndShowNewDetail({ dataNews, error }) {
 	try {
 		// Fake Pdf
 		// dataNews.document_type = DOCUMENT_TYPE_NEW.PDF
@@ -1403,18 +1441,18 @@ export function getInfoAndShowNewDetail({ dataNews, navigator, error }) {
 		// Fake HTML
 		// dataNews.document_type = DOCUMENT_TYPE_NEW.TEXT
 		if (error) {
-			return showBlankNew({ dataNews, navigator, error });
+			return showBlankNew({ dataNews, error });
 		}
 		const { document_type: documentType, news_code: newsCode } = dataNews;
 		switch (documentType) {
 			case DOCUMENT_TYPE_NEW.URL:
-				return showNewWithUrl({ dataNews, navigator });
+				return showNewWithUrl({ dataNews });
 			case DOCUMENT_TYPE_NEW.HTML:
-				return showNewWithHtml({ dataNews, navigator });
+				return showNewWithHtml({ dataNews });
 			case DOCUMENT_TYPE_NEW.PDF:
-				return showNewWithPdf({ dataNews, navigator });
+				return showNewWithPdf({ dataNews });
 			case DOCUMENT_TYPE_NEW.TEXT:
-				return showNewWithText({ dataNews, navigator });
+				return showNewWithText({ dataNews });
 			default:
 				break;
 		}
@@ -1425,7 +1463,7 @@ export function getInfoAndShowNewDetail({ dataNews, navigator, error }) {
 
 export function showNewsDetail(newID, navigator, isConnected, dataNews) {
 	try {
-		if (newID && navigator) {
+		if (newID) {
 			const url = api.getLinkNewUrl(newID);
 			const data = dataNews || {};
 			try {
@@ -1441,26 +1479,35 @@ export function showNewsDetail(newID, navigator, isConnected, dataNews) {
 								newsControl.setStatusShowNewDetail(true);
 								// console.log('GET LINK NEW SUCCESSFULL', res)
 								const data = res[0] || [];
-								navigator.showModal({
-									screen: 'equix.NewsDetail',
-									overrideBackPress: true,
-									title: I18n.t('newOrder'),
-									backButtonTitle: '',
-									animated: true,
-									animationType: 'none',
-									navigatorStyle: {
-										...CommonStyle.navigatorSpecial,
-										screenBackgroundColor: 'transparent',
-										modalPresentationStyle: 'overCurrentContext'
-									},
-									passProps: {
-										source: data.link,
-										data,
-										title: `${data.symbol} / ${data.title}`,
-										isConnected,
-										navigatorEventIDParents: navigator.navigatorEventID
-									}
-								});
+								const navigation = Navigation.useNavigationCustoms();
+								Navigation.navigate(ScreenEnum.NEWS_DETAIL, {
+									source: data.link,
+									data,
+									title: `${data.symbol} / ${data.title}`,
+									isConnected,
+									// navigatorEventIDParents: navigator.navigatorEventID
+									navigatorEventIDParents: navigation.getId()
+								})
+								// navigator.showModal({
+								//   screen: 'equix.NewsDetail',
+								//   overrideBackPress: true,
+								//   title: I18n.t('newOrder'),
+								//   backButtonTitle: '',
+								//   animated: true,
+								//   animationType: 'none',
+								//   navigatorStyle: {
+								//     ...CommonStyle.navigatorSpecial,
+								//     screenBackgroundColor: 'transparent',
+								//     modalPresentationStyle: 'overCurrentContext'
+								//   },
+								//   passProps: {
+								//     source: data.link,
+								//     data,
+								//     title: `${data.symbol} / ${data.title}`,
+								//     isConnected,
+								//     navigatorEventIDParents: navigator.navigatorEventID
+								//   }
+								// });
 							}
 						} else {
 							console.log('LINK NEW IS NULL');
@@ -1647,8 +1694,8 @@ export function renewTokenInterval() {
 
 	dataStorage.refreshTokenInterval = setInterval(() => {
 		refreshToken()
-			.then(() => {})
-			.catch((error) => {});
+			.then(() => { })
+			.catch((error) => { });
 	}, TIME_REFRESH_TOKEN);
 }
 
@@ -1700,8 +1747,7 @@ export function setLastTimeReNewToken() {
 	const userLoginID = dataStorage.emailLogin;
 	const time = new Date().getTime();
 	AsyncStorage.setItem(
-		`${
-			Controller.isDemo() ? 'demo' : 'prod'
+		`${Controller.isDemo() ? 'demo' : 'prod'
 		}_last_time_set_new_token_${userLoginID}`,
 		time.toString()
 	)
@@ -2048,7 +2094,7 @@ export function preprocessOrderDetailNoti(notif) {
 		setTimeout(() => {
 			dataStorage.dicRealtimeOrderDetailNoti = {};
 		}, TIME_OUT_REALTIME_NOTI);
-	} catch (error) {}
+	} catch (error) { }
 }
 
 export function showNotiPartialfill(filledPrice, orderId, accountId) {
@@ -2448,8 +2494,8 @@ export async function preprocessSettingNoti(notif) {
 				data.noti !== null || data.noti !== undefined
 					? data.noti
 					: data.is_notify !== null || data.is_notify !== undefined
-					? data.is_notify
-					: true;
+						? data.is_notify
+						: true;
 			// Update time news schedule
 			if (data && data.news) {
 				const { hour: fromHour, minute: fromMinute } =
@@ -2668,7 +2714,7 @@ export function preprocessAlertNoti(notif) {
 			const data = objChanged;
 			Emitter.emit(channel, { data, method });
 		}
-	} catch (error) {}
+	} catch (error) { }
 }
 
 export function preprocessNoti(notifOrigin) {
@@ -2788,9 +2834,9 @@ function isListMappingChange(oldMapping = '', newMapping = '') {
 		const oldListMapping = !oldMapping
 			? []
 			: oldMapping
-					.replace(/\s/g, '')
-					.split(',')
-					.sort((a, b) => a > b);
+				.replace(/\s/g, '')
+				.split(',')
+				.sort((a, b) => a > b);
 		const newListMapping = newMapping
 			.map((item) => item.account_id)
 			.sort((a, b) => a > b);
@@ -2931,19 +2977,19 @@ export function forgotPinWithAccessToken(pin, token, successCb, errorCb) {
 			const { encryptText, sessionID } = res;
 			const bodyData = pin
 				? {
-						data: {
-							accessToken: token,
-							pin: encryptText,
-							session_id: pin === encryptText ? null : sessionID,
-							env: `MOBILE_FORGOT_PIN_${dataStorage.emailLogin}`
-						}
-				  }
+					data: {
+						accessToken: token,
+						pin: encryptText,
+						session_id: pin === encryptText ? null : sessionID,
+						env: `MOBILE_FORGOT_PIN_${dataStorage.emailLogin}`
+					}
+				}
 				: {
-						data: {
-							accessToken: token,
-							env: `MOBILE_FORGOT_PIN_${dataStorage.emailLogin}`
-						}
-				  };
+					data: {
+						accessToken: token,
+						env: `MOBILE_FORGOT_PIN_${dataStorage.emailLogin}`
+					}
+				};
 			const authUrl = api.getAuthUrl();
 			return api
 				.postData(`${authUrl}/pin`, bodyData)
@@ -2976,19 +3022,19 @@ export function setNewPinToken(pin, token, successCb, errorCb) {
 			const { encryptText, sessionID } = res;
 			const bodyData = pin
 				? {
-						data: {
-							refreshToken: token,
-							pin: encryptText,
-							session_id: pin === encryptText ? null : sessionID,
-							env: 'MOBILE_CHANGE_PIN'
-						}
-				  }
+					data: {
+						refreshToken: token,
+						pin: encryptText,
+						session_id: pin === encryptText ? null : sessionID,
+						env: 'MOBILE_CHANGE_PIN'
+					}
+				}
 				: {
-						data: {
-							refreshToken: token,
-							env: 'MOBILE_CHANGE_PIN'
-						}
-				  };
+					data: {
+						refreshToken: token,
+						env: 'MOBILE_CHANGE_PIN'
+					}
+				};
 			return api
 				.postData(`${api.getAuthUrl()}/change-pin`, bodyData)
 				.then((data) => {
@@ -3346,14 +3392,14 @@ export function declareAnimation(
 ) {
 	const config = useNativeDriver
 		? {
-				toValue,
-				duration,
-				useNativeDriver: true
-		  }
+			toValue,
+			duration,
+			useNativeDriver: true
+		}
 		: {
-				toValue,
-				duration
-		  };
+			toValue,
+			duration
+		};
 	return Animated.timing(variable, config);
 }
 
@@ -3470,11 +3516,9 @@ export function sendToRocketChat(message, type = 'info') {
 		const timeFormat = currentDate.toString();
 		const channel = config.logChanel;
 		dataStorage.logId = dataStorage.logId + 1;
-		textSend = `IRESS Mobile - ${timeFormat} - LogId: ${
-			dataStorage.logId
-		} - UserInfo: ${user.uid || user.user_id} - Email: ${
-			user.email || dataStorage.emailLogin
-		} - Device: ${deviceId} - Content: ${textSend}`;
+		textSend = `IRESS Mobile - ${timeFormat} - LogId: ${dataStorage.logId
+			} - UserInfo: ${user.uid || user.user_id} - Email: ${user.email || dataStorage.emailLogin
+			} - Device: ${deviceId} - Content: ${textSend}`;
 		if (textSend.length && textSend.length >= 1000) {
 			textSend.slice(0, 1000);
 		}
@@ -3509,11 +3553,9 @@ export function sendToRocketChatBackUp(message, type = 'info') {
 		const currentDate = new Date();
 		const timeFormat = currentDate.toString();
 		dataStorage.logId = dataStorage.logId + 1;
-		textSend = `IRESS Mobile - ${timeFormat} - LogId: ${
-			dataStorage.logId
-		} - UserInfo: ${user.uid || user.user_id} - Email: ${
-			user.email || dataStorage.emailLogin
-		} - Device: ${deviceId} - Content: ${textSend}`;
+		textSend = `IRESS Mobile - ${timeFormat} - LogId: ${dataStorage.logId
+			} - UserInfo: ${user.uid || user.user_id} - Email: ${user.email || dataStorage.emailLogin
+			} - Device: ${deviceId} - Content: ${textSend}`;
 		if (textSend.length && textSend.length >= 1000) {
 			textSend.slice(0, 1000);
 		}
@@ -3578,11 +3620,11 @@ export function switchForm(navigator, event, cb = null) {
 					],
 					rightButtons: checkRoleByKey(ROLE_DETAIL.ROLE_PERFORM_EDIT_BUTTON)
 						? [
-								{
-									id: 'add_alert',
-									icon: iconsMap['ios-create-outline']
-								}
-						  ]
+							{
+								id: 'add_alert',
+								icon: iconsMap['ios-create-outline']
+							}
+						]
 						: []
 				}
 			});
@@ -5361,7 +5403,7 @@ export function sendRequestSyncNoti(bodyData) {
 	const url = api.getRequestSyncNotiUrl(userId);
 	api
 		.postData(url, { data: bodyData })
-		.then((param) => {})
+		.then((param) => { })
 		.catch((error) => {
 			logDevice(
 				'info',
@@ -5376,7 +5418,7 @@ export function unRegisterReceiverNoti() {
 	const url = `${api.getSubcribleChannelUrl()}/${userId}?device_id=${deviceId}`;
 	api
 		.deleteData(url)
-		.then((param) => {})
+		.then((param) => { })
 		.catch((error) => {
 			logDevice(
 				'info',
@@ -6432,8 +6474,8 @@ export function roundFn(numberFloat, length) {
 		if (length > 0) {
 			result = parseFloat(
 				arrNumber.substring(0, arrNumber.length - length) +
-					'.' +
-					arrNumber.substring(arrNumber.length - length)
+				'.' +
+				arrNumber.substring(arrNumber.length - length)
 			);
 		} else {
 			result = arrNumber;

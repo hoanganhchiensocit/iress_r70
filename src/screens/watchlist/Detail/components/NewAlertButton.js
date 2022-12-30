@@ -13,53 +13,56 @@ import { handleShowAlertLog } from '~s/alertLog/Controller/SwitchController'
 const { SYMBOL_CLASS_API_UPPER } = Enum;
 
 export default class NewAlert extends PureComponent {
-    onPressBell = this.onPressBell.bind(this);
+	onPressBell = this.onPressBell.bind(this);
 
-    onPressBell() {
-        const { symbol, exchange, navigator } = this.props;
-        handleShowAlertLog({ symbol, exchange })
-        // showNewAlertModal({
-        //     navigator,
-        //     passProps: {
-        //         isHideBackButton: false,
-        //         symbolSelected: symbol,
-        //         wrapperStyle: {
-        //             paddingTop:
-        //                 Platform.OS === 'ios'
-        //                     ? FunctionUtil.isIphoneXorAbove()
-        //                         ? 38
-        //                         : 16
-        //                     : 0,
-        //             height: FunctionUtil.isIphoneXorAbove() ? 48 + 38 : 48 + 16
-        //         },
-        //         style: {
-        //             top:
-        //                 Platform.OS === 'ios'
-        //                     ? FunctionUtil.isIphoneXorAbove()
-        //                         ? 38
-        //                         : 16
-        //                     : 0
-        //         }
-        //     }
-        // });
-    }
+	onPressBell() {
+		const {
+			symbol,
+			exchange,
+		} = this.props;
+		handleShowAlertLog({ symbol, exchange })
+		// showNewAlertModal({
+		//     navigator,
+		//     passProps: {
+		//         isHideBackButton: false,
+		//         symbolSelected: symbol,
+		//         wrapperStyle: {
+		//             paddingTop:
+		//                 Platform.OS === 'ios'
+		//                     ? FunctionUtil.isIphoneXorAbove()
+		//                         ? 38
+		//                         : 16
+		//                     : 0,
+		//             height: FunctionUtil.isIphoneXorAbove() ? 48 + 38 : 48 + 16
+		//         },
+		//         style: {
+		//             top:
+		//                 Platform.OS === 'ios'
+		//                     ? FunctionUtil.isIphoneXorAbove()
+		//                         ? 38
+		//                         : 16
+		//                     : 0
+		//         }
+		//     }
+		// });
+	}
 
-    render() {
-        const { symbol, exchange } = this.props;
-        const symbolClass = getSymbolClass({ symbol });
-        const isLogin = Controller.getLoginStatus();
-        const isDisable =
-            !isLogin ||
-            (symbolClass + '').toUpperCase() === SYMBOL_CLASS_API_UPPER.INDEX;
-        return (
-            <TouchableOpacity disabled={isDisable} onPress={this.onPressBell}>
-                <CommonStyle.icons.bell
-                    style={{ marginLeft: 16, opacity: isDisable ? 0.4 : 1 }}
-                    name={'newAlert'}
-                    size={20}
-                    color={CommonStyle.colorProduct}
-                />
-            </TouchableOpacity>
-        );
-    }
+	render() {
+		const { symbol, exchange } = this.props;
+		const symbolClass = getSymbolClass({ symbol });
+		const isLogin = Controller.getLoginStatus();
+		const isDisable =
+			!isLogin ||
+			(symbolClass + '').toUpperCase() === SYMBOL_CLASS_API_UPPER.INDEX;
+		return (
+			<TouchableOpacity disabled={isDisable} onPress={this.onPressBell}>
+				<CommonStyle.icons.bell
+					style={{ marginLeft: 16, opacity: isDisable ? 0.4 : 1 }}
+					name={'newAlert'}
+					size={20}
+					color={CommonStyle.colorProduct}
+				/>
+			</TouchableOpacity>
+		);
+	}
 }
