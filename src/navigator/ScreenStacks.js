@@ -26,6 +26,7 @@ import CategoriesWL from '~s/watchlist/Categories/';
 import EditWatchList from '~/screens/watchlist/EditWatchList/EditWatchlist.js';
 import SearchSymbol from '~s/search_symbol';
 import WatchlistDetail from '~s/watchlist/WatchlistDetail';
+import CreatePriceboard from '~s/watchlist/Categories/View/CreatePriceBoard';
 import NewDetail from '~s/news_v3/view/detail/';
 import NewsDetail from '~s/news_detail/news_detail';
 
@@ -92,7 +93,11 @@ function AppStack() {
 					component={CategoriesWL}
 					options={screenOptions}
 				/>
-
+				<Stack.Screen
+					name={ScreenEnum.CREATE_PRICEBOARD}
+					component={CreatePriceboard}
+					options={screenOptions}
+				/>
 				<Stack.Screen
 					name={ScreenEnum.EDIT_WATCHLIST}
 					component={EditWatchList}
