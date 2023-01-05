@@ -29,6 +29,7 @@ import { useShadow } from '~/component/shadow/SvgShadow';
 import { isIphoneXorAbove } from '~/lib/base/functionUtil';
 import { useLayout } from '~/component/custom_hook/';
 import KeyboardAvoidView from '~/component/keyboard_avoid_view/index.js';
+import Navigation from "../../../../navigator/Navigation";
 if (UIManager.setLayoutAnimationEnabledExperimental) {
 	UIManager.setLayoutAnimationEnabledExperimental(true);
 }
@@ -101,9 +102,10 @@ const RightIcon = React.forwardRef((props, ref) => {
 });
 
 const LeftIcon = (props) => {
-	const { navigator } = props;
+	// const { navigator } = props;
 	const onPress = () => {
-		navigator && navigator.popToRoot();
+		Navigation.back();
+		// navigator && navigator.popToRoot();
 	};
 	return (
 		<TouchableOpacityOpt
@@ -191,7 +193,7 @@ const NetworkWarning = (props) => {
 };
 
 const Header = React.forwardRef((props, ref) => {
-	const { onLayoutHeader, navigator } = props;
+	const { onLayoutHeader } = props;
 	const [text, setText] = useState('');
 	const [Shadow, onLayout] = useShadow();
 	const refWLName = useRef({});
@@ -257,7 +259,7 @@ const Header = React.forwardRef((props, ref) => {
 						paddingBottom: 16
 					}}
 				>
-					<LeftIcon navigator={navigator} />
+					<LeftIcon />
 					<Title />
 					<RightIcon ref={refIcon} text={text} {...props} />
 				</View>

@@ -469,7 +469,7 @@ const HoverComp = React.forwardRef((props, ref) => {
 });
 
 const ListSymbol = (props) => {
-	const { navigator, showHide } = props;
+	const { showHide } = props;
 	const dic = useRef({
 		dicRemoved: {}
 	});

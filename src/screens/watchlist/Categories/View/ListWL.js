@@ -2,13 +2,13 @@ import React, { useCallback, useRef } from 'react';
 import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import CreateNewWLButton from './CreateNewWLButton';
-import WatchlistActions from '~s/watchlist/reducers';
 import ListUserWL from './ListUserWL';
 import ListSystemWL from './ListSystemWL';
 import Shadow, { shadowOpt } from '~/component/shadow';
 import { func } from '~/storage'
+import Navigation from "../../../../navigator/Navigation";
 const Footer = (props) => {
-	const { activeTab, navigator } = props;
+	const { activeTab } = props;
 	const setting = {
 		...shadowOpt,
 		...{ radius: 0, border: 3 }
@@ -27,7 +27,7 @@ const Footer = (props) => {
 						alignItems: 'center'
 					}}
 				>
-					<CreateNewWLButton navigator={navigator} />
+					<CreateNewWLButton />
 				</View>
 			</View>
 		);
@@ -35,7 +35,6 @@ const Footer = (props) => {
 
 const ListWL = ({
 	activeTab,
-	navigator,
 	textSearch,
 	showDelete,
 	priceBoardSelected
@@ -51,7 +50,7 @@ const ListWL = ({
 	}, []);
 	const changePriceBoardSelected = async (watchlist, isRender) => {
 		await func.setStoragePriceBoard(watchlist)
-		navigator && navigator.pop();
+		Navigation.back();
 		const lastWatchList = await func.getStoragePriceBoard()
 		isRender &&
 			setTimeout(
@@ -78,7 +77,6 @@ const ListWL = ({
 				)}
 			<Footer
 				showDelete={showDelete}
-				navigator={navigator}
 				activeTab={activeTab}
 				showCheckBox={showCheckBox}
 				hideCheckBox={hideCheckBox}
