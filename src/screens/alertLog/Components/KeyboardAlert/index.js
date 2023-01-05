@@ -11,45 +11,44 @@ import CommonStyle from '~/theme/theme_controller'
 import ENUM from '~/enum'
 
 const KeyboardAlert = (props) => {
-    const {
-        isConnected,
-        inputFocus,
-        navigator,
-        symbol,
-        exchange
-    } = props
-    let { forceDisabledButton } = props
-    const isLoadingOrderAttribute = useSelector(state => state.newOrder.isLoadingOrderAttribute, shallowEqual)
-    forceDisabledButton = isLoadingOrderAttribute || forceDisabledButton
-    const renderMidleComp = useCallback(() => {
-        return (
-            <ButtonClearAlert
-                symbol={symbol}
-                exchange={exchange}
-                backgroundColor={CommonStyle.color.modify}
-                title={'newAlert'}
-            />
-        )
-    }, [inputFocus])
-    return (
-        <React.Fragment>
-            <Keyboard
-                forceDisabled={forceDisabledButton}
-                renderMidleComp={renderMidleComp}
-                titleButton={'newAlert'}
-                isConnected={isConnected}
-                symbol={symbol}
-                exchange={exchange}
-                {...props} />
-        </React.Fragment>
-    )
+	const {
+		isConnected,
+		inputFocus,
+		symbol,
+		exchange
+	} = props
+	let { forceDisabledButton } = props
+	const isLoadingOrderAttribute = useSelector(state => state.newOrder.isLoadingOrderAttribute, shallowEqual)
+	forceDisabledButton = isLoadingOrderAttribute || forceDisabledButton
+	const renderMidleComp = useCallback(() => {
+		return (
+			<ButtonClearAlert
+				symbol={symbol}
+				exchange={exchange}
+				backgroundColor={CommonStyle.color.modify}
+				title={'newAlert'}
+			/>
+		)
+	}, [inputFocus])
+	return (
+		<React.Fragment>
+			<Keyboard
+				forceDisabled={forceDisabledButton}
+				renderMidleComp={renderMidleComp}
+				titleButton={'newAlert'}
+				isConnected={isConnected}
+				symbol={symbol}
+				exchange={exchange}
+				{...props} />
+		</React.Fragment>
+	)
 }
 function mapStateToProps(state) {
-    return {
-        isConnected: state.app.isConnected,
-        inputFocus: state.newOrder.inputFocus,
-        forceDisabledButton: state.newOrder.forceDisabledButton
-    }
+	return {
+		isConnected: state.app.isConnected,
+		inputFocus: state.newOrder.inputFocus,
+		forceDisabledButton: state.newOrder.forceDisabledButton
+	}
 }
 
 export default connect(mapStateToProps)(KeyboardAlert)

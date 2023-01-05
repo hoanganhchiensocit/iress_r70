@@ -33,172 +33,176 @@ import * as InputModel from '~/screens/new_order/Model/InputModel.js'
 import * as AttributeModel from '~/screens/new_order/Model/AttributeModel.js'
 
 import { changeSymbolExchange, resetStateNewOrder } from '~/screens/new_order/Redux/actions.js';
+import Navigation from '~/navigator/Navigation';
+import { useRoute } from '@react-navigation/native';
 const { height: heightDevice } = Dimensions.get('window');
 const { Value } = Animated
 const marginTopPanel = getMarginTopDevice() + 32
 const { INDICES } = Enum.SYMBOL_CLASS
-const CreateNewAlerts = ({
-    symbol,
-    exchange,
-    navigator,
-    hideDetail,
-    onHideAll,
-    setSpaceTop,
-    isDisableShowNewDetail,
-    isBackToSearch = false
-}) => {
-    const { refBottomSheet, show, hide } = useRefBottomSheet()
-    const { refSearchAccount, show: showSearchAccount, hide: hideSearchAccount } = useRefSearchAccount()
-    const dispatch = useDispatch()
+const CreateNewAlerts = () => {
+	const route = useRoute();
+	const {
+		symbol,
+		exchange,
+		hideDetail,
+		onHideAll,
+		setSpaceTop,
+		isDisableShowNewDetail,
+		isBackToSearch = false
+	} = route.params || {};
+	const { refBottomSheet, show, hide } = useRefBottomSheet()
+	const { refSearchAccount, show: showSearchAccount, hide: hideSearchAccount } = useRefSearchAccount()
+	const dispatch = useDispatch()
 
-    useEffect(() => {
+	useEffect(() => {
 		dispatch.quotes.getSnapshot({ listSymbol: [{ symbol, exchange }] });
-        dispatch(changeSymbolExchange({ symbol, exchange }))
-        dataStorage.currentScreenId = ScreenId.ORDER
-        show && show()
-        Business.showButtonConfirm()
-        return () => {
-            AttributeModel.detroy()
-            InputModel.reset() // Reset model when unmount new order
-            dataStorage.isNeedSubSymbolOnNewOrder = true
-            dispatch(resetStateNewOrder())
-            onHideAll && onHideAll()
-        }
-    }, [])
-    const classSymbol = useMemo(() => {
-        return Business.getClassBySymbolAndExchange({ symbol, exchange })
-    }, [symbol, exchange])
+		dispatch(changeSymbolExchange({ symbol, exchange }))
+		dataStorage.currentScreenId = ScreenId.ORDER
+		show && show()
+		Business.showButtonConfirm()
+		return () => {
+			AttributeModel.detroy()
+			InputModel.reset() // Reset model when unmount new order
+			dataStorage.isNeedSubSymbolOnNewOrder = true
+			dispatch(resetStateNewOrder())
+			onHideAll && onHideAll()
+		}
+	}, [])
+	const classSymbol = useMemo(() => {
+		return Business.getClassBySymbolAndExchange({ symbol, exchange })
+	}, [symbol, exchange])
 
-    const companyName = useMemo(() => {
-        if (!symbol && !exchange) return '';
-        return Business.getCompanyName({ symbol, exchange }) || `${symbol}.${exchange}`;
-    }, [symbol, exchange]);
+	const companyName = useMemo(() => {
+		if (!symbol && !exchange) return '';
+		return Business.getCompanyName({ symbol, exchange }) || `${symbol}.${exchange}`;
+	}, [symbol, exchange]);
 
-    const { _scrollValue } = useMemo(() => {
-        return {
-            _scrollValue: new Value(0)
-        }
-    }, [])
-    const onCloseDetail = () => {
-        dispatch.alertLog.resetBodyAlert()
-        Navigation.dismissModal({
-            animated: false,
-            animationType: 'none'
-        })
-    };
-    const handleHideNewOrder = useCallback(() => {
-        Navigation.dismissModal({
-            animated: false,
-            animationType: 'none'
-        })
-    }, [])
-    const onRefresh = () => {
+	const { _scrollValue } = useMemo(() => {
+		return {
+			_scrollValue: new Value(0)
+		}
+	}, [])
+	const onCloseDetail = () => {
+		dispatch.alertLog.resetBodyAlert();
+		Navigation.back();
+		// Navigation.dismissModal({
+		//     animated: false,
+		//     animationType: 'none'
+		// })
+	};
+	const handleHideNewOrder = useCallback(() => {
+		Navigation.back();
+		// Navigation.dismissModal({
+		//     animated: false,
+		//     animationType: 'none'
+		// })
+	}, [])
+	const onRefresh = () => {
 
-    }
-    const renderHeader = useCallback(() => {
-        return (
-            <View
-                style={{
-                    backgroundColor: CommonStyle.backgroundColor,
-                    borderTopLeftRadius: 22,
-                    borderTopRightRadius: 22,
-                    zIndex: 99999
-                }}
-            >
-                <HeaderPanner
-                    title={companyName}
-                    onClose={onCloseDetail}
-                    onRefresh={onRefresh}
-                />
-                <OrderError isShowConnected={false} />
-            </View>
-        );
-    }, [symbol, exchange])
+	}
+	const renderHeader = useCallback(() => {
+		return (
+			<View
+				style={{
+					backgroundColor: CommonStyle.backgroundColor,
+					borderTopLeftRadius: 22,
+					borderTopRightRadius: 22,
+					zIndex: 99999
+				}}
+			>
+				<HeaderPanner
+					title={companyName}
+					onClose={onCloseDetail}
+					onRefresh={onRefresh}
+				/>
+				<OrderError isShowConnected={false} />
+			</View>
+		);
+	}, [symbol, exchange])
 
-    const renderContent = useCallback(() => {
-        return (
-            <TouchableDismissKeyboard>
-                <View style={{ flex: 1 }}>
-                    <ScrollView style={{ flex: 1 }} ref={_scrollValue}>
-                        <SpacePushContent>
-                            <NetworkWarning />
-                            <Text style={{
-                                fontSize: CommonStyle.fontSizeM,
-                                fontWeight: 'bold',
-                                color: CommonStyle.fontColor,
-                                marginLeft: 16,
-                                marginTop: 8,
-                                marginBottom: -8,
-                                flex: 1,
-                                zIndex: 1000
-                            }}>
-                                {(symbol + '.' + exchange) || '--'}</Text>
-                            <SymbolInfo
-                                navigator={navigator}
-                                symbol={symbol}
-                                exchange={exchange}
-                                // showAddToWl={showAddToWl}
-                                isShowDetail={false}
-                                isShowConnecting={false}
-                            />
-                            {classSymbol !== INDICES ? <BestBidAsk symbol={symbol} exchange={exchange} /> : null}
+	const renderContent = useCallback(() => {
+		return (
+			<TouchableDismissKeyboard>
+				<View style={{ flex: 1 }}>
+					<ScrollView style={{ flex: 1 }} ref={_scrollValue}>
+						<SpacePushContent>
+							<NetworkWarning />
+							<Text style={{
+								fontSize: CommonStyle.fontSizeM,
+								fontWeight: 'bold',
+								color: CommonStyle.fontColor,
+								marginLeft: 16,
+								marginTop: 8,
+								marginBottom: -8,
+								flex: 1,
+								zIndex: 1000
+							}}>
+								{(`${symbol || '--'} . ${exchange || '--'}`)}</Text>
+							<SymbolInfo
+								symbol={symbol}
+								exchange={exchange}
+								// showAddToWl={showAddToWl}
+								isShowDetail={false}
+								isShowConnecting={false}
+							/>
+							{classSymbol !== INDICES ? <BestBidAsk symbol={symbol} exchange={exchange} /> : null}
 
-                            <TradeInfo symbol={symbol} exchange={exchange} isShowMoreButton={false} />
-                            <View style={{ height: 16 }} />
-                            <ChooseAlerts symbol={symbol} exchange={exchange} />
-                        </SpacePushContent>
+							<TradeInfo symbol={symbol} exchange={exchange} isShowMoreButton={false} />
+							<View style={{ height: 16 }} />
+							<ChooseAlerts symbol={symbol} exchange={exchange} />
+						</SpacePushContent>
 
-                    </ScrollView>
-                    <View style={{
-                        height: Platform.OS === 'android' ? 68 + 16 : 72 + 16 // height button + padding
-                    }} />
-                </View>
+					</ScrollView>
+					<View style={{
+						height: Platform.OS === 'android' ? 68 + 16 : 72 + 16 // height button + padding
+					}} />
+				</View>
 
-            </TouchableDismissKeyboard>
-        )
-    }, [symbol, exchange])
-    return (
-        <KeyboardAvoidView
-            style={{ flex: 1, backgroundColor: CommonStyle.backgroundColor }}>
+			</TouchableDismissKeyboard>
+		)
+	}, [symbol, exchange])
+	return (
+		<KeyboardAvoidView
+			style={{ flex: 1, backgroundColor: CommonStyle.backgroundColor }}>
 
-            <BottomSheetBehavior
-                keyExtractor={'NewAlert'}
-                ref={refBottomSheet}
-                onCloseEnd={handleHideNewOrder}
-                onCloseStart={() => console.info('onCloseStart')}
-                onOpenStart={() => console.info('onOpenStart')}
-                snapPoints={[heightDevice - marginTopPanel, -100]}
-                scrollValue={_scrollValue}
-                renderContent={renderContent}
-                renderHeader={renderHeader}
-            />
-            <View style={{
-                backgroundColor: CommonStyle.backgroundColor,
-                zIndex: 999,
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0
-            }}>
-                <ButtonClearAlert
-                    symbol={symbol}
-                    exchange={exchange}
-                    backgroundColor={CommonStyle.color.modify}
-                    title={'newAlert'}
-                />
-            </View>
-            <View
-                pointerEvents={'box-none'}
-                style={{
-                    zIndex: 9999,
-                    flex: 1
-                }}>
-                <KeyBoadAlert navigator={navigator} symbol={symbol} exchange={exchange} />
-            </View>
-            <HandleDisableTouchabled />
-        </KeyboardAvoidView>
-    )
-        ;
+			<BottomSheetBehavior
+				keyExtractor={'NewAlert'}
+				ref={refBottomSheet}
+				onCloseEnd={handleHideNewOrder}
+				onCloseStart={() => console.info('onCloseStart')}
+				onOpenStart={() => console.info('onOpenStart')}
+				snapPoints={[heightDevice - marginTopPanel, -100]}
+				scrollValue={_scrollValue}
+				renderContent={renderContent}
+				renderHeader={renderHeader}
+			/>
+			<View style={{
+				backgroundColor: CommonStyle.backgroundColor,
+				zIndex: 999,
+				position: 'absolute',
+				bottom: 0,
+				left: 0,
+				right: 0
+			}}>
+				<ButtonClearAlert
+					symbol={symbol}
+					exchange={exchange}
+					backgroundColor={CommonStyle.color.modify}
+					title={'newAlert'}
+				/>
+			</View>
+			<View
+				pointerEvents={'box-none'}
+				style={{
+					zIndex: 9999,
+					flex: 1
+				}}>
+				<KeyBoadAlert symbol={symbol} exchange={exchange} />
+			</View>
+			<HandleDisableTouchabled />
+		</KeyboardAvoidView>
+	)
+		;
 }
 
 export default CreateNewAlerts;

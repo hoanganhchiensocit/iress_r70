@@ -28,6 +28,7 @@ import SearchSymbol from '~s/search_symbol';
 import WatchlistDetail from '~s/watchlist/WatchlistDetail';
 import NewDetail from '~s/news_v3/view/detail/';
 import NewsDetail from '~s/news_detail/news_detail';
+import CreateNewAlerts from '~s/alertLog/View/CreateNewAlerts'
 
 
 const Tab = createBottomTabNavigator();
@@ -116,6 +117,11 @@ function AppStack() {
 				<Stack.Screen
 					name={ScreenEnum.NEWS_DETAIL}
 					component={NewsDetail}
+					options={{ ...screenOptions, presentation: 'modal', animation: 'fade_from_bottom' }}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.CREATE_NEW_ALERTS}
+					component={CreateNewAlerts}
 					options={{ ...screenOptions, presentation: 'modal', animation: 'fade_from_bottom' }}
 				/>
 

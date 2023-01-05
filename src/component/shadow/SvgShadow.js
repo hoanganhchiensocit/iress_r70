@@ -39,7 +39,7 @@ const SvgShadow = ({ style, layout = {}, heightShadow = 5, stopOpacity = 0, cust
 
 	const xmlContent = useMemo(
 		() => <SvgXml xml={xml} width={'100%'} height={'100%'} />,
-		xml
+		[xml]
 	);
 	return (
 		<View

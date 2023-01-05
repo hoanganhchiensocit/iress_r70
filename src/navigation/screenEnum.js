@@ -33,7 +33,8 @@ export const ScreenEnum = {
 	SEARCH_SYMBOL: 'SearchSymbol',
 	WATCH_LIST_DETAIL: 'WatchlistDetail',
 	NEW_DETAIL: 'NewDetail',
-	NEWS_DETAIL: 'NewsDetail'
+	NEWS_DETAIL: 'NewsDetail',
+	CREATE_NEW_ALERTS: 'CreateNewAlerts'
 };
 
 // const addPreKeyScreen = () => {
