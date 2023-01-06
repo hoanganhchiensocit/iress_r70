@@ -2,7 +2,6 @@ import _ from 'lodash';
 
 export const ScreenEnum = {
 	FIND_WATCH_LIST: 'FindWatchlist',
-	CREATE_PRICEBOARD: 'CreatePriceboard',
 	MANAGE_PRICEBOARD_PERSONAL: 'ManagePriceboardPersonal',
 	MANAGE_PRICEBOARD: 'ManagePriceboard',
 	MANAGE_PRICEBOARD_STATIC: 'ManagePriceboardStatic',
@@ -30,11 +29,13 @@ export const ScreenEnum = {
 
 	CATEGORIES_WL: 'CategoriesWL',
 	EDIT_WATCHLIST: 'EditWatchList',
+	CREATE_PRICEBOARD: 'CreatePriceboard',
 	SEARCH_SYMBOL: 'SearchSymbol',
 	WATCH_LIST_DETAIL: 'WatchlistDetail',
 	NEW_DETAIL: 'NewDetail',
 	NEWS_DETAIL: 'NewsDetail',
-	DISCLAIMER:'Disclaimer'
+	DISCLAIMER:'Disclaimer',
+	CREATE_NEW_ALERTS: 'CreateNewAlerts'
 };
 
 // const addPreKeyScreen = () => {

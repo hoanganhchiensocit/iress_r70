@@ -50,13 +50,13 @@ const HandleCheckDataPriceBoard = ({ disabledButtonDone, setDisabledButtonDone }
         return null
     }, [priceBoard])
 }
-const Header = React.memo(({ navigator }) => {
+const Header = React.memo(({ }) => {
     const refHeaderMessage = useRef()
     const [disabledButtonDone, setDisabledButtonDone] = useState(true)
     return (
         <View>
             <View>
-                <TopHeader disabledButtonDone={disabledButtonDone} navigator={navigator} />
+                <TopHeader disabledButtonDone={disabledButtonDone} />
             </View>
             <View>
                 <BottomHeader setDisabledButtonDone={setDisabledButtonDone} />

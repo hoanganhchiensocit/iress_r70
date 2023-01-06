@@ -5,7 +5,8 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import CommonStyle from '~/theme/theme_controller';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/';
 import I18n from '~/modules/language/';
-import SvgIcon from '~s/watchlist/Component/Icon2';
+import Navigation from "../../../../navigator/Navigation";
+import { ScreenEnum } from "../../../../navigation/screenEnum";
 
 const OnModalButton = ({ onPress }) => (
 	<TouchableOpacityOpt
@@ -75,20 +76,21 @@ const OnMainButton = ({ onPress }) => (
 	</TouchableOpacityOpt>
 );
 
-const CreateNewWLButton = ({ navigator, isMainWatchlist, isEmpty }) => {
+const CreateNewWLButton = ({ isMainWatchlist, isEmpty }) => {
 	const pushToCreatePriceBoard = useCallback(() => {
-		const screen = 'equix.CreatePriceboard';
-		navigator &&
-			navigator.push({
-				screen,
-				navigatorStyle: {
-					disabledBackGesture: true,
-					...CommonStyle.navigatorSpecialNoHeader
-				},
-				passProps: {},
-				animated: true,
-				animationType: 'slide-horizontal'
-			});
+		// const screen = 'equix.CreatePriceboard';
+		Navigation.navigate(ScreenEnum.CREATE_PRICEBOARD)
+		// navigator &&
+		// 	navigator.push({
+		// 		screen,
+		// 		navigatorStyle: {
+		// 			disabledBackGesture: true,
+		// 			...CommonStyle.navigatorSpecialNoHeader
+		// 		},
+		// 		passProps: {},
+		// 		animated: true,
+		// 		animationType: 'slide-horizontal'
+		// 	});
 	}, []);
 
 	if (isMainWatchlist) {

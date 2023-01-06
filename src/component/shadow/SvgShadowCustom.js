@@ -58,7 +58,7 @@ export const SvgShadow = ({ style, layout = {}, options, position }) => {
 
 	const svgContent = useMemo(
 		() => <SvgXml xml={xml} width={'100%'} height={'100%'} />,
-		xml
+		[xml]
 	);
 	return (
 		<View

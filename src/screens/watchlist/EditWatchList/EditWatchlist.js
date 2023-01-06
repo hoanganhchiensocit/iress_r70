@@ -109,7 +109,7 @@ const EditWatchlist = ({ navigator }) => {
 							backgroundColor: CommonStyle.backgroundColor
 						}}
 					>
-						<Header navigator={navigator} />
+						<Header />
 						<Content />
 						<Footer
 							onShowConfirmDeleteWatchlist={handleShowConfirm}

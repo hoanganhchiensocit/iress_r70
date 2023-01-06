@@ -26,9 +26,11 @@ import CategoriesWL from '~s/watchlist/Categories/';
 import EditWatchList from '~/screens/watchlist/EditWatchList/EditWatchlist.js';
 import SearchSymbol from '~s/search_symbol';
 import WatchlistDetail from '~s/watchlist/WatchlistDetail';
+import CreatePriceboard from '~s/watchlist/Categories/View/CreatePriceBoard';
 import NewDetail from '~s/news_v3/view/detail/';
 import NewsDetail from '~s/news_detail/news_detail';
 import Disclaimer from '~/screens/disclaimer/disclaimer_iress';
+import CreateNewAlerts from '~s/alertLog/View/CreateNewAlerts'
 
 
 const Tab = createBottomTabNavigator();
@@ -93,7 +95,11 @@ function AppStack() {
 					component={CategoriesWL}
 					options={screenOptions}
 				/>
-
+				<Stack.Screen
+					name={ScreenEnum.CREATE_PRICEBOARD}
+					component={CreatePriceboard}
+					options={screenOptions}
+				/>
 				<Stack.Screen
 					name={ScreenEnum.EDIT_WATCHLIST}
 					component={EditWatchList}
@@ -124,6 +130,12 @@ function AppStack() {
 					component={Disclaimer}
 					options={screenOptions}
 				/>
+				<Stack.Screen
+					name={ScreenEnum.CREATE_NEW_ALERTS}
+					component={CreateNewAlerts}
+					options={{ ...screenOptions, presentation: 'modal', animation: 'fade_from_bottom' }}
+				/>
+
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

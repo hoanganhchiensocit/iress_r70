@@ -32,13 +32,13 @@ import { useRoute } from '@react-navigation/native';
 import Navigation from '~/navigator/Navigation';
 const { INDICES } = Enum.SYMBOL_CLASS
 const WatchlistDetail = () => {
-	const routes = useRoute();
+	const route = useRoute();
 	const {
 		symbol,
 		exchange,
 		isDisableShowNewDetail,
 		isBackToSearch = false
-	} = routes.params || {};
+	} = route.params || {};
 	const [refAddToWl, showAddToWl] = useShowAddToWl();
 	const [isFirstLoad, setIsFirstLoad] = useState(true);
 	useEffect(() => {

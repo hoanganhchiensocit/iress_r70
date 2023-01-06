@@ -319,7 +319,7 @@ const NetworkWarning = (props) => {
   );
 };
 
-const Content = ({ navigator, showDelete, priceBoardSelected }) => {
+const Content = ({ showDelete, priceBoardSelected }) => {
   const [Shadow, onLayout] = useShadow();
   const [activeTab, setActiveTab] = useState(0);
   const [textSearch, setTextSearch] = useState('');
@@ -358,7 +358,6 @@ const Content = ({ navigator, showDelete, priceBoardSelected }) => {
       <NetworkWarning />
       <ListWL
         showDelete={showDelete}
-        navigator={navigator}
         activeTab={activeTab}
         priceBoardSelected={priceBoardSelected}
         textSearch={textSearch}
@@ -542,7 +541,7 @@ const ConfirmDeleteFooter = ({ hideDelete }) => {
   );
 };
 
-const Categories = ({ navigator, priceBoardSelected }) => {
+const Categories = ({ priceBoardSelected }) => {
   const refConfirmDelete = useRef({});
   const refConfirmDeleteContent = useRef({});
   const showDelete = useCallback(() => {
@@ -570,10 +569,9 @@ const Categories = ({ navigator, priceBoardSelected }) => {
         onStartShouldSetResponder={Keyboard.dismiss}
         style={{ flex: 1, backgroundColor: CommonStyle.color.dark }}
       >
-        <Header navigator={navigator} />
+        <Header />
         <View style={{ height: 5 }} />
         <Content
-          navigator={navigator}
           priceBoardSelected={priceBoardSelected}
           showDelete={showDelete}
         />
