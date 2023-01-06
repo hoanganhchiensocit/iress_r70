@@ -65,7 +65,9 @@ export function updatePortfolio(data = {}) {
     setPortfolio(newData)
 }
 //  #endregion
-
+export function setDispatchFunc(dispatch) {
+    STORE.GlobalStore.dispatch = dispatch
+}
 //  #region REDUX
 export function getDispathchFunc() {
     return STORE.GlobalStore

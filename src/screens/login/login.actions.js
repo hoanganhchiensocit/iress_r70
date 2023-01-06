@@ -69,6 +69,8 @@ import {
 	getStorageBio,
 	storeToken
 } from '~/manage/manageAuth2';
+import Navigation from '~/navigator/Navigation';
+import { ScreenEnum } from '~/navigation';
 
 const TIME_REFRESH_TOKEN = ENUM.TIME_REFRESH_TOKEN;
 
@@ -620,10 +622,11 @@ export function loginIress({ accessToken }) {
 	HeaderNewsController.getDataCategory();
 	getPortfolioTypeAndLastAccount();
 	getUserPriceBoard(() => {
-		dataStorage.reloadAppAfterLogin && dataStorage.reloadAppAfterLogin(true);
+		Navigation.navigate(ScreenEnum.MAIN)
+		// dataStorage.reloadAppAfterLogin && dataStorage.reloadAppAfterLogin(true);
 	});
 	getStaticPriceBoard();
-	return dataStorage.reloadAppAfterLogin && dataStorage.reloadAppAfterLogin();
+	// return dataStorage.reloadAppAfterLogin && dataStorage.reloadAppAfterLogin();
 }
 
 const handleBiometric = (dispatch, accessToken) => {

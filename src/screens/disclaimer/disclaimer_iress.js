@@ -37,6 +37,7 @@ import BottomTabBar from '../../component/tabbar';
 import Header from '../../component/headerNavBar/index';
 import Icons from '../../component/headerNavBar/icon';
 import Header1 from './index';
+import Navigation from '~/navigator/Navigation';
 
 const { height, width } = Dimensions.get('window');
 const telpehone = `1300 769 433`;
@@ -45,9 +46,9 @@ export class Disclaimer extends Component {
 	constructor(props) {
 		super(props);
 		this.deviceModel = dataStorage.deviceModel;
-		this.props.navigator.setOnNavigatorEvent(
-			this.onNavigatorEvent.bind(this)
-		);
+		// this.props.navigator.setOnNavigatorEvent(
+		// 	this.onNavigatorEvent.bind(this)
+		// );
 		this.state = {
 			softMenuBarHeight: 0,
 			checked: true,
@@ -57,6 +58,19 @@ export class Disclaimer extends Component {
 	}
 
 	componentDidMount() {
+
+		this.focusEvent = this.props.navigation.addListener('focus', () => {
+			this.perf &&
+				this.perf.incrementCounter(
+					performanceEnum.show_form_disclaimer
+				);
+			setCurrentScreen(analyticsEnum.terms);
+			setRefTabbar(this.tabbar);
+			if (this.props.backMore) {
+				func.setCurrentScreenId(ScreenId.TERM_OF_USE);
+			}
+		})
+
 		if (Platform.OS === 'android') {
 			// Get soft bar height
 			const softMenuBarHeight =
@@ -72,19 +86,23 @@ export class Disclaimer extends Component {
 		}
 	}
 
+	componentWillUnmount() {
+		this.focusEvent()
+	}
+
 	onNavigatorEvent(event) {
 		if (event.type === 'DeepLink') {
-			switchForm(this.props.navigator, event);
+			// switchForm(this.props.navigator, event);
 		}
 		if (event.type === 'NavBarButtonPress') {
-			switch (event.id) {
-				case 'menu_ios':
-					this.props.navigator.toggleDrawer({
-						side: 'left',
-						animated: true
-					});
-					break;
-			}
+			// switch (event.id) {
+			// 	case 'menu_ios':
+			// 		this.props.navigator.toggleDrawer({
+			// 			side: 'left',
+			// 			animated: true
+			// 		});
+			// 		break;
+			// }
 		} else {
 			switch (event.id) {
 				case 'willAppear':
@@ -162,6 +180,27 @@ export class Disclaimer extends Component {
 	onCheck() {
 		const checked = !this.state.checked;
 		this.setState({ checked });
+	}
+
+	_handlePress() {
+		const {route} = this.props
+		const {backMore,onCheck,onAccept} = route.params
+		console.log('route.params',route.params)
+		if (Platform.OS === 'ios') {
+			this.setState({ disable: true });
+			if (backMore) {
+				Navigation.back()
+			} else {
+				onCheck && onCheck(this.state.checked)
+				onAccept && onAccept()
+			}
+		} else {
+			this.setState({ disable: true });
+			onCheck && onCheck(this.state.checked)
+			onAccept && onAccept()
+			func.setAutoOktaLogin(false);
+		}
+		Navigation.back()
 	}
 
 	render() {
@@ -264,15 +303,15 @@ ${I18n.tOri('termOfUsePart102')}`;
 									this.props.backMore
 										? CommonStyle.labelFromMenu
 										: {
-												textDecorationLine: 'underline',
-												textDecorationColor:
-													CommonStyle.fontColor,
-												fontSize:
-													CommonStyle.fontSizeM - 2,
-												fontFamily:
-													CommonStyle.fontPoppinsBold,
-												color: CommonStyle.fontColor
-										  }
+											textDecorationLine: 'underline',
+											textDecorationColor:
+												CommonStyle.fontColor,
+											fontSize:
+												CommonStyle.fontSizeM - 2,
+											fontFamily:
+												CommonStyle.fontPoppinsBold,
+											color: CommonStyle.fontColor
+										}
 								]}
 							>
 								{title1}
@@ -736,30 +775,7 @@ ${I18n.tOri('termOfUsePart102')}`;
 									{ justifyContent: 'center' }
 								]}
 								disabled={this.state.disable}
-								onPress={() => {
-									if (Platform.OS === 'ios') {
-										this.setState({ disable: true });
-										if (this.props.backMore) {
-											this.props.navigator.pop();
-										} else {
-											this.props.onCheck &&
-												this.props.onCheck(
-													this.state.checked
-												);
-											this.props.onAccept &&
-												this.props.onAccept();
-										}
-									} else {
-										this.setState({ disable: true });
-										this.props.onCheck &&
-											this.props.onCheck(
-												this.state.checked
-											);
-										this.props.onAccept &&
-											this.props.onAccept();
-										func.setAutoOktaLogin(false);
-									}
-								}}
+								onPress={()=>this._handlePress()}
 							>
 								<Text
 									testID={`disclaimerAcceptText`}

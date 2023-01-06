@@ -27,6 +27,7 @@ export function getGlobalState() {
 	return Model.getGlobalState() || {};
 }
 export const setGlobalStore = Model.setGlobalStore;
+export const setDispatchFunc = Model.setDispatchFunc;
 //  #endregion
 
 //  #region GET CONFIG APP

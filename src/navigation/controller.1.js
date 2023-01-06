@@ -10,6 +10,8 @@ import { func, dataStorage } from '~/storage';
 import { getIOSVersion } from '~/lib/base/functionUtil';
 import * as HeaderModel from '~/screens/news_v3/model/header_list_news/header.model.js';
 import ENUM from '~/enum'
+import Navigation from '~/navigator/Navigation';
+import { ScreenEnum } from './screenEnum';
 
 const { WIDTH_DRAWER } = ENUM
 const { height: HEIGHT_DEVICE, width: WIDTH_DEVICE } = Dimensions.get('window');
@@ -414,33 +416,34 @@ export function showUpdateMeScreen() {
 	});
 }
 export function showDisclaimerScreen(passProps) {
-	Navigation.startSingleScreenApp({
-		screen: {
-			screen: 'equix.Disclaimer',
-			title: I18n.t('disclaimer'),
-			navigatorStyle: {
-				navBarBackgroundColor: CommonStyle.fontBlue,
-				navBarTranslucent: false,
-				drawUnderNavBar: false,
-				tabBarHidden: true,
-				navBarHideOnScroll: false,
-				navBarTextColor: config.color.navigation,
-				navBarTextFontFamily: 'HelveticaNeue-Medium',
-				navBarTextFontSize: 18,
-				navBarTransparent: true,
-				navBarButtonColor: config.button.navigation,
-				statusBarColor: config.background.statusBar,
-				statusBarTextColorScheme: 'light',
-				drawUnderTabBar: true,
-				navBarNoBorder: true,
-				navBarSubtitleColor: 'white',
-				navBarSubtitleFontFamily: 'HelveticaNeue',
-				navBarHidden: true
-			}
-		},
-		passProps,
-		animationType: 'none'
-	});
+	Navigation.navigate(ScreenEnum.DISCLAIMER, passProps)
+	// Navigation.startSingleScreenApp({
+	// 	screen: {
+	// 		screen: 'equix.Disclaimer',
+	// 		title: I18n.t('disclaimer'),
+	// 		navigatorStyle: {
+	// 			navBarBackgroundColor: CommonStyle.fontBlue,
+	// 			navBarTranslucent: false,
+	// 			drawUnderNavBar: false,
+	// 			tabBarHidden: true,
+	// 			navBarHideOnScroll: false,
+	// 			navBarTextColor: config.color.navigation,
+	// 			navBarTextFontFamily: 'HelveticaNeue-Medium',
+	// 			navBarTextFontSize: 18,
+	// 			navBarTransparent: true,
+	// 			navBarButtonColor: config.button.navigation,
+	// 			statusBarColor: config.background.statusBar,
+	// 			statusBarTextColorScheme: 'light',
+	// 			drawUnderTabBar: true,
+	// 			navBarNoBorder: true,
+	// 			navBarSubtitleColor: 'white',
+	// 			navBarSubtitleFontFamily: 'HelveticaNeue',
+	// 			navBarHidden: true
+	// 		}
+	// 	},
+	// 	passProps,
+	// 	animationType: 'none'
+	// });
 }
 export function showHomePageScreen() {
 	Navigation.startSingleScreenApp({

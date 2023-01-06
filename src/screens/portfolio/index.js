@@ -38,7 +38,7 @@ import * as Controller from '~/memory/controller';
 import _ from 'lodash';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
-const PortfolioWrapper = ({}) => {
+const PortfolioWrapper = ({ }) => {
 	const dispatch = useDispatch();
 
 	const updateActiveStatus = (newActive) => {

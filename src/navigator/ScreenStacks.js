@@ -28,6 +28,7 @@ import SearchSymbol from '~s/search_symbol';
 import WatchlistDetail from '~s/watchlist/WatchlistDetail';
 import NewDetail from '~s/news_v3/view/detail/';
 import NewsDetail from '~s/news_detail/news_detail';
+import Disclaimer from '~/screens/disclaimer/disclaimer_iress';
 
 
 const Tab = createBottomTabNavigator();
@@ -36,7 +37,7 @@ const screenOptions = {
 	headerShown: false,
 	tabBarHideOnKeyboard: true,
 	adaptive: true,
-	keyboardHidesTabBar: true
+	keyboardHidesTabBar: true,
 };
 
 const QuickActions = () => {
@@ -118,7 +119,11 @@ function AppStack() {
 					component={NewsDetail}
 					options={{ ...screenOptions, presentation: 'modal', animation: 'fade_from_bottom' }}
 				/>
-
+				<Stack.Screen
+					name={ScreenEnum.DISCLAIMER}
+					component={Disclaimer}
+					options={screenOptions}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
