@@ -622,7 +622,7 @@ export function loginIress({ accessToken }) {
 	HeaderNewsController.getDataCategory();
 	getPortfolioTypeAndLastAccount();
 	getUserPriceBoard(() => {
-		Navigation.navigate(ScreenEnum.MAIN)
+		Navigation.reset(ScreenEnum.MAIN)
 		// dataStorage.reloadAppAfterLogin && dataStorage.reloadAppAfterLogin(true);
 	});
 	getStaticPriceBoard();

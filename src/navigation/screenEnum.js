@@ -32,6 +32,8 @@ export const ScreenEnum = {
 	CREATE_PRICEBOARD: 'CreatePriceboard',
 	SEARCH_SYMBOL: 'SearchSymbol',
 	WATCH_LIST_DETAIL: 'WatchlistDetail',
+	SINGLE_BOTTOM_SHEET: 'SingleBottomSheet',
+
 	NEW_DETAIL: 'NewDetail',
 	NEWS_DETAIL: 'NewsDetail',
 	DISCLAIMER:'Disclaimer',

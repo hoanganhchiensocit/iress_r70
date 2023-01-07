@@ -234,7 +234,6 @@ const DefaultComp = ({ changeWebKey, navigator, fromDrawer }) => {
           onOpenNewOrder={onOpenNewOrder}
           onAddToWl={showAddToWl}
           onRowPress={showDetail}
-          navigator={navigator}
           showModal={showModal}
           showSearch={showSearch}
           closeModal={closeModal}
