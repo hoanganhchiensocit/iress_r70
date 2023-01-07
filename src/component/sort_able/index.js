@@ -147,7 +147,8 @@ const Index = ({
         tmp = [item.item].concat(tmp)
         dic.current.data = tmp
         handleUpdateViewItemChange({ item })
-        refFlatList.current._component.scrollToOffset({ y: 0 })
+        //ChienHA update scroll to offset FlatList
+        refFlatList.current.scrollToOffset({ y: 0 })
         contentOffsetY.setValue(0)
         onChangeKeyTopIndex({ keyTopIndex: item.key, newData: dic.current.data })
         dispatch({

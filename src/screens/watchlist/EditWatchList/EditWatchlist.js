@@ -16,8 +16,9 @@ import {
 	initialState,
 	resetState
 } from '~/screens/watchlist/EditWatchList/Redux/actions.js';
+import Navigation from "../../../navigator/Navigation";
 
-const EditWatchlist = ({ navigator }) => {
+const EditWatchlist = ({ }) => {
 	const dispatch = useDispatch();
 	const userWatchlist = useSelector(
 		(state) => state.priceBoard.userPriceBoard
@@ -84,7 +85,7 @@ const EditWatchlist = ({ navigator }) => {
 			refConfirmDelete.current.show();
 	}, []);
 	const handleHideConfirm = useCallback(() => {
-		navigator && navigator.pop();
+		Navigation.back();
 		refConfirmDelete &&
 			refConfirmDelete.current &&
 			refConfirmDelete.current.show &&
