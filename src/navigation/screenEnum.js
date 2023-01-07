@@ -35,7 +35,8 @@ export const ScreenEnum = {
 	NEW_DETAIL: 'NewDetail',
 	NEWS_DETAIL: 'NewsDetail',
 	DISCLAIMER:'Disclaimer',
-	CREATE_NEW_ALERTS: 'CreateNewAlerts'
+	CREATE_NEW_ALERTS: 'CreateNewAlerts',
+	NEW_ORDER: 'NewOrder'
 };
 
 // const addPreKeyScreen = () => {
