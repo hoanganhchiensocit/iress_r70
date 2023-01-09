@@ -11,7 +11,7 @@ import { setOnDataFunction, setData } from '~/screens/portfolio/Model/StreamingM
 import { func, dataStorage } from '~/storage';
 import { errorSettingModel } from '~/screens/setting/main_setting/error_system_setting.js'
 
-const PortfolioStreaming = ({ navigator }) => {
+const PortfolioStreaming = () => {
     const accActive = useSelector(state => state.portfolio.accActive)
     const dispatch = useDispatch()
     const dic = useRef({

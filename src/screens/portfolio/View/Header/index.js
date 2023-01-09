@@ -20,13 +20,13 @@ const Title = props => {
     </View>
 }
 
-const Header = ({ navigator }) => {
+const Header = () => {
     const [Shadow, onLayout] = useShadow()
     const openMenu = () => {
-        navigator && navigator.toggleDrawer({
-            side: 'left',
-            animated: true
-        });
+        // navigator && navigator.toggleDrawer({
+        //     side: 'left',
+        //     animated: true
+        // });
     }
     return <View style={{ backgroundColor: CommonStyle.color.dark, paddingBottom: 5 }}>
         <View>

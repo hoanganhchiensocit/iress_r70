@@ -210,6 +210,7 @@ const Content = ({
 			updateDataRealtime &&
 			updateDataRealtime(positions, totalMarketValue, currency);
 	}, [data]);
+
 	const _listEmptyComponent = useCallback(() => {
 		return (
 			!dic.current.isLoading && (
@@ -234,10 +235,12 @@ const Content = ({
 			)
 		);
 	}, []);
+	
 	useEffect(() => {
 		lazyLoad();
 		return unmount;
 	}, []);
+
 	return (
 		<View style={{ flex: 1 }}>
 			<PortfolioAccount showSearchAccount={showSearchAccount} />
