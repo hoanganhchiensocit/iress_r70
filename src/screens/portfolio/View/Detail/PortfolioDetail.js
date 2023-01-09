@@ -18,7 +18,6 @@ const PortfolioDetail = ({
     symbol,
     exchange,
     data,
-    navigator,
     onClose,
     showAddToWl
 }) => {
@@ -27,10 +26,9 @@ const PortfolioDetail = ({
     return <View style={{
         width: '100%'
     }}>
-        <NetworkWarning navigator={navigator} />
+        <NetworkWarning />
         <PortfolioDetailSymbol
             updateActiveStatus={updateActiveStatus}
-            navigator={navigator}
             symbol={symbol}
             exchange={exchange}
             showAddToWl={showAddToWl} />

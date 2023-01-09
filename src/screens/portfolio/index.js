@@ -101,10 +101,7 @@ const PortfolioWrapper = ({ }) => {
 				const accAvtive = getAccActive();
 				getPortfolioTotal(accAvtive);
 			}
-			// func.setNavigatorGlobal({
-			// 	index: 3,
-			// 	navigator
-			// });
+
 			updateActiveStatus(true);
 
 			return () => {
@@ -166,13 +163,11 @@ const PortfolioWrapper = ({ }) => {
 	// }, []);
 
 	useLayoutEffect(() => {
-		// const listener = navigator.addOnNavigatorEvent(onNavigatorEvent);
 		ManageAppState.registerAppStateChangeHandle(ScreenId.PORTFOLIO, activeApp);
 		return () => {
 			dic.current.timeoutLoadingPanel &&
 				clearTimeout(dic.current.timeoutLoadingPanel);
 			ManageAppState.unRegisterAppState(ScreenId.PORTFOLIO);
-			// listener();
 		};
 	}, []);
 
@@ -182,28 +177,26 @@ const PortfolioWrapper = ({ }) => {
 		</View>
 	) : (
 		<View style={{ flex: 1, backgroundColor: CommonStyle.backgroundColor1 }}>
-			<HandleData navigator={navigator} />
-			<Header navigator={navigator} />
-			<NetworkWarning navigator={navigator} />
+			<HandleData  />
+			<Header />
+			<NetworkWarning  />
 			<Error
 				screenId={ScreenId.PORTFOLIO}
 				onReTry={ManageAppState.reLoadScreenNow}
 			/>
 			<Content
-				navigator={navigator}
 				showSearchAccount={showSearchAccount}
 				showHideTabbar={showHideTabbar}
 				showHideBuySell={showHideBuySell}
 				updateDataRealtime={updateDataRealtime}
 				showDetail={showDetail}
 			/>
-			<Footer navigator={navigator} refFooter={refFooter} />
+			<Footer refFooter={refFooter} />
 			{isFirstLoadPanel ? null : (
 				<React.Fragment>
 					<Detail
 						zIndex={100}
 						updateActiveStatus={updateActiveStatus}
-						navigator={navigator}
 						setSymbolExchange={setSymbolExchange}
 						showAddToWl={showAddToWl}
 						showHideTabbar={showHideTabbar}
@@ -211,7 +204,6 @@ const PortfolioWrapper = ({ }) => {
 						ref={refDetail}
 					/>
 					<PortfolioButtonBuySell
-						navigator={navigator}
 						zIndex={101}
 						updateActiveStatus={updateActiveStatus}
 						setSpaceTop={setSpaceTop}
