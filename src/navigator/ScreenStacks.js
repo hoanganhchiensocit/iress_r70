@@ -50,6 +50,7 @@ const modalOptions = {
   ...screenOptions,
   presentation: 'modal',
   animation: 'fade_from_bottom',
+  contentStyle: { backgroundColor: "transparent" },
 };
 
 const QuickActions = () => {
