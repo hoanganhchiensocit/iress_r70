@@ -128,17 +128,17 @@ const PortfolioHoldingTitle = ({ numberHolding = 0 }) => {
     const title = useMemo(() => {
         return `${I18n.t('portfolioHolding')} (${numberHolding})`
     }, [numberHolding])
-    const [activeTab, setActiveTab] = useState(() => {
-        return 0
-    })
+    const [activeTab, setActiveTab] = useState(0);
     const activeAccountId = getAccActive()
     const dispatch = useDispatch()
+    
     const onChangeTab = useCallback((newActiveTab) => {
         if (activeTab === newActiveTab) return
         // 0 - todayPL 1 - dayPL
         dispatch(changePLState(newActiveTab))
         setActiveTab(newActiveTab)
     }, [activeTab])
+
     useEffect(() => {
         if (dic.current.init) {
             dic.current.init = false
@@ -146,6 +146,7 @@ const PortfolioHoldingTitle = ({ numberHolding = 0 }) => {
             setActiveTab(0)
         }
     }, [activeAccountId])
+
     return <View style={{ paddingBottom: 4 }}>
         <View>
             <Shadow />

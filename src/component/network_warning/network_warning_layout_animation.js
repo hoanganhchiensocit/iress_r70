@@ -1,3 +1,4 @@
+import { useFocusEffect } from '@react-navigation/native'
 import React, {
     useRef, useEffect, useState,
     useImperativeHandle, useCallback, useLayoutEffect
@@ -11,7 +12,7 @@ import CommonStyle from '~/theme/theme_controller'
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
-let NetworkWarning = ({ navigator }, ref) => {
+let NetworkWarning = (props, ref) => {
     const dic = useRef({
         didAppear: true,
         isConnected: true
@@ -55,13 +56,24 @@ let NetworkWarning = ({ navigator }, ref) => {
                 break;
         }
     }, [])
-    useLayoutEffect(() => {
-        if (Platform.OS === 'ios') return
-        const listener = navigator.addOnNavigatorEvent(onNavigatorEvent);
-        return () => {
-            listener()
+
+    useFocusEffect(React.useCallback(() => {
+        if (Platform.OS === 'android') {
+            updateDidAppearStatus(true)
+            forceUpdate()
         }
-    }, [])
+        return () => {
+            Platform.OS === 'android' && updateDidAppearStatus(false)
+        }
+    }, []))
+    // useLayoutEffect(() => {
+    //     if (Platform.OS === 'ios') return
+    //     const listener = navigator.addOnNavigatorEvent(onNavigatorEvent);
+    //     return () => {
+    //         listener()
+    //     }
+    // }, [])
+
     return isConnected
         ? <View />
         : <View >

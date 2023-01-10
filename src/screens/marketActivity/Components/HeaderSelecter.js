@@ -263,7 +263,7 @@ let HeaderSelecter = ({ onSelected }, ref) => {
 	);
 	const [group, setGroup] = useState([]);
 
-	const groupFunc = (item) => item.group_name === 'Group';
+	const groupFunc = (item) => item?.group_name === 'Group';
 
 	useEffect(() => {
 		setGroup(_.groupBy(defaultMarketGroup, groupFunc)['true'] || []);

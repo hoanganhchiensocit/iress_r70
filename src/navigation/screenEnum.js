@@ -32,10 +32,14 @@ export const ScreenEnum = {
 	CREATE_PRICEBOARD: 'CreatePriceboard',
 	SEARCH_SYMBOL: 'SearchSymbol',
 	WATCH_LIST_DETAIL: 'WatchlistDetail',
+	SINGLE_BOTTOM_SHEET: 'SingleBottomSheet',
+
 	NEW_DETAIL: 'NewDetail',
 	NEWS_DETAIL: 'NewsDetail',
+	SHOW_MODAL_ALERT_LOG: 'ShowModalAlertLog',
+	DISCLAIMER: 'Disclaimer',
 	CREATE_NEW_ALERTS: 'CreateNewAlerts',
-	SHOW_MODAL_ALERT_LOG: 'ShowModalAlertLog'
+	NEW_ORDER: 'NewOrder'
 };
 
 // const addPreKeyScreen = () => {

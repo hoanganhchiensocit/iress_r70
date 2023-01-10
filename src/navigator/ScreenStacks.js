@@ -27,10 +27,15 @@ import EditWatchList from '~/screens/watchlist/EditWatchList/EditWatchlist.js';
 import SearchSymbol from '~s/search_symbol';
 import WatchlistDetail from '~s/watchlist/WatchlistDetail';
 import CreatePriceboard from '~s/watchlist/Categories/View/CreatePriceBoard';
+import SingleBottomSheet from '~/component/bottom_sheet_reanimated/SinglePanel.js';
+
 import NewDetail from '~s/news_v3/view/detail/';
 import NewsDetail from '~s/news_detail/news_detail';
-import CreateNewAlerts from '~s/alertLog/View/CreateNewAlerts';
 import ShowModalAlertLog from '~s/alertLog/Components/Selection/SelectionModal';
+import Disclaimer from '~/screens/disclaimer/disclaimer_iress';
+import CreateNewAlerts from '~s/alertLog/View/CreateNewAlerts'
+import NewOrder from '~/screens/new_order/NewOrderWrapper'
+
 
 
 const Tab = createBottomTabNavigator();
@@ -39,7 +44,14 @@ const screenOptions = {
 	headerShown: false,
 	tabBarHideOnKeyboard: true,
 	adaptive: true,
-	keyboardHidesTabBar: true
+	keyboardHidesTabBar: true,
+};
+
+const modalOptions = {
+	...screenOptions,
+	presentation: 'modal',
+	animation: 'fade_from_bottom',
+	contentStyle: { backgroundColor: "transparent" },
 };
 
 const QuickActions = () => {
@@ -126,9 +138,24 @@ function AppStack() {
 					options={{ ...screenOptions, presentation: 'modal', animation: 'fade_from_bottom' }}
 				/>
 				<Stack.Screen
+					name={ScreenEnum.DISCLAIMER}
+					component={Disclaimer}
+					options={screenOptions}
+				/>
+				<Stack.Screen
 					name={ScreenEnum.CREATE_NEW_ALERTS}
 					component={CreateNewAlerts}
 					options={{ ...screenOptions, presentation: 'modal', animation: 'fade_from_bottom' }}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.NEW_ORDER}
+					component={NewOrder}
+					options={modalOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.SINGLE_BOTTOM_SHEET}
+					component={SingleBottomSheet}
+					options={modalOptions}
 				/>
 				<Stack.Screen
 					name={ScreenEnum.SHOW_MODAL_ALERT_LOG}

@@ -94,7 +94,6 @@ export const useSubData = (navigator) => {
 };
 
 let TradeList = ({
-	navigator,
 	onAddToWl,
 	onRowPress,
 	onOpenNewOrder,
@@ -135,7 +134,6 @@ let TradeList = ({
 	// 	content = (
 	// 		<CreateNewWLButton
 	// 			isMainWatchlist
-	// 			navigator={navigator}
 	// 			isEmpty={isEmpty}
 	// 		/>
 	// 	);
@@ -144,7 +142,6 @@ let TradeList = ({
 		return (
 			<CreateNewWLButton
 				isMainWatchlist
-				navigator={navigator}
 				isEmpty={isEmpty}
 			/>
 		);

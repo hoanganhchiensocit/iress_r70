@@ -5,7 +5,9 @@ import {
 	Image,
 	Platform,
 	Animated,
-	AppState
+	AppState,
+	StatusBar,
+	Text
 } from 'react-native';
 import background from '../../img/background_mobile/ios82.png';
 import backgroundAndroid from '../../img/background_mobile/android.png';
@@ -14,7 +16,7 @@ import {
 	getListRegion,
 	postBrokerName2
 } from '../home/Controllers/RegionController';
-import { dataStorage } from '~/storage';
+import { dataStorage, func } from '~/storage';
 import Navigation from '~/navigator/Navigation';
 import performanceEnum from '../../constants/performance';
 import config from '../../config';
@@ -22,7 +24,12 @@ import ENUM from '~/enum';
 import {
 	checkNetworkConnection1,
 	checkTouchIdSupport,
+	clearAllItemFromLocalStorage,
+	declareAnimation,
+	declareParallelAnimation,
+	declareSequenceAnimation,
 	getLastTimeRenewToken,
+	getOrderDataBeforeShowDetail,
 	getSoftBarHeight,
 	getTimezoneByLocation,
 	logAndReport,
@@ -72,10 +79,21 @@ import { initCacheOrderTransactions } from '~/cache';
 import CheckUpdate from '~/component/check_update/check_update';
 import DeviceInfo from 'react-native-device-info';
 import { iconsLoaded } from '../../utils/AppIcons';
+import ProgressBarLight from '~/modules/_global/ProgressBarLight';
+import CommonStyle from '~/theme/theme_controller';
+import I18n from '../../modules/language';
+import { checkBiometricAvailable, getBiometricSetting, getLastUserOktaLoginId } from '~/manage/manageAuth';
+import { isEmpty, size } from 'lodash';
+import { buildStyle } from '~/build_style';
+import { connect } from 'react-redux'
 
 const { height, width } = Dimensions.get('window');
 const topHeight = height * 0.45;
 const MARGIN_TOP_LOGO_INIT = topHeight - 64;
+
+const bottomHeight = height * 0.55;
+const WELCOME_MARGIN_TOP = (bottomHeight - 64 - 64 - 128) / 2;
+const MARGIN_TOP_LOGO_AFTER_ANIM = (topHeight - 64) / 2;
 
 const loginState = {
 	NOT: 0,
@@ -86,10 +104,21 @@ const loginState = {
 const TIMEOUT_LOGING = 5000;
 
 export const store = configureStore();
-Controller.setGlobalStore(store);
-export class Splash extends React.PureComponent {
+buildStyle();
+dataStorage.platform = Platform.OS;
+
+class Splash extends React.PureComponent {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			ratio: 0,
+			percent: 0,
+			logoOpacity: new Animated.Value(0),
+			logoMarginTop: new Animated.Value(MARGIN_TOP_LOGO_INIT),
+			welcomeOpacity: new Animated.Value(0),
+			busyBoxOpacity: new Animated.Value(0)
+		};
 
 		this.loginSuccess = loginState.NOT; //clear
 		this.needClickToLogout = false;
@@ -102,7 +131,6 @@ export class Splash extends React.PureComponent {
 		this.prevNetworkConnection = null; //clear
 		this.update = null;
 
-		this.checkUpdateNative = this.checkUpdateNative.bind(this);
 		this.startApp = this.startApp.bind(this);
 		this.callbackAfterLogin = this.callbackAfterLogin.bind(this);
 		this.showForm = this.showForm.bind(this);
@@ -121,7 +149,6 @@ export class Splash extends React.PureComponent {
 		this._handleAppStateChange = this._handleAppStateChange.bind(this);
 		this.showDisclaimer = this.showDisclaimer.bind(this);
 		this.callBackAutoLogin = this.callBackAutoLogin.bind(this);
-		this.callbackAfterLogin = this.callbackAfterLogin.bind(this);
 		this.goToApp = this.goToApp.bind(this);
 		this.unregisterMessage = this.unregisterMessage.bind(this);
 		this.getDefaultTimeZone = this.getDefaultTimeZone.bind(this);
@@ -130,11 +157,65 @@ export class Splash extends React.PureComponent {
 		this.onCheck = this.onCheck.bind(this);
 		this.onAccept = this.onAccept.bind(this);
 		this.startAppFunction = this.startAppFunction.bind(this);
+
+		this.downloadProgressCallback =
+			this.downloadProgressCallback.bind(this);
+		this.logoMarginTopAnim = declareAnimation(
+			this.state.logoMarginTop,
+			MARGIN_TOP_LOGO_AFTER_ANIM,
+			500
+		);
+		this.logoOpacityAnim = declareAnimation(this.state.logoOpacity, 1, 500);
+		this.opacityAnim = declareParallelAnimation([
+			declareAnimation(this.state.welcomeOpacity, 1, 500),
+			declareAnimation(this.state.busyBoxOpacity, 1, 500)
+		]);
+		this.setStatusBarMode();
 	}
 
-	componentWillUnmount() {}
+	setStatusBarMode() {
+		StatusBar.setBarStyle('light-content');
+	}
+
+	downloadProgressCallback(progress) {
+		try {
+			const recei = progress.receivedBytes || 0;
+			const total = progress.totalBytes || 0;
+			let percent = 0;
+			if (total) {
+				percent = Math.round((recei / total) * 10000) / 100;
+			}
+			const downloadProgress = progress
+				? `${progress.receivedBytes} of ${progress.totalBytes} bytes`
+				: 'Caculating...';
+			this.setState({
+				ratio: percent
+			});
+			// dataStorage.callbackDownload && dataStorage.callbackDownload(downloadProgress, percent);
+		} catch (error) {
+			logDevice(
+				'error',
+				`NATIVE - downloadProgressCallback exception with ${error}`
+			);
+		}
+	}
+
+	setPercent(ratio, percent) {
+		this.setState({ ratio, percent });
+	}
+
 	componentDidMount() {
-		this.startAppFunction();
+		this.addToStorage();
+	}
+
+	initFunc() {
+		Controller.setGlobalStore(store);
+		Controller.setDispatchFunc(this.props.dispatch)
+		declareSequenceAnimation([
+			this.logoOpacityAnim,
+			this.logoMarginTopAnim,
+			this.opacityAnim
+		]).start();
 
 		this.update = new CheckUpdate(
 			this.startAppAfterLoadStore,
@@ -144,15 +225,19 @@ export class Splash extends React.PureComponent {
 
 		this.showForm(false);
 		checkTouchIdSupport();
+		if (config.clearLocalStorage) {
+			clearAllItemFromLocalStorage();
+		}
 		getSoftBarHeight();
 		AppController.handleEventApp();
+		this.subForceReloadUser();
 		this.getDefaultTimeZone();
 		Business.getUserAgent();
 		Business.getDeviceID();
 		Business.initEnv();
 		this.initNotiListener();
 
-		this.addToStorage();
+		this.startAppFunction()
 	}
 
 	addToStorage() {
@@ -171,6 +256,8 @@ export class Splash extends React.PureComponent {
 		dataStorage.callBackAutoLogin = this.callBackAutoLogin;
 		dataStorage.showAlertChangePin = this.showAlertChangePin;
 		dataStorage.startAppAfterLoadStore = this.startAppAfterLoadStore;
+
+		this.initFunc()
 	}
 
 	openNotiInApp(notif) {
@@ -307,7 +394,7 @@ export class Splash extends React.PureComponent {
 
 	handleConnectionChange(isConnected) {
 		console.log('YOLO handleConnectionChange');
-		store.dispatch(appActions.changeConnection(isConnected));
+		this.props.dispatch(appActions.changeConnection(isConnected));
 	}
 
 	showMaintainModal() {
@@ -650,7 +737,7 @@ export class Splash extends React.PureComponent {
 			dataStorage.emailLogin = login.email.toLowerCase().trim() || '';
 			Controller.setLoginStatus(login.isLogin);
 			if (login.token || isStartApp) {
-				store.dispatch(
+				this.props.dispatch(
 					loginActions.login(
 						login.email,
 						null,
@@ -670,37 +757,12 @@ export class Splash extends React.PureComponent {
 		const objStore = store.getState() || {};
 		const login = objStore.login || {};
 		const checked = login.checked || false;
-		if (checked || dataStorage.is_logout) {
-			this.callbackDefault();
-		} else {
-			this.showDisclaimer();
-		}
-	}
-
-	async callbackDefault() {
-		// Show sign in screen
-		dataStorage.checkUpdateApp &&
-			dataStorage.checkUpdateApp(false, async () => {
-				if (dataStorage.loginAsGuest) {
-					await this.settingThemeBeforeLogin();
-					dataStorage.maintain.currentState !== true && showNewOverViewScreen();
-				} else {
-					// Timeout wait for busybox animation finish
-					const timeOut = dataStorage.is_logout ? 200 : 1100;
-					this.clearTimeoutLoging();
-					setTimeout(() => {
-						dataStorage.maintain.currentState !== true && this.goToApp();
-						// showHomePageScreen();
-					}, timeOut);
-				}
-			});
-		// SplashScreen.hide();
-		store.dispatch(loginActions.loginAppSuccess());
-		// Iress fixed languege en
-		Controller.setLang('en');
-		Controller.dispatch(settingActions.setLang('en'));
-		Controller.setFontSize(ENUM.FONT_SIZES[1].value);
-		Controller.dispatch(settingActions.setFontSize(ENUM.FONT_SIZES[1].value));
+		this.callbackDefault();
+		// if (checked || dataStorage.is_logout) {
+		// 	this.callbackDefault();
+		// } else {
+		// 	this.showDisclaimer();
+		// }
 	}
 
 	showDisclaimer() {
@@ -717,7 +779,6 @@ export class Splash extends React.PureComponent {
 				}, 1100);
 			});
 
-		SplashScreen.hide();
 	}
 
 	setNotiData(data) {
@@ -763,17 +824,66 @@ export class Splash extends React.PureComponent {
 		try {
 			const listRegion = await getListRegion();
 			dataStorage.listRegion = listRegion;
-			Navigation.navigate('Home');
-
-			//ChienHA
-			//tạm fix
-			// Navigation.navigate(ScreenEnum.AUTO_LOGIN);
-			// Navigation.navigate(ScreenEnum.MAIN);
-			// Navigation.navigate(ScreenEnum.ACTIVITIES);
 		} catch (error) {
 			dataStorage.listRegion = [];
-			// loginError(error.message);
+			loginError(error.message);
 		}
+
+		try {
+			const listRegionByEnv = dataStorage.listRegion.filter((item) => {
+				const { region_type: regionType } = item;
+				return regionType === ENUM.ENV_TYPE.UAT;
+			});
+			const sizeRegion = size(listRegionByEnv);
+			Controller.dispatch(loginActions.changeBrokerName(config.envRegion));
+			if (sizeRegion === 1) {
+				const item = listRegionByEnv[0];
+				Controller.setRegion(item.region_code);
+
+				await postBrokerName2(config.envRegion);
+			} else {
+				const [storeRegion] = await this.getStorageInformation();
+
+				if (storeRegion) {
+					Controller.setRegion(storeRegion.region_code);
+				}
+				if (!isEmpty(storeRegion)) {
+					await postBrokerName2(config.envRegion);
+				}
+			}
+
+			const biometric = await getBiometricSetting();
+			Controller.dispatch(settingActions.setBiometric(!!biometric));
+		} catch (error) {
+			loginActions.loginError(error.message);
+		}
+
+		dataStorage.isOkta = false;
+		dataStorage.isLoggedInOkta = false;
+		this.loginDefault();
+	}
+
+	getStorageInformation() {
+		return new Promise((resolve) => {
+			Promise.all([
+				func.getRegionSelected(),
+				func.getBrokerName(),
+				func.getCacheLoginSuccess(),
+				getLastUserOktaLoginId(),
+				checkBiometricAvailable()
+			])
+				.then((res) => {
+					resolve(res);
+				})
+				.catch((err) => {
+					console.log(
+						'getStorageInformation EXCEPTION',
+						err,
+						err.message
+					);
+					resolve([{}, 'false']); // Default value của region là {}, của loginSuccess là 'false'
+				});
+		});
 	}
 
 	reloadAppAfterLogin() {
@@ -793,18 +903,14 @@ export class Splash extends React.PureComponent {
 
 			this.setLoginState(loginState.SUCCESS);
 			// this.clearTimeoutLoging();
-			this.goToApp();
 			//DUCLM FUNC
-			// if (dataStorage.checkUpdateApp) {
-			// 	console.log('here 123123123123');
-			// 	dataStorage.checkUpdateApp(false, () => {
-			// 		console.log('here 123123');
-			// 		this.goToApp();
-			// 	});
-			// } else {
-			// 	console.log('here 456456');
-			// 	this.goToApp();
-			// }
+			if (dataStorage.checkUpdateApp) {
+				dataStorage.checkUpdateApp(false, () => {
+					this.goToApp();
+				});
+			} else {
+				this.goToApp();
+			}
 		} catch (error) {
 			logDevice(
 				'error',
@@ -813,37 +919,26 @@ export class Splash extends React.PureComponent {
 		}
 	}
 
-	//DUCLM FUNC AFTER LOGIN OKTA SUCCESS
-	goToApp() {
-		Navigation.navigate(ScreenEnum.MAIN);
+	cb() {
+		// Exception when ko truyen tabInfor
+		Controller.setInAppStatus(true);
+		dataStorage.maintain.currentState !== true && Navigation.navigate(ScreenEnum.HOME)
+		this.resetNotiData();
+		func.setUpdateAfterChangeAppState(true);
+	};
 
+	goToApp() {
 		// Set inApp status
-		// const tabSelected = HOME_SCREEN[3];
-		// dataStorage.tabIndexSelected = tabSelected.tabIndex;
-		// const cb = (tabInfo = tabSelected) => {
-		// 	// Exception when ko truyen tabInfor
-		// 	Controller.setInAppStatus(true);
-		// 	dataStorage.maintain.currentState !== true &&
-		// 		showMainAppScreen({
-		// 			...tabInfo,
-		// 			...{
-		// 				originActiveTab: this.notiData
-		// 					? tabSelected.activeTab
-		// 					: tabInfo.activeTab
-		// 			}
-		// 		});
-		// 	this.resetNotiData();
-		// 	func.setUpdateAfterChangeAppState(true);
-		// };
-		// if (this.notiData) {
-		// 	getOrderDataBeforeShowDetail({
-		// 		cb,
-		// 		isOutApp: true,
-		// 		notif: this.notiData
-		// 	});
-		// } else {
-		// 	cb(tabSelected);
-		// }
+		if (this.notiData) {
+			getOrderDataBeforeShowDetail({
+				cb,
+				isOutApp: true,
+				notif: this.notiData
+			});
+		} else {
+			console.log('goToApp cb')
+			this.cb();
+		}
 	}
 
 	clearTimeoutLoging() {
@@ -860,7 +955,7 @@ export class Splash extends React.PureComponent {
 				localData.enableTouchID !== null &&
 				localData.enableTouchID !== undefined
 			) {
-				store.dispatch(
+				this.props.dispatch(
 					authSettingActions.setEnableTouchID(localData.enableTouchID)
 				);
 			}
@@ -886,13 +981,12 @@ export class Splash extends React.PureComponent {
 		// 		objParam
 		// 	}
 		// });
-		store.dispatch(loginActions.loginAppSuccess());
+		this.props.dispatch(loginActions.loginAppSuccess());
 		this.perf && this.perf.stop();
 	}
 
 	async callbackDefault() {
 		// Show login screen
-		// SplashScreen.hide();
 		dataStorage.checkUpdateApp &&
 			dataStorage.checkUpdateApp(false, async () => {
 				dataStorage.isSignOut = true;
@@ -904,11 +998,11 @@ export class Splash extends React.PureComponent {
 				} else {
 					const timeOut = dataStorage.is_logout ? 200 : 1100;
 					setTimeout(() => {
-						dataStorage.maintain.currentState !== true && this.goToApp;
+						dataStorage.maintain.currentState !== true && this.goToApp();
 						// showHomePageScreen();
 					}, timeOut);
 				}
-				store.dispatch(loginActions.loginAppSuccess());
+				this.props.dispatch(loginActions.loginAppSuccess());
 			});
 
 		if (Controller.getLoginStatus()) {
@@ -923,12 +1017,12 @@ export class Splash extends React.PureComponent {
 
 	startApp() {
 		console.log('YOLO startApp');
-		initApp(this.callbackDefault);
+		this.callbackDefault()
 	}
 
 	onCheck(checked) {
-		console.log('YOLO onCheck');
-		store.dispatch(loginActions.disclaimerDisplay(checked));
+		console.log('YOLO onCheck',checked);
+		Controller.dispatch(loginActions.disclaimerDisplay(checked));
 	}
 
 	onAccept() {
@@ -936,10 +1030,11 @@ export class Splash extends React.PureComponent {
 		try {
 			this.startApp();
 		} catch (err) {
-			store.dispatch(loginActions.disclaimerDisplay(false));
+			this.props.dispatch(loginActions.disclaimerDisplay(false));
 		}
 	}
 
+	checkUpdateNative = this.checkUpdateNative.bind(this);
 	checkUpdateNative(callback) {
 		let isNeedUpdate = false;
 		const byPass = false;
@@ -951,10 +1046,12 @@ export class Splash extends React.PureComponent {
 			android_next_build: androidNextBuild
 		} = dataStorage.systemInfo;
 		Controller.setIressStatus(iress);
+		// console.log('currentIosVersion', config.currentIosVersion)
+		// console.log('dataStorage.systemInfo', dataStorage.systemInfo)
 		if (Platform.OS === 'ios') {
 			if (
-				config.currentIosVersion !== iosBuild &&
-				config.currentIosVersion !== iosNextBuild
+				config.currentIosVersion <= iosBuild &&
+				config.currentIosVersion <= iosNextBuild
 			) {
 				isNeedUpdate = true;
 			}
@@ -966,6 +1063,7 @@ export class Splash extends React.PureComponent {
 				isNeedUpdate = true;
 			}
 		}
+		console.log('isNeedUpdate', isNeedUpdate)
 		// Process
 		if (isNeedUpdate) {
 			this.showUpdateMe();
@@ -999,7 +1097,7 @@ export class Splash extends React.PureComponent {
 	startAppAfterLoadStore() {
 		console.log('YOLO startAppAfterLoadStore');
 		try {
-			store.dispatch(loginActions.setLoginFailed());
+			this.props.dispatch(loginActions.setLoginFailed());
 			iconsLoaded.then(() => {
 				dataStorage.startApp = this.startAppFunction;
 
@@ -1064,15 +1162,141 @@ export class Splash extends React.PureComponent {
 						<Animated.View
 							style={{
 								height: 72,
-								marginTop: MARGIN_TOP_LOGO_INIT
+								marginTop: this.state.logoMarginTop,
+								opacity: this.state.logoOpacity
 							}}
 						>
 							{this.renderLogo()}
 						</Animated.View>
+					</View>
+
+					<View style={{ flex: 1, height: bottomHeight }}>
+						<Animated.View
+							style={{ opacity: this.state.busyBoxOpacity }}
+						>
+							<View
+								style={{
+									backgroundColor: 'transparent',
+									height: 40,
+									justifyContent: 'center',
+									alignItems: 'center'
+								}}
+							>
+								<ProgressBarLight
+									color={CommonStyle.fontWhite}
+								/>
+							</View>
+							{this.props.isUpgrade ? (
+								<View
+									style={{
+										marginHorizontal: 32,
+										justifyContent: 'center',
+										alignItems: 'center'
+									}}
+								>
+									<Text
+										style={{
+											fontSize: CommonStyle.fontSizeM,
+											fontFamily: 'HelveticaNeue',
+											fontWeight: 'bold',
+											color: '#FFF'
+										}}
+									>
+										{I18n.t('importantNotification')}
+									</Text>
+									<Text
+										style={{
+											fontSize: CommonStyle.fontSizeM,
+											fontFamily: 'HelveticaNeue',
+											color: '#FFF'
+										}}
+									>
+										{I18n.t('upgradedSystem')}
+									</Text>
+								</View>
+							) : this.props.isUpdating ? (
+								<View
+									style={{
+										width,
+										justifyContent: 'center',
+										alignItems: 'center',
+										flexDirection: 'row'
+									}}
+								>
+									<Text
+										style={[
+											CommonStyle.textMainNoColor,
+											{
+												color: '#FFF',
+												marginBottom: 4,
+												textAlign: 'left'
+											}
+										]}
+									>
+										{I18n.t('updatingFirstCapitalize')}
+									</Text>
+									<Text
+										style={[
+											CommonStyle.textMainNoColor,
+											{
+												color: '#FFF',
+												marginBottom: 4,
+												textAlign: 'left'
+											}
+										]}
+									>{` (${this.state.percent}%)...`}</Text>
+								</View>
+							) : (
+								<Text
+									style={[
+										CommonStyle.textMainNoColor,
+										{
+											color: '#FFF',
+											marginBottom: 4,
+											textAlign: 'center'
+										}
+									]}
+								>
+									{I18n.t('connectingFirstCapitalize')}
+								</Text>
+							)}
+						</Animated.View>
+						{this.props.isUpgrade ? (
+							<View />
+						) : (
+							<Animated.View
+								style={{
+									opacity: this.state.welcomeOpacity,
+									marginHorizontal: 64,
+									marginTop: WELCOME_MARGIN_TOP
+								}}
+							>
+								<Text
+									style={{
+										textAlign: 'center',
+										fontSize: CommonStyle.font30,
+										fontFamily: 'HelveticaNeue-Medium',
+										color: '#FFFFFF'
+									}}
+								>
+									{I18n.t('WelComeTo')}
+								</Text>
+								<Text
+									style={{
+										textAlign: 'center',
+										fontSize: CommonStyle.font30,
+										fontFamily: 'HelveticaNeue-Medium',
+										color: '#FFFFFF'
+									}}
+								>
+									{I18n.t('appName')}
+								</Text>
+							</Animated.View>
+						)}
 					</View>
 				</View>
 			</View>
 		);
 	}
 }
-export default Splash;
+export default connect()(Splash);

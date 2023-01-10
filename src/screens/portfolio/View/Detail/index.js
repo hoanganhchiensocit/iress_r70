@@ -2,7 +2,7 @@ import React, { useMemo, useState, useCallback, useRef, useImperativeHandle } fr
 import {
     View, Dimensions, StyleSheet
 } from 'react-native'
-import Animated  from 'react-native-reanimated'
+import Animated from 'react-native-reanimated'
 import BackDropView from '~s/watchlist/Component/BackDropView2';
 import NestedScrollView from '~s/watchlist/Component/NestedScroll/WatchlistNested';
 import PortfolioDetail from './PortfolioDetail';
@@ -52,17 +52,17 @@ const Detail = React.forwardRef(({
         }, 10);
     }, [])
     const updateDataRealtime = useCallback((positions = [], totalMarketValue, currency) => {
-        const isShowPanel = useCheckPanelStatus(refNested) // Nếu đang không hiển thị panel thì không ghi nhận realtime
-        if (!positions.length || !symbolInfo.symbol || !symbolInfo.exchange || !isShowPanel) return
-        const filterData = positions.filter(position => {
-            const { symbol, exchange } = position
-            return symbol === symbolInfo.symbol && exchange === symbolInfo.exchange
-        })
-        const newData = filterData[0]
-        if (!newData) return
-        newData['total_market_value'] = totalMarketValue // Mapping thêm total_market_value trong positions
-        newData['currency_account'] = currency // Mapping thêm currency by account trong positions
-        setData(newData)
+        // const isShowPanel = useCheckPanelStatus(refNested) // Nếu đang không hiển thị panel thì không ghi nhận realtime
+        // if (!positions.length || !symbolInfo.symbol || !symbolInfo.exchange || !isShowPanel) return
+        // const filterData = positions.filter(position => {
+        //     const { symbol, exchange } = position
+        //     return symbol === symbolInfo.symbol && exchange === symbolInfo.exchange
+        // })
+        // const newData = filterData[0]
+        // if (!newData) return
+        // newData['total_market_value'] = totalMarketValue // Mapping thêm total_market_value trong positions
+        // newData['currency_account'] = currency // Mapping thêm currency by account trong positions
+        // setData(newData)
     }, [symbolInfo.symbol, symbolInfo.exchange])
     useImperativeHandle(ref, () => {
         return {
@@ -121,7 +121,6 @@ const Detail = React.forwardRef(({
             symbol={symbolInfo.symbol}
             exchange={symbolInfo.exchange}
             data={data}
-            navigator={navigator}
             onClose={onCloseDetail}
         />
     }, [symbolInfo, data])
@@ -143,41 +142,6 @@ const Detail = React.forwardRef(({
             />
         </React.Fragment>
     )
-    return <React.Fragment>
-        <BackDropView
-            spaceTop={_spaceTop}
-            _scrollValue={_scrollContainer}
-            _isScrollContent={_isScrollContent}
-            opacityInterpolate={translateY =>
-                interpolate(translateY, {
-                    inputRange: [-1, 0, DEVICE_HEIGHT, DEVICE_HEIGHT + 1],
-                    outputRange: [0.85, 0.85, 0, 0]
-                })
-            }
-        />
-
-        <NestedScrollView
-            ref={refNested}
-            _isScrollContent={_isScrollContent}
-            _scrollValue={_scrollValue}
-            _scrollContainer={_scrollContainer}
-            spaceTop={_spaceTop}
-            renderHeaderPanner={renderHeaderPanner}
-            beginHideCallback={onCloseDetailByScroll}
-        >
-            <View style={styles.bg} />
-            <PortfolioDetail
-                navigator={navigator}
-                updateActiveStatus={updateActiveStatus}
-                showAddToWl={showAddToWl}
-                symbol={symbolInfo.symbol}
-                exchange={symbolInfo.exchange}
-                data={data}
-                navigator={navigator}
-                onClose={onCloseDetail}
-            />
-        </NestedScrollView>
-    </React.Fragment>
 })
 
 const styles = {}

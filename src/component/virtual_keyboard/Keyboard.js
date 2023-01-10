@@ -147,14 +147,14 @@ export const ButtomConfirm = function ({
 	let animateStyles = {};
 	if (translateY) {
 		animateStyles = {
-			opacity: Animated.interpolate(translateY, {
+			opacity: Animated.interpolateNode(translateY, {
 				inputRange: [0, midleTrigger, heightTop],
 				outputRange: [0, 0, 1],
 				extrapolate: Extrapolate.CLAMP
 			}),
 			transform: [
 				{
-					translateX: Animated.interpolate(translateY, {
+					translateX: Animated.interpolateNode(translateY, {
 						inputRange: [0, 8, heightTop],
 						outputRange: [widthDevices, 0, 0],
 						extrapolate: Extrapolate.CLAMP
@@ -543,7 +543,7 @@ function KeyBoardWithButtomConfirm({
 				{
 					transform: [
 						{
-							translateY: Animated.interpolate(translateY, {
+							translateY: Animated.interpolateNode(translateY, {
 								inputRange: [-1, 0, heightDevices * 2],
 								outputRange: [0, 0, heightDevices * 2]
 							})

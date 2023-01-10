@@ -5,8 +5,10 @@ import { getDisplayName } from '~/business';
 import SvgIcon from '~s/watchlist/Component/Icon2';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/';
 import { handleShowAlertLog } from '~s/alertLog/Controller/SwitchController'
+import Navigation from '~/navigator/Navigation';
+import { ScreenEnum } from '~/navigation';
 
-const DisplayName = ({ updateActiveStatus, symbol, exchange, navigator }) => {
+const DisplayName = ({ updateActiveStatus, symbol, exchange }) => {
 	const displayName = useMemo(() => {
 		if (!symbol && !exchange) return '';
 		return getDisplayName({ symbol, exchange }) || `${symbol}.${exchange}`;
@@ -14,18 +16,22 @@ const DisplayName = ({ updateActiveStatus, symbol, exchange, navigator }) => {
 
 	const showSecDetail = useCallback(() => {
 		updateActiveStatus && updateActiveStatus(false);
-		navigator &&
-			navigator.push({
-				screen: 'equix.WatchlistDetail',
-				overrideBackPress: true,
-				animated: false,
-				animationType: 'none',
-				navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
-				passProps: {
-					symbol,
-					exchange
-				}
-			});
+		Navigation.navigate(ScreenEnum.WATCH_LIST_DETAIL, {
+			symbol,
+			exchange
+		})
+		// navigator &&
+		// 	navigator.push({
+		// 		screen: 'equix.WatchlistDetail',
+		// 		overrideBackPress: true,
+		// 		animated: false,
+		// 		animationType: 'none',
+		// 		navigatorStyle: CommonStyle.navigatorSpecialNoHeader,
+		// 		passProps: {
+		// 			symbol,
+		// 			exchange
+		// 		}
+		// 	});
 	}, [symbol, exchange]);
 
 	return (

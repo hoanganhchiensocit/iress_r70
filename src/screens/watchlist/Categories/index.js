@@ -21,7 +21,6 @@ import {
 import I18n from '~/modules/language/';
 import CommonStyle, { register } from '~/theme/theme_controller';
 import TabView from '~/component/tabview4/';
-import SvgIcon from '~s/watchlist/Component/Icon2';
 import ExtraSvgIcon from '~/component/svg_icon/SvgIcon';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt';
@@ -29,7 +28,7 @@ import TextInputAvoidPadding from '~/component/text_input/index.js';
 import * as FunctionUtil from '~/lib/base/functionUtil';
 import * as PureFunc from '~/utils/pure_func';
 import ListWL from './View/ListWL';
-import ConfirmDelete from '~/component/confirm_delete/ConfirmDelete';
+import { useRoute } from '@react-navigation/native';
 import ListUserWLDelete from './View/ListUserWLDelete';
 import { dataStorage } from '~/storage';
 
@@ -541,7 +540,9 @@ const ConfirmDeleteFooter = ({ hideDelete }) => {
   );
 };
 
-const Categories = ({ priceBoardSelected }) => {
+const Categories = () => {
+  const route = useRoute();
+  const { priceBoardSelected } = route.params || {}
   const refConfirmDelete = useRef({});
   const refConfirmDeleteContent = useRef({});
   const showDelete = useCallback(() => {

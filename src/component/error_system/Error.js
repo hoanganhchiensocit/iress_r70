@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { View, StyleSheet, LayoutAnimation, UIManager, Platform, Dimensions } from 'react-native'
 import { dataStorage } from '~/storage'
-import Animated  from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { TYPE_ERROR_SYSTEM, ERROR_SYSTEM } from './Constants'
 import { useListenerShowError, useListenerHideError } from '~/component/error_system/Hook/Listenner.js'
 import { setCode, getCode } from '~/component/error_system/Model/ErrorModel.js'
@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import Shadow from '~/component/shadow';
 import * as Controller from '~/memory/controller'
 import { useNavigator, awaitCallback } from '~/screens/watchlist/TradeList/tradelist.hook.js';
+import { useFocusEffect } from '@react-navigation/native';
 const { width: widthDevices, height: heightDevices } = Dimensions.get('window')
 
 if (Platform.OS === 'android') {
@@ -27,7 +28,7 @@ const {
     timing
 } = Animated
 
-const Error = React.memo(({ onReTry, screenId, navigator }) => {
+const Error = React.memo(({ onReTry, screenId }) => {
     const [type, setTypeError] = useState(TYPE_ERROR_SYSTEM.HIDE);
     const [code, setCode] = useState(null)
     const [firstLoad, setFirstLoad] = useState(false)
@@ -96,22 +97,35 @@ const Error = React.memo(({ onReTry, screenId, navigator }) => {
     useListenerHideError({
         hideError
     })
-    navigator && useNavigator(navigator, {
-        willAppear: () => {
-            setFirstLoad(false)
-        },
-        didDisappear: () => {
+
+    useFocusEffect(React.useCallback(() => {
+        setFirstLoad(false)
+        return () => {
             if (Controller.getStatusModalCurrent()) {
                 return;
             }
             setFirstLoad(true)
         }
-    });
+    }, []))
+
+    // navigator && useNavigator(navigator, {
+    //     willAppear: () => {
+    //         setFirstLoad(false)
+    //     },
+    //     didDisappear: () => {
+    //         if (Controller.getStatusModalCurrent()) {
+    //             return;
+    //         }
+    //         setFirstLoad(true)
+    //     }
+    // });
 
     useEffect(() => {
         return () => setCode(null)
     }, [])
+    
     if (firstLoad) return null
+
     return (
         <View
         >

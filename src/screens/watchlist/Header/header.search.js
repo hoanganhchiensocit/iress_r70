@@ -1,34 +1,29 @@
 import React, {
-	useState,
-	useEffect,
 	useCallback,
 	useMemo,
-	useRef,
 	useImperativeHandle
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { cloneDeep, pickBy, map, values } from 'lodash';
+import { pickBy, values } from 'lodash';
 import isEqual from 'react-fast-compare';
 
 import {
 	View,
 	Text,
-	TextInput,
 	StyleSheet,
 	Platform,
-	Dimensions,
-	TouchableOpacity
 } from 'react-native';
 import I18n from '~/modules/language/';
 import CommonStyle, { register } from '~/theme/theme_controller';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt';
 import * as PriceBoardModel from '~/screens/watchlist/EditWatchList/Model/PriceBoardModel.js';
 import * as PureFunc from '~/utils/pure_func';
-// import { Navigation } from 'react-native-navigation'
 import * as FunctionUtil from '~/lib/base/functionUtil';
 import ENUM from '~/enum';
 import * as Controller from '~/memory/controller';
 import * as ContentModel from '~/component/add_symbol/Models/Content.js';
+import Navigation from "../../../navigator/Navigation";
+import { ScreenEnum } from "../../../navigation";
 
 const { TIME_DELAY, NAME_PANEL } = ENUM;
 export function getLocalDataSelected({
@@ -118,25 +113,15 @@ let SearchBar = (props, ref) => {
 				: dicSymbolSelected;
 			Controller.setStatusModalCurrent(true);
 			dispatch.subWatchlist.resetActions();
-			Navigation.showModal({
-				screen: 'equix.SingleBottomSheet',
-				animated: false,
-				animationType: 'none',
-				navigatorStyle: {
-					...CommonStyle.navigatorModalSpecialNoHeader,
-					modalPresentationStyle: 'overCurrentContext'
-				},
-				overrideBackPress: true,
-				passProps: {
-					namePanel: NAME_PANEL.ADD_AND_SEARCH,
-					isSwitchFromQuickButton: true,
-					enabledGestureInteraction: false,
-					onDone: onDone,
-					dicSymbolSelected: { ...newDicSymbolSelected },
-					onSelectedSymbol,
-					disableSelected: disabled,
-					priceBoardSelected
-				}
+			Navigation.navigate(ScreenEnum.SINGLE_BOTTOM_SHEET, {
+				namePanel: NAME_PANEL.ADD_AND_SEARCH,
+				isSwitchFromQuickButton: true,
+				enabledGestureInteraction: false,
+				onDone: onDone,
+				dicSymbolSelected: { ...newDicSymbolSelected },
+				onSelectedSymbol,
+				disableSelected: disabled,
+				priceBoardSelected
 			});
 		},
 		[dicSymbolSelected, priceBoardSelected]

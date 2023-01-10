@@ -102,10 +102,8 @@ const RightIcon = React.forwardRef((props, ref) => {
 });
 
 const LeftIcon = (props) => {
-	// const { navigator } = props;
 	const onPress = () => {
-		Navigation.back();
-		// navigator && navigator.popToRoot();
+		Navigation.popToTop();
 	};
 	return (
 		<TouchableOpacityOpt
@@ -390,10 +388,10 @@ const WLName = React.forwardRef((props, ref) => {
 });
 
 const Content = (props) => {
-	const { navigator, showHide } = props;
+	const { showHide } = props;
 	return (
 		<View style={{ flex: 1, backgroundColor: CommonStyle.color.dark }}>
-			<ListSymbol navigator={navigator} showHide={showHide} />
+			<ListSymbol showHide={showHide} />
 		</View>
 	);
 };
@@ -412,14 +410,13 @@ const CreatePriceBoard = (props) => {
 		return dic.current.animConfig;
 	}, []);
 	const [onLayoutHeader] = useLayout(updateLayoutHeader);
-	const { navigator } = props;
 	const dic = useRef({
 		layoutHeader: {},
 		animConfig: {}
 	});
 	const onDone = useCallback(() => {
 		createNewPriceBoard();
-		navigator && navigator.popToRoot();
+		Navigation.popToTop();
 	}, []);
 	const [refHeader, showHide] = useShowHideKeyboard();
 	return (
@@ -431,9 +428,8 @@ const CreatePriceBoard = (props) => {
 					ref={refHeader}
 					onLayoutHeader={onLayoutHeader}
 					onDone={onDone}
-					navigator={navigator}
 				/>
-				<Content navigator={navigator} showHide={showHide} />
+				<Content showHide={showHide} />
 			</KeyboardAvoidView>
 		</CreatePriceBoardContext.Provider>
 	);

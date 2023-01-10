@@ -25,6 +25,8 @@ import ScreenId from '~/constants/screen_id';
 import * as ConditionModel from '~/screens/new_order/Model/PriceBaseContingentConditionModel';
 import * as PriceBaseTabModel from '~/screens/new_order/Model/PriceBaseContingentTabModel';
 import * as TabModel from '~/screens/new_order/Model/TabModel.js';
+import Navigation from "../../../navigator/Navigation";
+import { ScreenEnum } from "../../../navigation";
 
 const { NAME_PANEL } = Enum;
 let now = new Date().getTime() + 1000 * 60 * 60 * 24;
@@ -247,33 +249,52 @@ export function handleShowAmendOrderEntry({ data, navigator, amendType }) {
 	//
 	handleInitTabTrading(amendType, data);
 	setType(amendType);
-	Navigation.showModal({
-		screen: 'equix.NewOrder',
-		animated: false,
-		animationType: 'none',
-		navigatorStyle: {
-			...CommonStyle.navigatorModalSpecialNoHeader,
-			modalPresentationStyle: 'overCurrentContext'
+	Navigation.navigate(ScreenEnum.NEW_ORDER, {
+		// hideDetail: props.hideDetail,
+		// setSpaceTop: props.setSpaceTop,
+		namePanel: NAME_PANEL.NEW_ORDER,
+		isSwitchFromQuickButton: false,
+		symbol: stateAmend.symbol,
+		exchange: stateAmend.exchange,
+		contingentData: {
+			status,
+			condition,
+			priceBase,
+			triggerPrice
 		},
-		passProps: {
-			// hideDetail: props.hideDetail,
-			// setSpaceTop: props.setSpaceTop,
-			namePanel: NAME_PANEL.NEW_ORDER,
-			isSwitchFromQuickButton: false,
-			symbol: stateAmend.symbol,
-			exchange: stateAmend.exchange,
-			contingentData: {
-				status,
-				condition,
-				priceBase,
-				triggerPrice
-			},
-			onHideAll: () => {
-				dataStorage.currentScreenId = ScreenId.ORDERS;
-				setType(Enum.AMEND_TYPE.DEFAULT);
-			}
+		onHideAll: () => {
+			dataStorage.currentScreenId = ScreenId.ORDERS;
+			setType(Enum.AMEND_TYPE.DEFAULT);
 		}
-	});
+	})
+
+	// Navigation.showModal({
+	// 	screen: 'equix.NewOrder',
+	// 	animated: false,
+	// 	animationType: 'none',
+	// 	navigatorStyle: {
+	// 		...CommonStyle.navigatorModalSpecialNoHeader,
+	// 		modalPresentationStyle: 'overCurrentContext'
+	// 	},
+	// 	passProps: {
+	// 		// hideDetail: props.hideDetail,
+	// 		// setSpaceTop: props.setSpaceTop,
+	// 		namePanel: NAME_PANEL.NEW_ORDER,
+	// 		isSwitchFromQuickButton: false,
+	// 		symbol: stateAmend.symbol,
+	// 		exchange: stateAmend.exchange,
+	// 		contingentData: {
+	// 			status,
+	// 			condition,
+	// 			priceBase,
+	// 			triggerPrice
+	// 		},
+	// 		onHideAll: () => {
+	// 			dataStorage.currentScreenId = ScreenId.ORDERS;
+	// 			setType(Enum.AMEND_TYPE.DEFAULT);
+	// 		}
+	// 	}
+	// });
 }
 export function handleShowCancelOrder({ data, navigator, amendType }) {
 	setOrderDetail(data);
@@ -284,6 +305,7 @@ export function handleShowCancelOrder({ data, navigator, amendType }) {
 	//
 	handleInitTabTrading(amendType);
 	setType(amendType);
+
 	Navigation.showModal({
 		screen: 'equix.ConfirmCancel',
 		animated: false,
@@ -310,26 +332,40 @@ export function handleShowCancelOrder({ data, navigator, amendType }) {
 }
 export function handleShowNewOrder({ symbol, exchange, onHideAll }) {
 	Controller.setStatusModalCurrent(true);
-	Navigation.showModal({
-		screen: 'equix.NewOrder',
-		animated: false,
-		animationType: 'none',
-		navigatorStyle: {
-			...CommonStyle.navigatorModalSpecialNoHeader,
-			modalPresentationStyle: 'overCurrentContext'
-		},
-		passProps: {
-			// hideDetail: props.hideDetail,
-			// setSpaceTop: props.setSpaceTop,
-			namePanel: NAME_PANEL.NEW_ORDER,
-			isSwitchFromQuickButton: false,
-			symbol,
-			exchange,
-			onHideAll: () => {
-				Controller.setStatusModalCurrent(false);
-				dataStorage.currentScreenId = ScreenId.WATCHLIST;
-				onHideAll && onHideAll();
-			}
+	Navigation.navigate(ScreenEnum.NEW_ORDER, {
+		// hideDetail: props.hideDetail,
+		// setSpaceTop: props.setSpaceTop,
+		namePanel: NAME_PANEL.NEW_ORDER,
+		isSwitchFromQuickButton: false,
+		symbol,
+		exchange,
+		onHideAll: () => {
+			Controller.setStatusModalCurrent(false);
+			dataStorage.currentScreenId = ScreenId.WATCHLIST;
+			onHideAll && onHideAll();
 		}
-	});
+	})
+
+	// Navigation.showModal({
+	// 	screen: 'equix.NewOrder',
+	// 	animated: false,
+	// 	animationType: 'none',
+	// 	navigatorStyle: {
+	// 		...CommonStyle.navigatorModalSpecialNoHeader,
+	// 		modalPresentationStyle: 'overCurrentContext'
+	// 	},
+	// 	passProps: {
+	// 		// hideDetail: props.hideDetail,
+	// 		// setSpaceTop: props.setSpaceTop,
+	// 		namePanel: NAME_PANEL.NEW_ORDER,
+	// 		isSwitchFromQuickButton: false,
+	// 		symbol,
+	// 		exchange,
+	// 		onHideAll: () => {
+	// 			Controller.setStatusModalCurrent(false);
+	// 			dataStorage.currentScreenId = ScreenId.WATCHLIST;
+	// 			onHideAll && onHideAll();
+	// 		}
+	// 	}
+	// });
 }

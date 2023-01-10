@@ -616,7 +616,6 @@ const ListSymbol = (props) => {
 			<View style={{ flex: 1 }}>
 				<AddSymbolButton
 					isOnMain
-					navigator={navigator}
 					isEmpty={isEmpty}
 					showHide={showHide}
 				/>
@@ -628,7 +627,6 @@ const ListSymbol = (props) => {
 					onChangeKeyTopIndex={handleUpdateTopIndex}
 				/>
 				<Footer
-					navigator={navigator}
 					onDelete={onDelete}
 					isEmpty={isEmpty}
 				/>

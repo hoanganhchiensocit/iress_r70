@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
-import { View, Text, Keyboard } from 'react-native';
+import React, { useCallback } from 'react';
+import { Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
@@ -7,8 +7,9 @@ import { updateListSymbolAdded } from '~s/watchlist/Categories/Redux/actions';
 import CommonStyle from '~/theme/theme_controller';
 import TouchableOpacityOpt from '~/component/touchableOpacityOpt/';
 import I18n from '~/modules/language/';
-import SvgIcon from '~s/watchlist/Component/Icon2';
 import ENUM from '~/enum';
+import Navigation from "../../../../navigator/Navigation";
+import { ScreenEnum } from "../../../../navigation";
 const { NAME_PANEL } = ENUM;
 
 const FooterButton = ({ disabled, onPress }) => (
@@ -85,7 +86,7 @@ const MainButton = ({ disabled, onPress }) => {
 	);
 };
 
-const AddSymbolButton = ({ navigator, isOnMain, isEmpty, showHide }) => {
+const AddSymbolButton = ({ isOnMain, isEmpty, showHide }) => {
 	const dispatch = useDispatch();
 	const dicSymbolAdded = useSelector(
 		(state) => state.categoriesWL.dicSymbolAdded
@@ -106,24 +107,14 @@ const AddSymbolButton = ({ navigator, isOnMain, isEmpty, showHide }) => {
 
 	const onPress = useCallback(() => {
 		showHide && showHide(false);
-		navigator &&
-			navigator.showModal({
-				screen: 'equix.SingleBottomSheet',
-				animated: false,
-				animationType: 'none',
-				navigatorStyle: {
-					...CommonStyle.navigatorModalSpecialNoHeader,
-					modalPresentationStyle: 'overCurrentContext'
-				},
-				passProps: {
-					namePanel: NAME_PANEL.ADD_AND_SEARCH,
-					isSwitchFromQuickButton: true,
-					enabledGestureInteraction: false,
-					dicSymbolSelected: dicSymbolAdded,
-					onDone,
-					addOnOutside: true
-				}
-			});
+		Navigation.navigate(ScreenEnum.SINGLE_BOTTOM_SHEET, {
+			namePanel: NAME_PANEL.ADD_AND_SEARCH,
+			isSwitchFromQuickButton: true,
+			enabledGestureInteraction: false,
+			dicSymbolSelected: dicSymbolAdded,
+			onDone,
+			addOnOutside: true
+		})
 	}, [dicSymbolAdded]);
 
 	if (isOnMain) {
