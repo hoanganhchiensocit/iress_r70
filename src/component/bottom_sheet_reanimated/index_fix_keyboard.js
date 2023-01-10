@@ -263,10 +263,10 @@ export default class BottomSheetBehavior extends Component {
 			i + 1 === snapPoints.length
 				? snapPoints[i]
 				: cond(
-						lessThan(destinationPoint, middlesOfSnapPoints[i]),
-						snapPoints[i],
-						currentSnapPoint(i + 1)
-				  );
+					lessThan(destinationPoint, middlesOfSnapPoints[i]),
+					snapPoints[i],
+					currentSnapPoint(i + 1)
+				);
 		// current snap point desired
 		this.snapPoint = currentSnapPoint();
 
@@ -567,7 +567,7 @@ export default class BottomSheetBehavior extends Component {
 				} else {
 					s.setValue(
 						sortedPropsSnapPints[0].val -
-							sortedPropsSnapPints[i].val
+						sortedPropsSnapPints[i].val
 					);
 				}
 			});
@@ -731,8 +731,8 @@ export default class BottomSheetBehavior extends Component {
 											divide(
 												this.translateMaster,
 												this.state.snapPoints[
-													this.state.snapPoints
-														.length - 1
+												this.state.snapPoints
+													.length - 1
 												]
 											)
 										)
@@ -745,174 +745,174 @@ export default class BottomSheetBehavior extends Component {
                         ])} /> */}
 							{(this.props.onOpenStart ||
 								this.props.onCloseEnd) && (
-								<Animated.Code
-									exec={onChange(this.translateMaster, [
-										cond(
-											and(
-												lessOrEq(
-													divide(
-														this.translateMaster,
-														this.state.snapPoints[
+									<Animated.Code
+										exec={onChange(this.translateMaster, [
+											cond(
+												and(
+													lessOrEq(
+														divide(
+															this.translateMaster,
+															this.state.snapPoints[
 															this.state
 																.snapPoints
 																.length - 1
-														]
-													),
-													1 -
+															]
+														),
+														1 -
 														(this.props
 															.callbackThreshold
 															? this.props
-																	.callbackThreshold
+																.callbackThreshold
 															: 0.01)
-												),
-												neq(this.onOpenStartValue, 1)
-											),
-											[
-												call([], () => {
-													if (this.props.onOpenStart)
-														this.props.onOpenStart();
-												}),
-												set(this.onOpenStartValue, 1),
-												set(this.initMount, 0),
-												cond(
-													defined(
-														this.onCloseEndValue
 													),
-													set(this.onCloseEndValue, 0)
-												)
-											]
-										)
-									])}
-								/>
-							)}
+													neq(this.onOpenStartValue, 1)
+												),
+												[
+													call([], () => {
+														if (this.props.onOpenStart)
+															this.props.onOpenStart();
+													}),
+													set(this.onOpenStartValue, 1),
+													set(this.initMount, 0),
+													cond(
+														defined(
+															this.onCloseEndValue
+														),
+														set(this.onCloseEndValue, 0)
+													)
+												]
+											)
+										])}
+									/>
+								)}
 							{(this.props.onOpenEnd ||
 								this.props.onCloseStart) && (
-								<Animated.Code
-									exec={onChange(this.translateMaster, [
-										cond(
-											and(
-												eq(
-													this.translateMaster,
-													this.props.top ||
+									<Animated.Code
+										exec={onChange(this.translateMaster, [
+											cond(
+												and(
+													eq(
+														this.translateMaster,
+														this.props.top ||
 														this.state.snapPoints[
-															this.state
-																.snapPoints
-																.length - 1
+														this.state
+															.snapPoints
+															.length - 1
 														]
-												),
-												neq(this.onOpenEndValue, 1)
-											),
-											[
-												call([], () => {
-													if (this.props.onOpenEnd)
-														this.props.onOpenEnd();
-												}),
-												set(this.onOpenEndValue, 1),
-												cond(
-													defined(
-														this.onCloseStartValue
 													),
-													set(
-														this.onCloseStartValue,
-														0
+													neq(this.onOpenEndValue, 1)
+												),
+												[
+													call([], () => {
+														if (this.props.onOpenEnd)
+															this.props.onOpenEnd();
+													}),
+													set(this.onOpenEndValue, 1),
+													cond(
+														defined(
+															this.onCloseStartValue
+														),
+														set(
+															this.onCloseStartValue,
+															0
+														)
 													)
-												)
-											]
-										)
-									])}
-								/>
-							)}
+												]
+											)
+										])}
+									/>
+								)}
 							{(this.props.onCloseStart ||
 								this.props.onOpenEnd) && (
-								<Animated.Code
-									exec={onChange(this.translateMaster, [
-										cond(
-											and(
-												greaterOrEq(
-													divide(
-														this.translateMaster,
-														this.state.snapPoints[
+									<Animated.Code
+										exec={onChange(this.translateMaster, [
+											cond(
+												and(
+													greaterOrEq(
+														divide(
+															this.translateMaster,
+															this.state.snapPoints[
 															this.state
 																.snapPoints
 																.length - 1
-														]
-													),
-													this.props.callbackThreshold
-														? this.props
+															]
+														),
+														this.props.callbackThreshold
+															? this.props
 																.callbackThreshold
-														: 0.01
-												),
-												neq(this.onCloseStartValue, 1)
-											),
-											[
-												call([], () => {
-													if (this.props.onCloseStart)
-														this.props.onCloseStart();
-												}),
-												set(this.onCloseStartValue, 1),
-												cond(
-													defined(
-														this.onCloseStartValue
+															: 0.01
 													),
-													set(this.onOpenEndValue, 0)
-												)
-											]
-										)
-									])}
-								/>
-							)}
+													neq(this.onCloseStartValue, 1)
+												),
+												[
+													call([], () => {
+														if (this.props.onCloseStart)
+															this.props.onCloseStart();
+													}),
+													set(this.onCloseStartValue, 1),
+													cond(
+														defined(
+															this.onCloseStartValue
+														),
+														set(this.onOpenEndValue, 0)
+													)
+												]
+											)
+										])}
+									/>
+								)}
 							{(this.props.onCloseEnd ||
 								this.props.onOpenStart) && (
-								<Animated.Code
-									exec={onChange(this.translateMaster, [
-										cond(
-											and(
-												greaterOrEq(
-													divide(
-														this.translateMaster,
-														this.state.snapPoints[
+									<Animated.Code
+										exec={onChange(this.translateMaster, [
+											cond(
+												and(
+													greaterOrEq(
+														divide(
+															this.translateMaster,
+															this.state.snapPoints[
 															this.state
 																.snapPoints
 																.length - 1
-														]
-													),
-													1 -
+															]
+														),
+														1 -
 														(this.props
 															.callbackThreshold
 															? this.props
-																	.callbackThreshold
+																.callbackThreshold
 															: 0.01)
-												),
-												neq(this.onCloseEndValue, 1),
-												neq(this.initMount, 1)
-											),
-											[
-												call([], () => {
-													if (this.props.onCloseEnd)
-														this.props.onCloseEnd();
-												}),
-												set(this.onCloseEndValue, 1),
-												set(this.initMount, 0),
-												cond(
-													defined(
-														this.onOpenStartValue
 													),
-													set(
-														this.onOpenStartValue,
-														0
+													neq(this.onCloseEndValue, 1),
+													neq(this.initMount, 1)
+												),
+												[
+													call([], () => {
+														if (this.props.onCloseEnd)
+															this.props.onCloseEnd();
+													}),
+													set(this.onCloseEndValue, 1),
+													set(this.initMount, 0),
+													cond(
+														defined(
+															this.onOpenStartValue
+														),
+														set(
+															this.onOpenStartValue,
+															0
+														)
+													),
+													cond(
+														defined(
+															this.onOpenEndValue
+														),
+														set(this.onOpenEndValue, 0)
 													)
-												),
-												cond(
-													defined(
-														this.onOpenEndValue
-													),
-													set(this.onOpenEndValue, 0)
-												)
-											]
-										)
-									])}
-								/>
-							)}
+												]
+											)
+										])}
+									/>
+								)}
 							{this.props.translateMaster && (
 								<Animated.Code
 									exec={onChange(

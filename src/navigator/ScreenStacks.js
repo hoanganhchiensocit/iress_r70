@@ -29,7 +29,8 @@ import WatchlistDetail from '~s/watchlist/WatchlistDetail';
 import CreatePriceboard from '~s/watchlist/Categories/View/CreatePriceBoard';
 import NewDetail from '~s/news_v3/view/detail/';
 import NewsDetail from '~s/news_detail/news_detail';
-import CreateNewAlerts from '~s/alertLog/View/CreateNewAlerts'
+import CreateNewAlerts from '~s/alertLog/View/CreateNewAlerts';
+import ShowModalAlertLog from '~s/alertLog/Components/Selection/SelectionModal';
 
 
 const Tab = createBottomTabNavigator();
@@ -128,6 +129,11 @@ function AppStack() {
 					name={ScreenEnum.CREATE_NEW_ALERTS}
 					component={CreateNewAlerts}
 					options={{ ...screenOptions, presentation: 'modal', animation: 'fade_from_bottom' }}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.SHOW_MODAL_ALERT_LOG}
+					component={ShowModalAlertLog}
+					options={{ ...screenOptions, presentation: 'containedTransparentModal', animation: 'fade' }}
 				/>
 
 			</Stack.Navigator>

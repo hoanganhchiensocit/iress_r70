@@ -34,7 +34,8 @@ export const ScreenEnum = {
 	WATCH_LIST_DETAIL: 'WatchlistDetail',
 	NEW_DETAIL: 'NewDetail',
 	NEWS_DETAIL: 'NewsDetail',
-	CREATE_NEW_ALERTS: 'CreateNewAlerts'
+	CREATE_NEW_ALERTS: 'CreateNewAlerts',
+	SHOW_MODAL_ALERT_LOG: 'ShowModalAlertLog'
 };
 
 // const addPreKeyScreen = () => {
