@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef, useMemo, useImperativeHandle } from 'react'
-import { View, Text, Platform, TouchableOpacity } from 'react-native'
+import { View, Text, Platform, TouchableOpacity, TextInput } from 'react-native'
 import * as Emitter from '@lib/vietnam-emitter';
-import TextInput from '~/component/textinput_avoid_keyboard/TextInput'
+// import TextInput from '~/component/textinput_avoid_keyboard/TextInput'
 // import IconCustom from '~/component/svg_icon/SvgIcon.js'
 import * as Util from '~/util';
 import CommonStyle, { register } from '~/theme/theme_controller'
