@@ -244,8 +244,10 @@ export default class BottomSheetBehavior extends Component {
 	initMount = new Value(1);
 	constructor(props) {
 		super(props);
+		console.log('Metoo--kk-------', this.manuallySetValue)
 		this.state = BottomSheetBehavior.getDerivedStateFromProps(props);
 		const { snapPoints, init } = this.state;
+		console.log('Metoo-init---', this.state)
 		const middlesOfSnapPoints = [];
 		for (let i = 1; i < snapPoints.length; i++) {
 			middlesOfSnapPoints.push(
@@ -509,9 +511,8 @@ export default class BottomSheetBehavior extends Component {
 		if (!this.props.enabledManualSnapping) {
 			return;
 		}
-		this.manuallySetValue.setValue(
-			this.state.snapPoints[this.state.propsToNewIncides[index]]
-		);
+		const _value = this.state.snapPoints[this.state.propsToNewIncides[index]]._value
+		this.manuallySetValue.setValue(_value);
 		this.isManuallySetValue.setValue(1);
 	};
 	scrollTo = (translateY) => {
@@ -614,6 +615,7 @@ export default class BottomSheetBehavior extends Component {
 	render() {
 		const { heightOfHeader = 0 } = this.state;
 		const { zIndex = 100 } = this.props;
+		console.log('Metoo----render ----', this.state)
 		return (
 			<React.Fragment>
 				<Animated.View
@@ -924,14 +926,14 @@ export default class BottomSheetBehavior extends Component {
 									)}
 								/>
 							)}
-							{this.props.scrollValue && (
-								<Animated.Code
-									exec={onChange(
-										this.Y,
-										set(this.props.scrollValue, this.Y)
-									)}
-								/>
-							)}
+							{/*{this.props.scrollValue && (*/}
+								{/*<Animated.Code*/}
+									{/*exec={onChange(*/}
+										{/*this.Y,*/}
+										{/*set(this.props.scrollValue, this.Y)*/}
+									{/*)}*/}
+								{/*/>*/}
+							{/*)}*/}
 							<HandleDismissKeyboard
 								parentState={this.panMasterState}
 								childrenState={this.panState}
