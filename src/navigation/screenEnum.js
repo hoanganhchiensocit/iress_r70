@@ -36,7 +36,8 @@ export const ScreenEnum = {
 
 	NEW_DETAIL: 'NewDetail',
 	NEWS_DETAIL: 'NewsDetail',
-	DISCLAIMER:'Disclaimer',
+	SHOW_MODAL_ALERT_LOG: 'ShowModalAlertLog',
+	DISCLAIMER: 'Disclaimer',
 	CREATE_NEW_ALERTS: 'CreateNewAlerts',
 	NEW_ORDER: 'NewOrder'
 };

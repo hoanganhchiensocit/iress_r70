@@ -31,6 +31,7 @@ import SingleBottomSheet from '~/component/bottom_sheet_reanimated/SinglePanel.j
 
 import NewDetail from '~s/news_v3/view/detail/';
 import NewsDetail from '~s/news_detail/news_detail';
+import ShowModalAlertLog from '~s/alertLog/Components/Selection/SelectionModal';
 import Disclaimer from '~/screens/disclaimer/disclaimer_iress';
 import CreateNewAlerts from '~s/alertLog/View/CreateNewAlerts'
 import NewOrder from '~/screens/new_order/NewOrderWrapper'
@@ -40,126 +41,131 @@ import NewOrder from '~/screens/new_order/NewOrderWrapper'
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const screenOptions = {
-  headerShown: false,
-  tabBarHideOnKeyboard: true,
-  adaptive: true,
-  keyboardHidesTabBar: true,
+	headerShown: false,
+	tabBarHideOnKeyboard: true,
+	adaptive: true,
+	keyboardHidesTabBar: true,
 };
 
 const modalOptions = {
-  ...screenOptions,
-  presentation: 'modal',
-  animation: 'fade_from_bottom',
-  contentStyle: { backgroundColor: "transparent" },
+	...screenOptions,
+	presentation: 'modal',
+	animation: 'fade_from_bottom',
+	contentStyle: { backgroundColor: "transparent" },
 };
 
 const QuickActions = () => {
-  return <View/>
+	return <View />
 }
 
 function Main() {
-  return <Tab.Navigator screenOptions={screenOptions}
-                        tabBar={props => <MyBottomTabBar {...props} />}>
-    <Tab.Screen name={ScreenEnum.ACTIVITIES} component={Activities}/>
-    <Tab.Screen name={ScreenEnum.TRADE} component={Trade}/>
-    <Tab.Screen name={ScreenEnum.QUICK_ACTION} component={() => null}/>
-    <Tab.Screen name={ScreenEnum.PORTFOLIO} component={Portfolio}/>
-    <Tab.Screen name={ScreenEnum.ORDERS} component={Orders}/>
-  </Tab.Navigator>
+	return <Tab.Navigator screenOptions={screenOptions}
+		tabBar={props => <MyBottomTabBar {...props} />}>
+		<Tab.Screen name={ScreenEnum.ACTIVITIES} component={Activities} />
+		<Tab.Screen name={ScreenEnum.TRADE} component={Trade} />
+		<Tab.Screen name={ScreenEnum.QUICK_ACTION} component={() => null} />
+		<Tab.Screen name={ScreenEnum.PORTFOLIO} component={Portfolio} />
+		<Tab.Screen name={ScreenEnum.ORDERS} component={Orders} />
+	</Tab.Navigator>
 }
 
 function AppStack() {
-  return (
-    <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator>
-        <Stack.Screen
-          name={ScreenEnum.SPLASH}
-          component={Splash}
-          options={screenOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.HOME}
-          component={Home}
-          options={screenOptions}
-        />
-        {/*<Stack.Screen name="Login" component={Login}/>*/}
-        {/* <Stack.Screen
+	return (
+		<NavigationContainer ref={navigationRef}>
+			<Stack.Navigator>
+				<Stack.Screen
+					name={ScreenEnum.SPLASH}
+					component={Splash}
+					options={screenOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.HOME}
+					component={Home}
+					options={screenOptions}
+				/>
+				{/*<Stack.Screen name="Login" component={Login}/>*/}
+				{/* <Stack.Screen
 					name={ScreenEnum.BUSY_BOX}
 					component={BusyBox}
 					options={screenOptions}
 				/> */}
 
-        <Stack.Screen
-          name={ScreenEnum.AUTO_LOGIN}
-          component={AutoLogin}
-          options={screenOptions}
-        />
+				<Stack.Screen
+					name={ScreenEnum.AUTO_LOGIN}
+					component={AutoLogin}
+					options={screenOptions}
+				/>
 
-        <Stack.Screen
-          name={ScreenEnum.MAIN}
-          component={Main}
-          options={screenOptions}
-        />
+				<Stack.Screen
+					name={ScreenEnum.MAIN}
+					component={Main}
+					options={screenOptions}
+				/>
 
-        <Stack.Screen
-          name={ScreenEnum.CATEGORIES_WL}
-          component={CategoriesWL}
-          options={screenOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.CREATE_PRICEBOARD}
-          component={CreatePriceboard}
-          options={screenOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.EDIT_WATCHLIST}
-          component={EditWatchList}
-          options={screenOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.SEARCH_SYMBOL}
-          component={SearchSymbol}
-          options={screenOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.WATCH_LIST_DETAIL}
-          component={WatchlistDetail}
-          options={screenOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.NEW_DETAIL}
-          component={NewDetail}
-          options={screenOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.NEWS_DETAIL}
-          component={NewsDetail}
-          options={modalOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.DISCLAIMER}
-          component={Disclaimer}
-          options={screenOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.CREATE_NEW_ALERTS}
-          component={CreateNewAlerts}
-          options={modalOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.NEW_ORDER}
-          component={NewOrder}
-          options={modalOptions}
-        />
-        <Stack.Screen
-          name={ScreenEnum.SINGLE_BOTTOM_SHEET}
-          component={SingleBottomSheet}
-          options={modalOptions}
-        />
+				<Stack.Screen
+					name={ScreenEnum.CATEGORIES_WL}
+					component={CategoriesWL}
+					options={screenOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.CREATE_PRICEBOARD}
+					component={CreatePriceboard}
+					options={screenOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.EDIT_WATCHLIST}
+					component={EditWatchList}
+					options={screenOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.SEARCH_SYMBOL}
+					component={SearchSymbol}
+					options={screenOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.WATCH_LIST_DETAIL}
+					component={WatchlistDetail}
+					options={screenOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.NEW_DETAIL}
+					component={NewDetail}
+					options={screenOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.NEWS_DETAIL}
+					component={NewsDetail}
+					options={{ ...screenOptions, presentation: 'modal', animation: 'fade_from_bottom' }}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.DISCLAIMER}
+					component={Disclaimer}
+					options={screenOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.CREATE_NEW_ALERTS}
+					component={CreateNewAlerts}
+					options={{ ...screenOptions, presentation: 'modal', animation: 'fade_from_bottom' }}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.NEW_ORDER}
+					component={NewOrder}
+					options={modalOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.SINGLE_BOTTOM_SHEET}
+					component={SingleBottomSheet}
+					options={modalOptions}
+				/>
+				<Stack.Screen
+					name={ScreenEnum.SHOW_MODAL_ALERT_LOG}
+					component={ShowModalAlertLog}
+					options={{ ...screenOptions, presentation: 'containedTransparentModal', animation: 'fade' }}
+				/>
 
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+			</Stack.Navigator>
+		</NavigationContainer>
+	);
 }
 
 export default AppStack;

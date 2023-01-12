@@ -4,8 +4,9 @@ import TouchableOpacityOpt from '~/component/touchableOpacityOpt/'
 import PropTypes from 'prop-types'
 import CommonStyle, { register } from '~/theme/theme_controller'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import { Navigation } from 'react-native-navigation'
 import Enum from '~/enum';
+import Navigation from '~/navigator/Navigation';
+import { ScreenEnum } from '~/navigation';
 const Icon = () => <CommonStyle.icons.cheDown style={{
 	textAlign: 'center',
 	alignSelf: 'center'
@@ -19,26 +20,13 @@ const useShowModal = ({ setValue, selectedValue, layoutInput, data, refTextInput
 				layoutInput.current.y = pageY;
 				layoutInput.current.x = pageX;
 				layoutInput.current.width = width;
-				Navigation.showModal({
-					screen: 'equix.ShowModalAlertLog',
-					animated: false,
-					animationType: 'none',
-					navigatorStyle: {
-						...CommonStyle.navigatorModalSpecialNoHeader,
-						modalPresentationStyle: 'overCurrentContext'
-					},
-					passProps: {
-						data,
-						layoutInput,
-						selectedValue,
-						onClose: () => {
-							Navigation.dismissModal({
-								animationType: 'none'
-							})
-						},
-						onSelected: setValue,
-						styleValue
-					}
+				Navigation.navigate(ScreenEnum.SHOW_MODAL_ALERT_LOG, {
+					data,
+					layoutInput,
+					selectedValue,
+					onClose: Navigation.back,
+					onSelected: setValue,
+					styleValue
 				})
 			});
 	})
