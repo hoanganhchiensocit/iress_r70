@@ -38,6 +38,7 @@ import {
 	changeSymbolExchange,
 	resetStateNewOrder
 } from '~/screens/new_order/Redux/actions.js';
+import Navigation from '~/navigator/Navigation';
 const { height: heightDevice } = Dimensions.get('window');
 const { Value } = Animated;
 const marginTopPanel = getMarginTopDevice() + 32;
@@ -78,10 +79,7 @@ const NewOrderWrapper = ({
 		};
 	}, []);
 	const handleHideNewOrder = useCallback(() => {
-		Navigation.dismissModal({
-			animated: false,
-			animationType: 'none'
-		});
+		Navigation.back();
 
 		resetOrderInfo();
 	}, []);
